@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recursive-companion"
+version = "0.1.0"
+description = "Modular multi-phase LLM companion framework"
+authors = [{ name="Your Name", email="you@example.com" }]
+readme = "README.md"
+packages = ["recursive_companion", "core"]
+dependencies = [
+    "langchain-openai>=0.1.0",
+    "tiktoken>=0.5.1",
+]
+
+[tool.setuptools.package-data]
+recursive_companion = ["templates/*.txt"]
