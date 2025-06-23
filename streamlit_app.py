@@ -13,15 +13,32 @@ from recursive_companion import (
     GenericCompanion, 
     MarketingCompanion, 
     BugTriageCompanion, 
-    StrategyCompanion
-)
-
-from core.streamlit_chains import (
+    StrategyCompanion,
     StreamlitGenericCompanion,
     StreamlitMarketingCompanion,
     StreamlitBugTriageCompanion,
     StreamlitStrategyCompanion
 )
+
+# Companion mapping for cleaner instantiation
+COMPANION_MAP = {
+    "generic": {
+        "standard": GenericCompanion,
+        "streamlit": StreamlitGenericCompanion
+    },
+    "marketing": {
+        "standard": MarketingCompanion,
+        "streamlit": StreamlitMarketingCompanion
+    },
+    "bug_triage": {
+        "standard": BugTriageCompanion,
+        "streamlit": StreamlitBugTriageCompanion
+    },
+    "strategy": {
+        "standard": StrategyCompanion,
+        "streamlit": StreamlitStrategyCompanion
+    }
+}
 
 # Callback to capture streaming tokens
 class StreamingCallbackHandler(BaseCallbackHandler):
@@ -39,6 +56,15 @@ st.set_page_config(
     page_icon="🔄",
     layout="wide"
 )
+
+# Custom CSS to make text in expanders larger
+#st.markdown("""
+#<style>
+    #.streamlit-expanderContent {
+        #font-size: 20px !important;
+    #}
+#</style>
+#""", unsafe_allow_html=True)
 
 st.title("🔄 Recursive Companion Studio")
 st.markdown("Watch AI agents critique and refine their own responses in real-time")
@@ -104,9 +130,15 @@ with st.sidebar:
         )
         
         # Display options
-        show_critique = st.checkbox("Show Critique Process", value=True)
-        show_metrics = st.checkbox("Show Metrics", value=True)
         live_preview = st.checkbox("Live Preview", value=False, help="Show critique/revision process in real-time as it happens")
+        # Disable show_critique if live_preview is on (live preview replaces it)
+        show_critique = st.checkbox(
+            "Show Critique Process", 
+            value=True, 
+            disabled=live_preview,
+            help="Disabled when Live Preview is on" if live_preview else "Show the refinement process after analysis"
+        )
+        show_metrics = st.checkbox("Show Metrics", value=True)
         
         # Apply button
         apply_settings = st.form_submit_button("Apply Settings", type="secondary")
@@ -119,7 +151,7 @@ with st.sidebar:
             'max_loops': max_loops,
             'similarity_threshold': similarity_threshold,
             'selected_template': selected_template,
-            'show_critique': show_critique,
+            'show_critique': show_critique and not live_preview,  # Auto-disable if live preview is on
             'show_metrics': show_metrics,
             'live_preview': live_preview
         }
@@ -164,97 +196,33 @@ with col1:
             live_container = None
             if current_settings['live_preview']:
                 st.success("Analysis in progress...")
-                live_expander = st.expander("🔄 Live Refinement Process", expanded=True)
-                live_container = live_expander.container()
+                live_container = st.empty()  # Use st.empty() for dynamic updates!
             
             with st.spinner("Thinking..."):
                 try:
-                    # Create companion with APPLIED settings
-                    # Use Streamlit companions if live preview is enabled
-                    if current_settings['live_preview']:
-                        # Use Streamlit-enabled companions for live updates
-                        if current_settings['selected_template'] == "generic":
-                            companion = StreamlitGenericCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                clear_history=True,
-                                progress_container=live_container  # Pass the container for live updates
-                            )
-                        elif current_settings['selected_template'] == "marketing":
-                            companion = StreamlitMarketingCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                clear_history=True,
-                                progress_container=live_container
-                            )
-                        elif current_settings['selected_template'] == "bug_triage":
-                            companion = StreamlitBugTriageCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                clear_history=True,
-                                progress_container=live_container
-                            )
-                        elif current_settings['selected_template'] == "strategy":
-                            companion = StreamlitStrategyCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                clear_history=True,
-                                progress_container=live_container
-                            )
+                    # Select companion class based on settings
+                    template_type = current_settings['selected_template']
+                    companion_type = "streamlit" if current_settings['live_preview'] else "standard"
+                    companion_class = COMPANION_MAP[template_type][companion_type]
+                    
+                    # Build kwargs for companion instantiation
+                    companion_kwargs = {
+                        'llm': current_settings['model'],
+                        'temperature': current_settings['temperature'],
+                        'max_loops': current_settings['max_loops'],
+                        'similarity_threshold': current_settings['similarity_threshold'],
+                        'return_transcript': True,
+                        'clear_history': True
+                    }
+                    
+                    # Add specific kwargs based on companion type
+                    if companion_type == "streamlit":
+                        companion_kwargs['progress_container'] = live_container
                     else:
-                        # Use regular companions without live updates
-                        if current_settings['selected_template'] == "generic":
-                            companion = GenericCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                verbose=False,
-                                clear_history=True
-                            )
-                        elif current_settings['selected_template'] == "marketing":
-                            companion = MarketingCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                verbose=False,
-                                clear_history=True
-                            )
-                        elif current_settings['selected_template'] == "bug_triage":
-                            companion = BugTriageCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                verbose=False,
-                                clear_history=True
-                            )
-                        elif current_settings['selected_template'] == "strategy":
-                            companion = StrategyCompanion(
-                                llm=current_settings['model'],
-                                temperature=current_settings['temperature'],
-                                max_loops=current_settings['max_loops'],
-                                similarity_threshold=current_settings['similarity_threshold'],
-                                return_transcript=True,
-                                verbose=False,
-                                clear_history=True
-                            )
+                        companion_kwargs['verbose'] = False
+                    
+                    # Create companion instance
+                    companion = companion_class(**companion_kwargs)
                     
                     # Run the analysis - always get transcript
                     final_answer, run_log = companion.loop(user_input)
@@ -276,7 +244,7 @@ with col1:
     if 'results' in st.session_state and st.session_state.results:
         results = st.session_state.results
         
-        st.success("Analysis complete!")
+        
         
         # Final answer
         st.markdown("### 📋 Final Analysis")

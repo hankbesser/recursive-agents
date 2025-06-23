@@ -1,11 +1,16 @@
-# companion/__init__.py
+# recursive_companion/__init__.py
 """
 Public API surface for the Recursive Companion package.
 
 Most users should import classes directly from this package root:
 
-    from companion import GenericCompaniom
-    agent = GenericCompanion(llm)
+    from recursive_companion import GenericCompanion
+    agent = GenericCompanion(llm="gpt-4o-mini")
+    answer = agent("Analyze this problem...")
+
+With new modular structure, companions are organized by UI framework:
+    - base.py: Standard companions without UI integration
+    - streamlit.py: Streamlit-enabled companions with live updates
 
 If you later move or rename the implementation modules, only this file
 needs updating—user code stays stable.
@@ -17,20 +22,39 @@ needs updating—user code stays stable.
 from core.chains import BaseCompanion        
 
 # ---------------------------------------------------------------------
-# Re-export all concrete agents
+# Re-export all concrete agents from base.py
 # ---------------------------------------------------------------------
-from .generic_companion import GenericCompanion                   
-from .marketing_companion import MarketingCompanion     
-from .bug_triage_companion import BugTriageCompanion     
-from .strategy_companion import StrategyCompanion        
+from .base import (
+    GenericCompanion,
+    MarketingCompanion,
+    BugTriageCompanion,
+    StrategyCompanion,
+)
 
 # ---------------------------------------------------------------------
-# What `from companion import *` should expose
+# Re-export Streamlit-enabled agents from streamlit.py
+# ---------------------------------------------------------------------
+from .streamlit import (
+    StreamlitGenericCompanion,
+    StreamlitMarketingCompanion,
+    StreamlitBugTriageCompanion,
+    StreamlitStrategyCompanion,
+)
+
+# ---------------------------------------------------------------------
+# What `from recursive_companion import *` should expose
 # ---------------------------------------------------------------------
 __all__ = [
+    # Core
     "BaseCompanion",
+    # Standard companions
     "GenericCompanion",
     "MarketingCompanion",
     "BugTriageCompanion",
     "StrategyCompanion",
+    # Streamlit companions
+    "StreamlitGenericCompanion",
+    "StreamlitMarketingCompanion",
+    "StreamlitBugTriageCompanion",
+    "StreamlitStrategyCompanion",
 ]

@@ -88,12 +88,13 @@ class MarketingCompanion(BaseCompanion):
     """
     TEMPLATES = MARKETING_TEMPLATES
     MAX_LOOPS = 2
-    # Do subclasses need their own __init__ / super().__init__()?
-    # They only need one when they must add extra constructor logic (i.e):
-
-    # def __init__(self, llm, *, channel_weights=None, **kw):
-        # super().__init__(llm, **kw)   ## builds chains, sets history
-        # self.channel_weights = channel_weights or {"email": 1, "social": 1}
+    
+    # Note: Subclasses only need __init__ if adding new parameters.
+    # Example:
+    #
+    # def __init__(self, llm=None, *, channel_weights=None, **kwargs):
+    #     super().__init__(llm, **kwargs)  # Let parent handle all standard setup
+    #     self.channel_weights = channel_weights or {"email": 1.0, "social": 1.0}
 
 
 

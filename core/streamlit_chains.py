@@ -15,6 +15,7 @@ from typing import Dict, Any, List, Union, Optional
 from numpy import dot
 from numpy.linalg import norm
 import streamlit as st
+import time
 
 from langchain.prompts import (
     ChatPromptTemplate,
@@ -130,12 +131,17 @@ class StreamlitBaseCompanion:
         # If you like the cumulative behaviour, skip this line.  
         self.run_log.clear()  # ← start fresh for this call
         
-        # Live update: Show user input if container provided
+        # Single placeholder for all live updates
         if self.progress_container:
-            with self.progress_container:
-                st.markdown("**Processing your input...**")
-                st.markdown(f"_{user_input}_")
-                st.markdown("---")
+            content_placeholder = self.progress_container.empty()
+            
+            # Store all content to display
+            all_content = {
+                "initial": None,
+                "iterations": [],
+                "status": None,
+                "final": None
+            }
         
         # 1. initial draft
         draft = self.init_chain.invoke(
@@ -144,10 +150,11 @@ class StreamlitBaseCompanion:
         
         # Live update: Show initial draft
         if self.progress_container:
-            with self.progress_container:
-                st.markdown("**Initial Draft**")
-                st.markdown(draft)
-                st.markdown("---")
+            all_content["initial"] = {
+                "user_input": user_input,
+                "draft": draft
+            }
+            self._redraw_all_content(content_placeholder, all_content, current_iteration=0)
         
         prev = None
         # 2. critique / revision cycles
@@ -156,41 +163,38 @@ class StreamlitBaseCompanion:
                 {"user_input": user_input, "draft": draft}
             ).content
             
-            # Live update: Show critique
-            if self.progress_container:
-                with self.progress_container:
-                    st.markdown(f"**Critique {i}**")
-                    st.markdown(critique)
-                    st.markdown("---")
-
             # simple phrase-based early exit?
             if any(p in critique.lower() for p in ("no further improvements", "minimal revisions")):
                 self.run_log.append({"draft": draft, "critique": critique, "revision": draft})
                 if self.progress_container:
-                    with self.progress_container:
-                        st.info("✓ Early exit: No further improvements needed")
+                    all_content["status"] = "✓ Early exit: No further improvements needed"
+                    self._redraw_all_content(content_placeholder, all_content, current_iteration=i)
                 break
 
             revised = self.rev_chain.invoke(
                 {"user_input": user_input, "draft": draft, "critique": critique}
             ).content
             
-            # Live update: Show revision
+            # Calculate similarity
+            sim = cosine(prev, revised) if prev else None
+            
+            # Store iteration
             if self.progress_container:
-                with self.progress_container:
-                    st.markdown(f"**Revision {i}**")
-                    st.markdown(revised)
-                    if prev:
-                        sim = cosine(prev, revised)
-                        st.caption(f"_Similarity to previous: {sim:.3f}_")
-                    st.markdown("---")
+                all_content["iterations"].append({
+                    "number": i,
+                    "critique": critique,
+                    "revision": revised,
+                    "similarity": sim
+                })
+                self._redraw_all_content(content_placeholder, all_content, current_iteration=i)
 
             # similarity early exit?
             if prev and cosine(prev, revised) > self.similarity_threshold:
                 self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
                 if self.progress_container:
-                    with self.progress_container:
-                        st.success(f"✓ Converged: Similarity threshold reached ({self.similarity_threshold:.2f})")
+                    all_content["status"] = f"✓ Converged: Similarity threshold reached ({self.similarity_threshold:.2f})"
+                    self._redraw_all_content(content_placeholder, all_content, current_iteration=i)
+                draft=revised    
                 break
 
             self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
@@ -201,10 +205,8 @@ class StreamlitBaseCompanion:
         
         # Live update: Show final result
         if self.progress_container:
-            with self.progress_container:
-                st.success("✓ Analysis complete!")
-                st.markdown("**Final Answer**")
-                st.markdown(draft)
+            all_content["final"] = True
+            self._redraw_all_content(content_placeholder, all_content, final=True)
                 
         if self.clear_history:
             #kept = self.history.copy()  # optional: return copy to caller
@@ -237,3 +239,53 @@ class StreamlitBaseCompanion:
             out.append("\n**Revision**\n\n" + step["revision"])
             out.append("\n---\n")
         return "\n".join(out)
+    
+    def _redraw_all_content(self, placeholder, content, current_iteration=None, final=False):
+        """Redraw all content in a single placeholder following Stack Overflow pattern."""
+        # Clear the placeholder first
+        placeholder.empty()
+        
+        # Small delay for clean transition (as recommended by Stack Overflow)
+        time.sleep(0.01)
+        
+        # Use container for multiple elements (as recommended by Stack Overflow)
+        with placeholder.container():
+            # Initial draft expander
+            if content["initial"]:
+                expanded = (current_iteration == 0) and not final
+                with st.expander("📝 Initial Problem & Draft", expanded=expanded):
+                    st.markdown("**Your Question:**")
+                    st.markdown(f"_{content['initial']['user_input']}_")
+                    st.markdown("---")
+                    st.markdown("**Initial Draft:**")
+                    st.markdown(content['initial']['draft'])
+            
+            # All iterations
+            total_iterations = len(content["iterations"])
+            for idx, iter_data in enumerate(content["iterations"]):
+                # Only consider it "last" if we're in final mode (analysis complete)
+                is_last_iteration = final and (idx == total_iterations - 1)
+                expanded = (iter_data["number"] == current_iteration) and not final
+                with st.expander(f"🔄 Iteration {iter_data['number']}", expanded=expanded):
+                    st.markdown(f"**Critique {iter_data['number']}:**")
+                    st.markdown(iter_data["critique"])
+                    
+                    # Show revision unless this is the final iteration in the final display
+                    if not is_last_iteration:
+                        st.markdown("---")
+                        st.markdown(f"**Revision {iter_data['number']}:**")
+                        st.markdown(iter_data["revision"])
+                        if iter_data["similarity"] is not None:
+                            st.caption(f"_Similarity to previous: {iter_data['similarity']:.3f}_")
+            
+            # Status messages
+            if content["status"]:
+                if "Early exit" in content["status"]:
+                    st.info(content["status"])
+                else:
+                    st.success(content["status"])
+            
+            # Final message
+            if content["final"]:
+                st.success("✓ Analysis complete! See final analysis below.")
+    

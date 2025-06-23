@@ -51,8 +51,9 @@ Core plumbing for all Companion subclasses
 
 Design notes
 ============
-* Templates live in ``templates/``; subclasses merge the 5-key generic dict
-  with their own overrides via ``{**GENERIC_TEMPLATES, "initial_sys": …}``.
+* Templates live in ``templates/`` as text files.
+* Subclasses set TEMPLATES class attribute (typically using build_templates() 
+  from template_load_utils.py for DRY template composition).
 * All debug output is gated by ``verbose`` OR standard logging levels.
 * No system prompts are stored in history; token cost stays minimal.
 """
@@ -221,6 +222,7 @@ class BaseCompanion:
                 self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
                 if self.verbose:
                     logging.debug("Similarity threshold reached (%.2f).", self.similarity_threshold)
+                draft = revised
                 break
 
             self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
