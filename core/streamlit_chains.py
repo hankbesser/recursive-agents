@@ -1,66 +1,20 @@
-# core/chains.py
+# core/streamlit_chains.py
 """
-Core plumbing for all Companion subclasses
-------------------------------------------
+Streamlit-specific version of chains.py with live update capabilities
+---------------------------------------------------------------------
 
-* cosine(a:str, b:str) → float
-    Cached OpenAI-embedding cosine similarity.  Used to decide whether two
-    successive revisions are “close enough” to stop looping early.
+Same as core/chains.py but the loop() method emits real-time updates
+to a Streamlit container if provided. See core/chains.py for detailed
+documentation of the core algorithm.
 
-* build_chains(t:dict[str,str], llm:ChatOpenAI)
-    Construct the **Init → Critique → Revision** runnables from a 5-key
-    template dict.  Injects ``MessagesPlaceholder("history")``.
-
-* BaseCompanion
-    ├─ __init__(llm: str | ChatOpenAI | None = None,
-    │           *,
-    │           templates:dict[str,str] |       None = None,
-    │           similarity_threshold:float |    None = None,
-    │           max_loops:int | None          = None,
-    │           temperature:float | None      = None,
-    │           verbose:bool                  = False,
-    │           clear_history:bool | None     = None,
-    │           return_transcript:bool        = False,
-    │           **llm_kwargs)
-    │      · Builds an internal ``ChatOpenAI`` *if* caller passes a model-name
-    │        string (no import needed in user code).
-    │      · Creates ``history`` & ``run_log`` containers.
-    │      · Merges caller kwargs with class-level defaults.
-    │      · Builds the three chains via *build_chains()*.
-    │
-    ├─ loop(user_input:str)
-    │      Returns **str**         (final draft)         when *return_transcript=False*
-    │           or **(str, list)** (final, run_log)      when *return_transcript=True*
-    │      · Performs the three-phase loop ≤ max_loops
-    │      · similarity / empty-critique early-exit
-    │      · Appends (Human, AI) messages to ``history``
-    │      · Stores each {draft, critique, revision} dict in ``run_log``
-    │      · Auto-clears history if ``self.clear_history`` is *True*
-    │
-    ├─ transcript_as_markdown() → str
-    │      Nicely formatted view of ``run_log`` for notebooks / logs.
-    │
-    └─ Public instance attributes
-           · history             list[HumanMessage|AIMessage]   (cross-call)
-           · run_log             list[dict]  (inner iterations, last call)
-           · sim_thresh          float       effective similarity threshold
-           · max_loops           int         effective loop cap
-           · temperature         float       effective sampling temperature
-           · clear_history       bool        auto-wipe flag in effect
-           · verbose             bool        debug logging flag
-
-Design notes
-============
-* Templates live in ``templates/``; subclasses merge the 5-key generic dict
-  with their own overrides via ``{**GENERIC_TEMPLATES, "initial_sys": …}``.
-* All debug output is gated by ``verbose`` OR standard logging levels.
-* No system prompts are stored in history; token cost stays minimal.
+The only difference is the addition of progress_container parameter
+and live UI updates during the critique/revision loop.
 """
 
 from typing import Dict, Any, List, Union, Optional
 from numpy import dot
 from numpy.linalg import norm
-import logging
+import streamlit as st
 
 from langchain.prompts import (
     ChatPromptTemplate,
@@ -103,7 +57,7 @@ def build_chains(t: Dict[str, str], llm: ChatOpenAI):
 # ---------------------------------------------------------------------
 # ❸ BaseCompanion
 # ---------------------------------------------------------------------
-class BaseCompanion:
+class StreamlitBaseCompanion:
     """
     Three-phase critique / revision agent with optional early-exit and history.
     Subclasses override TEMPLATES (and optionally class defaults).
@@ -127,7 +81,7 @@ class BaseCompanion:
         max_loops: int | None = None,
         clear_history: bool | None = None,
         return_transcript: bool = False,
-        verbose: bool = False,
+        progress_container = None,  # Streamlit container for live updates
         **llm_kwargs: Any, # passthrough                  
     ):
         # merge subclass templates with caller overrides
@@ -167,31 +121,33 @@ class BaseCompanion:
         self.history: List[Any] = []     # list[HumanMessage | AIMessage]
         self.run_log: list[dict[str, str]] = []   # stores per-iteration details
 
-
         self.return_transcript = return_transcript
-        self.verbose = verbose
-        if self.verbose:                          # minimal logger setup
-            logging.basicConfig(
-                level=logging.DEBUG,
-                format="%(levelname)s | %(message)s"
-            )
+        self.progress_container = progress_container  # Store the Streamlit container
 
     # ---------- main recursive loop -----------------------------------
     def loop(self, user_input: str) ->  str | tuple[str, list]:
-        if self.verbose:
-            logging.debug("USER INPUT:\n%s", user_input.strip())
-        
         # Note: That keeps run_log scoped to one outer call instead of accumulating across multiple. 
         # If you like the cumulative behaviour, skip this line.  
         self.run_log.clear()  # ← start fresh for this call
+        
+        # Live update: Show user input if container provided
+        if self.progress_container:
+            with self.progress_container:
+                st.markdown("**Processing your input...**")
+                st.markdown(f"_{user_input}_")
+                st.markdown("---")
         
         # 1. initial draft
         draft = self.init_chain.invoke(
             {"user_input": user_input, "history": self.history}
         ).content
         
-        if self.verbose:
-            logging.debug("INITIAL DRAFT:\n%s\n", draft.strip())
+        # Live update: Show initial draft
+        if self.progress_container:
+            with self.progress_container:
+                st.markdown("**Initial Draft**")
+                st.markdown(draft)
+                st.markdown("---")
         
         prev = None
         # 2. critique / revision cycles
@@ -199,28 +155,42 @@ class BaseCompanion:
             critique = self.crit_chain.invoke(
                 {"user_input": user_input, "draft": draft}
             ).content
-            if self.verbose:
-                logging.debug("CRITIQUE #%d:\n%s\n", i, critique.strip())
+            
+            # Live update: Show critique
+            if self.progress_container:
+                with self.progress_container:
+                    st.markdown(f"**Critique {i}**")
+                    st.markdown(critique)
+                    st.markdown("---")
 
             # simple phrase-based early exit?
             if any(p in critique.lower() for p in ("no further improvements", "minimal revisions")):
                 self.run_log.append({"draft": draft, "critique": critique, "revision": draft})
-                if self.verbose:
-                    logging.debug("Early-exit phrase detected.")
+                if self.progress_container:
+                    with self.progress_container:
+                        st.info("✓ Early exit: No further improvements needed")
                 break
 
             revised = self.rev_chain.invoke(
                 {"user_input": user_input, "draft": draft, "critique": critique}
             ).content
-            if self.verbose:
-                sim = cosine(prev or "", revised) if prev else 0
-                logging.debug("REVISION #%d (cosine=%.3f):\n%s\n", i, sim, revised.strip())
+            
+            # Live update: Show revision
+            if self.progress_container:
+                with self.progress_container:
+                    st.markdown(f"**Revision {i}**")
+                    st.markdown(revised)
+                    if prev:
+                        sim = cosine(prev, revised)
+                        st.caption(f"_Similarity to previous: {sim:.3f}_")
+                    st.markdown("---")
 
             # similarity early exit?
             if prev and cosine(prev, revised) > self.similarity_threshold:
                 self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
-                if self.verbose:
-                    logging.debug("Similarity threshold reached (%.2f).", self.similarity_threshold)
+                if self.progress_container:
+                    with self.progress_container:
+                        st.success(f"✓ Converged: Similarity threshold reached ({self.similarity_threshold:.2f})")
                 break
 
             self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
@@ -228,6 +198,13 @@ class BaseCompanion:
 
         # 3. update history & return
         self.history.extend([HumanMessage(user_input), AIMessage(draft)])
+        
+        # Live update: Show final result
+        if self.progress_container:
+            with self.progress_container:
+                st.success("✓ Analysis complete!")
+                st.markdown("**Final Answer**")
+                st.markdown(draft)
                 
         if self.clear_history:
             #kept = self.history.copy()  # optional: return copy to caller
@@ -260,5 +237,3 @@ class BaseCompanion:
             out.append("\n**Revision**\n\n" + step["revision"])
             out.append("\n---\n")
         return "\n".join(out)
-
-
