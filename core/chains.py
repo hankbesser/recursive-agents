@@ -75,10 +75,9 @@ from langchain_core.messages import HumanMessage, AIMessage
 # ---------------------------------------------------------------------
 # ❶ Global embeddings + cosine helper
 # ---------------------------------------------------------------------
-_emb = OpenAIEmbeddings()          # single process-wide client
 
-def cosine(a: str, b: str) -> float:
-    va, vb = _emb.embed_query(a), _emb.embed_query(b)
+def cosine_from_embeddings(va: List[float], vb: List[float]) -> float:
+    """Compute cosine similarity from pre-computed embeddings."""
     return dot(va, vb) / (norm(va) * norm(vb))
 
 # ---------------------------------------------------------------------
@@ -129,6 +128,7 @@ class BaseCompanion:
         clear_history: bool | None = None,
         return_transcript: bool = False,
         verbose: bool = False,
+        embedding_model=None,
         **llm_kwargs: Any, # passthrough                  
     ):
         # merge subclass templates with caller overrides
@@ -168,7 +168,7 @@ class BaseCompanion:
         self.history: List[Any] = []     # list[HumanMessage | AIMessage]
         self.run_log: list[dict[str, str]] = []   # stores per-iteration details
 
-
+        self._emb = embedding_model or OpenAIEmbeddings()
         self.return_transcript = return_transcript
         self.verbose = verbose
         if self.verbose:                          # minimal logger setup
@@ -194,7 +194,8 @@ class BaseCompanion:
         if self.verbose:
             logging.debug("INITIAL DRAFT:\n%s\n", draft.strip())
         
-        prev = None
+        prev: str | None      = None          # previous draft text
+        prev_emb: list | None = None          # previous embedding (starts empty)
         # 2. critique / revision cycles
         for i in range(1, self.max_loops + 1):
             critique = self.crit_chain.invoke(
@@ -210,23 +211,50 @@ class BaseCompanion:
                     logging.debug("Early-exit phrase detected.")
                 break
 
+            # revision
             revised = self.rev_chain.invoke(
                 {"user_input": user_input, "draft": draft, "critique": critique}
             ).content
+
+            # similarity check (embed once) - Compute similarity (only if we have a previous draft)
+            if prev is None:
+                sim = None
+            else:
+                if prev_emb is None:   # cache once
+                    prev_emb = self._emb.embed_query(prev)
+                cur_emb = self._emb.embed_query(revised)
+                sim     = cosine_from_embeddings(prev_emb, cur_emb)
+
             if self.verbose:
-                sim = cosine(prev or "", revised) if prev else 0
-                logging.debug("REVISION #%d (cosine=%.3f):\n%s\n", i, sim, revised.strip())
-
-            # similarity early exit?
-            if prev and cosine(prev, revised) > self.similarity_threshold:
-                self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
+                sim_display = sim if sim is not None else 0
+                logging.debug("REVISION #%d (cosine=%.3f):\n%s\n", i, sim_display, revised.strip())
+            
+            # Similarity early-exit test (no extra row inside)
+            if sim is not None and sim >= self.similarity_threshold:
+                # 1) record this converging turn
+                # 2) LOG FIRST — keep before/after contrast
+                self.run_log.append({
+                "draft":    draft,     # v n-1
+                "critique": critique,  # critique on v n-1
+                "revision": revised    # v n  (final)
+                })
                 if self.verbose:
-                    logging.debug("Similarity threshold reached (%.2f).", self.similarity_threshold)
-                draft = revised
-                break
+                    logging.debug("Similarity threshold reached (%.2f).", self.similarity_threshold)                
 
+                
+                # update cached state *after* logging
+                # update for final return
+                prev = revised      # Cache the final text # won't be used again (since you're breaking), it's good practice to keep all state variables consistent
+                draft = revised     # So caller sees final text  
+                prev_emb = cur_emb  # Cache the final embedding  # won't be used again (since you're breaking), it's good practice to keep all state variables consistent
+                break # exit loop
+                
+            # not converged → prepare for next round
             self.run_log.append({"draft": draft, "critique": critique, "revision": revised})
-            prev, draft = draft, revised
+            prev = draft           # store current draft for next comparison
+            if 'cur_emb' in locals():  # only cache if we computed it
+                prev_emb = cur_emb      # cache embedding for next comparison    
+            draft = revised        # update draft for next iteration
 
         # 3. update history & return
         self.history.extend([HumanMessage(user_input), AIMessage(draft)])
@@ -251,7 +279,7 @@ class BaseCompanion:
         """Alias so a Companion instance is itself a callable."""
         return self.loop(user_input)
     
-    
+
     def transcript_as_markdown(self) -> str:
         """Pretty-print the last run for logs or UI."""
         out = []

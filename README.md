@@ -61,13 +61,48 @@ While others prompt-engineer, we've embedded a philosophical framework that guid
 ```text
 PHASE 1: Initial Decomposition
 ↓ Map visible territory without premature patterns
+
 PHASE 2: Pattern Compression
 ↓ Find where symptoms share hidden roots
+
 PHASE 3: Structural Synthesis
-↓ Let compressed patterns expand into implications
-CONVERGENCE: Mathematical similarity says "stop"
+Let compressed patterns expand into implications
 ```
-This protocol (templates/protocol_context.txt) transforms every companion into a pattern-discovery engine. Problems know their own solutions—we just create conditions for revelation.
+This protocol (```templates/protocol_context.txt```) transforms every companion into a pattern-discovery engine. Problems know their own solutions—we just create conditions for revelation.
+
+while others hard-code prompts, we've built a **modular "thinking" system**:
+
+- **Protocol Layer**: HOW to think (injectable philosophy)
+- **System Templates**: WHO you are (domain identity)
+- **User Templates**: WHAT to do (task framing)
+- **Mix & Match**: Any combination works!
+
+### The Real Magic: Protocol Injection
+
+```python
+# Your protocol shapes thinking, but WHERE it applies is flexible:
+if key.endswith("_sys"):  # Default: protocols guide system identity
+    content = content.format(context=protocol_context)
+
+# But you could:
+# - Inject only into critique phase for "guided criticism"
+# - Use different protocols for different phases
+# - Skip protocols entirely for rapid iteration
+# - Compose multiple protocols dynamically
+```
+### Advanced: Rethinking the Protocol Layer
+
+```python
+# Morning vs Evening protocols
+build_templates(protocol="exploration_protocol" if morning else "convergence_protocol")
+
+# Phase-specific protocols
+build_templates(critique_sys="harsh_critique", critique_protocol="academic_rigor")
+
+# Protocol-free companions for baseline comparison
+build_templates(skip_protocol=True)
+```
+
 
 ---
 ## 🏗️ Architecture: Clean Layers, Clear Purpose
