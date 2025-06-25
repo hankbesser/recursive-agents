@@ -17,7 +17,7 @@ Why bother to do this?
 from langchain_core.runnables import RunnableLambda
 from langgraph.graph import StateGraph
 from typing import TypedDict
-from recursive_companion import MarketingCompanion, BugTriageCompanion, StrategyCompanion
+from recursive_companion.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
 
 # 1 - Wrap in a RunnableLambda
 llm_fast  = "gpt-4o-mini"
@@ -76,5 +76,21 @@ final = result.get("final_plan", "")
 
 print("\n=== FINAL PLAN ===\n")
 print(final)
+
+# === After LangGraph workflow completes ===
+print("\n🔍 DEEP INTROSPECTION - What LangGraph CAN'T normally show you:\n")
+# Show iteration counts
+print(f"Marketing iterations: {len(mkt.run_log)}")
+print(f"Engineering iterations: {len(eng.run_log)}")
+print(f"Strategy iterations: {len(plan.run_log)}")
+# Show why each converged
+print("\n📊 CONVERGENCE ANALYSIS:")
+for name, agent in [("Marketing", mkt), ("Engineering", eng), ("Strategy", plan)]:
+    if len(agent.run_log) < agent.max_loops:
+        print(f"{name}: Converged early (quality threshold reached)")
+    else:
+        print(f"{name}: Used all {agent.max_loops} iterations")
+
+
 print("\n=== INNER STEPS ===\n")
 print(plan.transcript_as_markdown())

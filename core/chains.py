@@ -286,45 +286,38 @@ class BaseCompanion:
         
         if self.run_log:
             # Initial draft (from first iteration)
-            out.append("-" * 80)
+            out.append("\n" +"-" * 80 + "\n") 
             out.append("## Initial Draft")
-            out.append("-" * 80)
+            out.append("\n" +"-" * 80 + "\n") 
             out.append(self.run_log[0]["draft"])
-            out.append("-" * 80)
-            out.append("\n" + "=" * 80 + "\n")
             
             # Iterations (all but last)
             for idx, step in enumerate(self.run_log[:-1], 1):
                 out.append(f"## Iteration {idx}")
-                out.append("-" * 80)
+                out.append("\n" + "-" * 80 + "\n")
                 
-                out.append("### Critique")
-                out.append("-" * 80)
+                out.append(f"### Critique {idx}")
+                out.append("\n" + "-" * 80 + "\n")
                 out.append(step["critique"])
-                out.append("-" * 80)
                 
-                out.append("\n### Revision")
-                out.append("-" * 80)
+                out.append("\n" + f"### Revision {idx}")
+                out.append("\n" + "-" * 80 + "\n")
                 out.append(step["revision"])
-                out.append("-" * 80)
-                
-                out.append("\n" + "=" * 80 + "\n")
+              
             
             # Last iteration (shows critique but labels revision as final answer)
             if len(self.run_log) > 0:
                 last_step = self.run_log[-1]
                 out.append(f"## Iteration {len(self.run_log)}")
-                out.append("-" * 80)
+                out.append("\n" +"-" * 80 + "\n") 
                 
-                out.append("### Critique")
-                out.append("-" * 80)
+                out.append(f"### Critique {len(self.run_log)}")
+                out.append("\n" +"-" * 80 + "\n") 
                 out.append(last_step["critique"])
-                out.append("-" * 80)
                 
-                out.append("\n### Final Answer")
-                out.append("-" * 80)
+                out.append("### Final Answer")
+                out.append("\n" +"-" * 80 + "\n") 
                 out.append(last_step["revision"])
-                out.append("-" * 80)
         
         return "\n".join(out)
 
