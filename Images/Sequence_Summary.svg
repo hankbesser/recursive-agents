@@ -2,12 +2,12 @@
 <!-- Sequence Summary with embedded solid white background -->
 
 <svg
-   viewBox="0 0 800 350"
+   viewBox="0 0 781 337"
    version="1.1"
    id="svg12"
    sodipodi:docname="Sequence_Summary.svg"
-   width="800"
-   height="350"
+   width="781"
+   height="337"
    inkscape:version="1.4.2 (2aeb623e1d, 2025-05-12)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,57 +23,58 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.54125"
-     inkscape:cx="293.59286"
-     inkscape:cy="149.87835"
+     inkscape:cx="342.25466"
+     inkscape:cy="150.52717"
      inkscape:window-width="1920"
      inkscape:window-height="964"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg12" />
+     inkscape:current-layer="svg12"
+     showgrid="false" />
   <!-- Solid white background rectangle (belt‑and‑suspenders) -->
   <rect
-     width="85.991348%"
-     height="91.132729%"
-     x="1.297646"
-     y="12.327662"
+     width="87.920013%"
+     height="79.718712%"
+     x="-1.9672916e-06"
+     y="3.2441263"
      fill="#ffffff"
      fill-opacity="1"
      id="rect1"
-     style="stroke-width:0.885248" />
+     style="stroke-width:0.837186" />
   <!-- Title -->
   <text
-     x="374.10028"
-     y="40.542751"
+     x="369.86124"
+     y="31.414778"
      text-anchor="middle"
-     font-size="18.319px"
+     font-size="18.175px"
      font-weight="bold"
      font-family="Arial, sans-serif"
      id="text1"
-     transform="scale(0.9854011,1.0148152)"
-     style="stroke-width:1.01772">Sequence Summary</text>
+     transform="scale(0.99943772,1.0005626)"
+     style="stroke-width:1.00973">Sequence Summary</text>
   <!-- User input prompt - moved much higher -->
   <text
-     x="71.360168"
-     y="59.618515"
+     x="69.494255"
+     y="50.341022"
      text-anchor="middle"
-     font-size="12.2127px"
+     font-size="12.1179px"
      font-family="Arial, sans-serif"
      id="text2"
-     transform="scale(0.98540109,1.0148152)"
-     style="stroke-width:1.01772">User input prompt <animate
+     transform="scale(0.99943772,1.0005626)"
+     style="stroke-width:1.00973">User input prompt <animate
    attributeName="opacity"
    values="0;1;1"
    dur="0.5s"
    fill="freeze" /></text>
   <!-- Arrow down - now longer -->
   <line
-     x1="65.776665"
-     y1="65.665764"
-     x2="65.776665"
-     y2="117.30579"
+     x1="64.88485"
+     y1="55.420891"
+     x2="64.88485"
+     y2="105.93655"
      stroke="#808080"
-     stroke-width="1.01772"
+     stroke-width="1.00973"
      marker-end="url(#arrowhead)"
      id="line2">
     <animate
@@ -86,7 +87,7 @@
   <!-- Main pipeline -->
   <g
      id="pipeline"
-     transform="matrix(1.0028651,0,0,1.0328004,-32.507157,10.15939)">
+     transform="matrix(1.0091774,0,0,1.0103131,-34.017577,1.1230638)">
     <!-- init_prompt | LLM -->
     <rect
        x="50"
@@ -231,12 +232,12 @@
   </g>
   <!-- Arrows up from each box -->
   <line
-     x1="102.87965"
-     y1="123.76743"
-     x2="102.87965"
-     y2="103.11146"
+     x1="102.22135"
+     y1="112.25749"
+     x2="102.22135"
+     y2="92.051277"
      stroke="#666666"
-     stroke-width="1.52657"
+     stroke-width="1.51454"
      marker-end="url(#arrowhead-small)"
      id="line5">
     <animate
@@ -247,12 +248,12 @@
        fill="freeze" />
   </line>
   <line
-     x1="293.42407"
-     y1="123.76743"
-     x2="293.42407"
-     y2="103.11146"
+     x1="293.96515"
+     y1="112.25749"
+     x2="293.96515"
+     y2="92.051277"
      stroke="#666666"
-     stroke-width="1.52657"
+     stroke-width="1.51454"
      marker-end="url(#arrowhead-small)"
      id="line6">
     <animate
@@ -263,12 +264,12 @@
        fill="freeze" />
   </line>
   <line
-     x1="493.99707"
-     y1="123.76743"
-     x2="493.99707"
-     y2="103.11146"
+     x1="495.80051"
+     y1="112.25749"
+     x2="495.80051"
+     y2="92.051277"
      stroke="#666666"
-     stroke-width="1.52657"
+     stroke-width="1.51454"
      marker-end="url(#arrowhead-small)"
      id="line7">
     <animate
@@ -280,45 +281,45 @@
   </line>
   <!-- Labels above arrows -->
   <text
-     x="104.40383"
-     y="91.428879"
+     x="102.27888"
+     y="81.902039"
      text-anchor="middle"
-     font-size="12.2127px"
+     font-size="12.1179px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text7"
-     transform="scale(0.9854011,1.0148152)"
-     style="stroke-width:1.01772">Generates <animate
+     transform="scale(0.99943772,1.0005626)"
+     style="stroke-width:1.00973">Generates <animate
    attributeName="opacity"
    values="0;1"
    dur="0.3s"
    begin="1.3s"
    fill="freeze" /></text>
   <text
-     x="297.77112"
-     y="91.428879"
+     x="294.1304"
+     y="81.902039"
      text-anchor="middle"
-     font-size="12.2127px"
+     font-size="12.1179px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text8"
-     transform="scale(0.9854011,1.0148152)"
-     style="stroke-width:1.01772">Critiques <animate
+     transform="scale(0.99943772,1.0005626)"
+     style="stroke-width:1.00973">Critiques <animate
    attributeName="opacity"
    values="0;1"
    dur="0.3s"
    begin="2.1s"
    fill="freeze" /></text>
   <text
-     x="501.31558"
-     y="91.428879"
+     x="496.07938"
+     y="81.902039"
      text-anchor="middle"
-     font-size="12.2127px"
+     font-size="12.1179px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text9"
-     transform="scale(0.9854011,1.0148152)"
-     style="stroke-width:1.01772">Revises <animate
+     transform="scale(0.99943772,1.0005626)"
+     style="stroke-width:1.00973">Revises <animate
    attributeName="opacity"
    values="0;1"
    dur="0.3s"
@@ -326,10 +327,10 @@
    fill="freeze" /></text>
   <!-- Loop indicator -->
   <path
-     d="m 560.96723,156.0105 q 108.66929,0 108.66929,45.84314 0,45.84312 -375.40295,45.84312 -88.91122,0 -88.91122,-45.84312 0,-18.33727 4.93951,-50.42744"
+     d="m 563.19224,143.79854 q 109.35327,0 109.35327,44.84499 0,44.84496 -377.76576,44.84496 -89.4709,0 -89.4709,-44.84496 0,-17.93801 4.9706,-49.32948"
      fill="none"
      stroke="#666666"
-     stroke-width="1.90345"
+     stroke-width="1.88857"
      stroke-dasharray="5, 5"
      marker-end="url(#arrowhead)"
      id="path9">
@@ -348,15 +349,15 @@
   </path>
   <!-- Loop text -->
   <text
-     x="440.25229"
-     y="264.4418"
+     x="435.49469"
+     y="253.55875"
      text-anchor="middle"
-     font-size="13.2305px"
+     font-size="13.1272px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text10"
-     transform="scale(0.9854011,1.0148152)"
-     style="stroke-width:1.01772">⟳ up to MAX_LOOPS (similarity stop) <animate
+     transform="scale(0.99943772,1.0005626)"
+     style="stroke-width:1.00973">⟳ up to MAX_LOOPS (similarity stop) <animate
    attributeName="opacity"
    values="0;1"
    dur="0.5s"
@@ -367,16 +368,16 @@
   <!-- Hidden paths -->
   <path
      id="firstPassPath"
-     d="m 87.836658,118.60343 v 25.82001 H 278.38104 478.95406"
+     d="m 87.083703,107.20594 v 25.25782 H 278.82739 480.66286"
      fill="none"
      stroke="none"
-     style="stroke-width:1.01772" />
+     style="stroke-width:1.00973" />
   <path
      id="loopPath"
-     d="m 278.38104,144.42344 h 200.57302 q 190.54438,0 190.54438,51.64002 0,51.64002 -235.6733,51.64002 -235.67333,0 -235.67333,-51.64002 0,-51.64002 80.22923,-51.64002"
+     d="m 278.82739,132.46376 h 201.83547 q 191.74371,0 191.74371,50.51566 0,50.51565 -237.15668,50.51565 -237.15669,0 -237.15669,-50.51565 0,-50.51566 80.73419,-50.51566"
      fill="none"
      stroke="none"
-     style="stroke-width:1.01772" />
+     style="stroke-width:1.00973" />
   <!-- Arrow definitions -->
   <defs
      id="defs12">
