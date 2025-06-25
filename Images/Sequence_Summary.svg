@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Sequence Summary with embedded solid white background -->
+
+<svg
+   viewBox="0 0 800 350"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="Sequence_Summary.svg"
+   width="800"
+   height="350"
+   inkscape:version="1.4.2 (2aeb623e1d, 2025-05-12)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.54125"
+     inkscape:cx="293.59286"
+     inkscape:cy="149.87835"
+     inkscape:window-width="1920"
+     inkscape:window-height="964"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <!-- Solid white background rectangle (belt‑and‑suspenders) -->
+  <rect
+     width="85.991348%"
+     height="91.132729%"
+     x="1.297646"
+     y="12.327662"
+     fill="#ffffff"
+     fill-opacity="1"
+     id="rect1"
+     style="stroke-width:0.885248" />
+  <!-- Title -->
+  <text
+     x="374.10028"
+     y="40.542751"
+     text-anchor="middle"
+     font-size="18.319px"
+     font-weight="bold"
+     font-family="Arial, sans-serif"
+     id="text1"
+     transform="scale(0.9854011,1.0148152)"
+     style="stroke-width:1.01772">Sequence Summary</text>
+  <!-- User input prompt - moved much higher -->
+  <text
+     x="71.360168"
+     y="59.618515"
+     text-anchor="middle"
+     font-size="12.2127px"
+     font-family="Arial, sans-serif"
+     id="text2"
+     transform="scale(0.98540109,1.0148152)"
+     style="stroke-width:1.01772">User input prompt <animate
+   attributeName="opacity"
+   values="0;1;1"
+   dur="0.5s"
+   fill="freeze" /></text>
+  <!-- Arrow down - now longer -->
+  <line
+     x1="65.776665"
+     y1="65.665764"
+     x2="65.776665"
+     y2="117.30579"
+     stroke="#808080"
+     stroke-width="1.01772"
+     marker-end="url(#arrowhead)"
+     id="line2">
+    <animate
+       attributeName="opacity"
+       values="0;1"
+       dur="0.3s"
+       begin="0.5s"
+       fill="freeze" />
+  </line>
+  <!-- Main pipeline -->
+  <g
+     id="pipeline"
+     transform="matrix(1.0028651,0,0,1.0328004,-32.507157,10.15939)">
+    <!-- init_prompt | LLM -->
+    <rect
+       x="50"
+       y="110"
+       width="140"
+       height="40"
+       fill="#e8f4f8"
+       stroke="#2c5282"
+       stroke-width="2"
+       rx="5"
+       id="rect2">
+      <animate
+         attributeName="opacity"
+         values="0;1"
+         dur="0.5s"
+         begin="0.8s"
+         fill="freeze" />
+      <animate
+         attributeName="fill"
+         values="#e8f4f8;#b3e0f2;#e8f4f8"
+         dur="2s"
+         begin="1.3s" />
+    </rect>
+    <text
+       x="120"
+       y="135"
+       text-anchor="middle"
+       font-size="13px"
+       font-family="Arial, sans-serif"
+       id="text3">init_prompt | LLM <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.5s"
+   begin="0.8s"
+   fill="freeze" /></text>
+    <!-- Arrow right -->
+    <line
+       x1="190"
+       y1="130"
+       x2="230"
+       y2="130"
+       stroke="#000000"
+       stroke-width="2"
+       marker-end="url(#arrowhead)"
+       id="line3">
+      <animate
+         attributeName="opacity"
+         values="0;1"
+         dur="0.3s"
+         begin="1.3s"
+         fill="freeze" />
+    </line>
+    <!-- critique_prompt | LLM -->
+    <rect
+       x="230"
+       y="110"
+       width="160"
+       height="40"
+       fill="#e8f4f8"
+       stroke="#2c5282"
+       stroke-width="2"
+       rx="5"
+       id="rect3">
+      <animate
+         attributeName="opacity"
+         values="0;1"
+         dur="0.5s"
+         begin="1.6s"
+         fill="freeze" />
+      <animate
+         attributeName="fill"
+         values="#e8f4f8;#b3e0f2;#e8f4f8"
+         dur="2s"
+         begin="2.1s"
+         repeatCount="indefinite" />
+    </rect>
+    <text
+       x="310"
+       y="135"
+       text-anchor="middle"
+       font-size="13px"
+       font-family="Arial, sans-serif"
+       id="text4">critique_prompt | LLM <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.5s"
+   begin="1.6s"
+   fill="freeze" /></text>
+    <!-- Arrow right -->
+    <line
+       x1="390"
+       y1="130"
+       x2="430"
+       y2="130"
+       stroke="#000000"
+       stroke-width="2"
+       marker-end="url(#arrowhead)"
+       id="line4">
+      <animate
+         attributeName="opacity"
+         values="0;1"
+         dur="0.3s"
+         begin="2.1s"
+         fill="freeze" />
+    </line>
+    <!-- revision_prompt | LLM -->
+    <rect
+       x="430"
+       y="110"
+       width="160"
+       height="40"
+       fill="#e8f4f8"
+       stroke="#2c5282"
+       stroke-width="2"
+       rx="5"
+       id="rect4">
+      <animate
+         attributeName="opacity"
+         values="0;1"
+         dur="0.5s"
+         begin="2.4s"
+         fill="freeze" />
+      <animate
+         attributeName="fill"
+         values="#e8f4f8;#b3e0f2;#e8f4f8"
+         dur="2s"
+         begin="2.9s"
+         repeatCount="indefinite" />
+    </rect>
+    <text
+       x="510"
+       y="135"
+       text-anchor="middle"
+       font-size="13px"
+       font-family="Arial, sans-serif"
+       id="text5">revision_prompt | LLM <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.5s"
+   begin="2.4s"
+   fill="freeze" /></text>
+  </g>
+  <!-- Arrows up from each box -->
+  <line
+     x1="102.87965"
+     y1="123.76743"
+     x2="102.87965"
+     y2="103.11146"
+     stroke="#666666"
+     stroke-width="1.52657"
+     marker-end="url(#arrowhead-small)"
+     id="line5">
+    <animate
+       attributeName="opacity"
+       values="0;1"
+       dur="0.3s"
+       begin="1.3s"
+       fill="freeze" />
+  </line>
+  <line
+     x1="293.42407"
+     y1="123.76743"
+     x2="293.42407"
+     y2="103.11146"
+     stroke="#666666"
+     stroke-width="1.52657"
+     marker-end="url(#arrowhead-small)"
+     id="line6">
+    <animate
+       attributeName="opacity"
+       values="0;1"
+       dur="0.3s"
+       begin="2.1s"
+       fill="freeze" />
+  </line>
+  <line
+     x1="493.99707"
+     y1="123.76743"
+     x2="493.99707"
+     y2="103.11146"
+     stroke="#666666"
+     stroke-width="1.52657"
+     marker-end="url(#arrowhead-small)"
+     id="line7">
+    <animate
+       attributeName="opacity"
+       values="0;1"
+       dur="0.3s"
+       begin="2.9s"
+       fill="freeze" />
+  </line>
+  <!-- Labels above arrows -->
+  <text
+     x="104.40383"
+     y="91.428879"
+     text-anchor="middle"
+     font-size="12.2127px"
+     font-family="Arial, sans-serif"
+     fill="#666666"
+     id="text7"
+     transform="scale(0.9854011,1.0148152)"
+     style="stroke-width:1.01772">Generates <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.3s"
+   begin="1.3s"
+   fill="freeze" /></text>
+  <text
+     x="297.77112"
+     y="91.428879"
+     text-anchor="middle"
+     font-size="12.2127px"
+     font-family="Arial, sans-serif"
+     fill="#666666"
+     id="text8"
+     transform="scale(0.9854011,1.0148152)"
+     style="stroke-width:1.01772">Critiques <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.3s"
+   begin="2.1s"
+   fill="freeze" /></text>
+  <text
+     x="501.31558"
+     y="91.428879"
+     text-anchor="middle"
+     font-size="12.2127px"
+     font-family="Arial, sans-serif"
+     fill="#666666"
+     id="text9"
+     transform="scale(0.9854011,1.0148152)"
+     style="stroke-width:1.01772">Revises <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.3s"
+   begin="2.9s"
+   fill="freeze" /></text>
+  <!-- Loop indicator -->
+  <path
+     d="m 560.96723,156.0105 q 108.66929,0 108.66929,45.84314 0,45.84312 -375.40295,45.84312 -88.91122,0 -88.91122,-45.84312 0,-18.33727 4.93951,-50.42744"
+     fill="none"
+     stroke="#666666"
+     stroke-width="1.90345"
+     stroke-dasharray="5, 5"
+     marker-end="url(#arrowhead)"
+     id="path9">
+    <animate
+       attributeName="opacity"
+       values="0;1"
+       dur="0.5s"
+       begin="3.2s"
+       fill="freeze" />
+    <animate
+       attributeName="stroke-dashoffset"
+       values="0;-10"
+       dur="1s"
+       begin="3.7s"
+       repeatCount="indefinite" />
+  </path>
+  <!-- Loop text -->
+  <text
+     x="440.25229"
+     y="264.4418"
+     text-anchor="middle"
+     font-size="13.2305px"
+     font-family="Arial, sans-serif"
+     fill="#666666"
+     id="text10"
+     transform="scale(0.9854011,1.0148152)"
+     style="stroke-width:1.01772">⟳ up to MAX_LOOPS (similarity stop) <animate
+   attributeName="opacity"
+   values="0;1"
+   dur="0.5s"
+   begin="3.2s"
+   fill="freeze" /></text>
+  <!-- First pass data flow animation -->
+  <!-- Looping data flow animation -->
+  <!-- Hidden paths -->
+  <path
+     id="firstPassPath"
+     d="m 87.836658,118.60343 v 25.82001 H 278.38104 478.95406"
+     fill="none"
+     stroke="none"
+     style="stroke-width:1.01772" />
+  <path
+     id="loopPath"
+     d="m 278.38104,144.42344 h 200.57302 q 190.54438,0 190.54438,51.64002 0,51.64002 -235.6733,51.64002 -235.67333,0 -235.67333,-51.64002 0,-51.64002 80.22923,-51.64002"
+     fill="none"
+     stroke="none"
+     style="stroke-width:1.01772" />
+  <!-- Arrow definitions -->
+  <defs
+     id="defs12">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="5"
+       orient="auto">
+      <polygon
+         points="0,10 0,0 10,5 "
+         fill="#000000"
+         id="polygon11" />
+    </marker>
+    <marker
+       id="arrowhead-small"
+       markerWidth="8"
+       markerHeight="8"
+       refX="7"
+       refY="4"
+       orient="auto">
+      <polygon
+         points="0,8 0,0 8,4 "
+         fill="#666666"
+         id="polygon12" />
+    </marker>
+  </defs>
+</svg>

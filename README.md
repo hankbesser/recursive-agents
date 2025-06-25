@@ -2,13 +2,19 @@
 
 ## A Meta-Framework for Self-Improving AI Agents
 
-Recursive Companion implements a unique **three-phase iterative refinement architecture** that transforms how AI agents approach complex problems. Unlike traditional single-pass
-systems, it discovers hidden problem structures through recursive decomposition and pattern emergence.
+Recursive Companion implements a **three-phase iterative refinement architecture** where AI agents critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
+
+![Sequence Flow](Images/Sequence_Summary.svg)
+
+→ See the [Architecture Documentation](docs/RC_architecture.md) for detailed system design.
 
 ### Why Recursive Companion?
 
-Most AI frameworks treat problems as static puzzles to solve. Recursive Companion recognizes that **problems contain hidden architectures** that only reveal themselves through
-iteration. Each analysis phase creates conditions for deeper insight, ultimately compressing complex symptoms into their essential dynamics.
+**See inside your AI's thinking.*** While other frameworks show you what happened, RC shows you why. Every agent maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
+
+*Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
+
+**Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial_sys), apply protocols to specific phases (usually throughout system templates for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
 
 
 ---
@@ -53,59 +59,51 @@ class LegalCompanion(BaseCompanion):
     TEMPLATES = LEGAL_TEMPLATES
     SIM_THRESHOLD = 0.99  # Legal requires higher precision
 ```
+## 🚀 Quick Start & Full Streamlit App
+
+### Install
+```bash
+pip install -e .  # or pip install . for non-editable
+
+export OPENAI_API_KEY="sk-..." # in terminal
+# For Jupyter/Python (more secure):
+# Create .env file with:
+# OPENAI_API_KEY="sk-..."
+# Then in your code:
+# from dotenv import load_dotenv
+# load_dotenv()
+```
+
+### Run the Complete Streamlit Application
+```bash
+streamlit run streamlit_app.py
+```
+
+**You get a full interactive application:**
+- Select any companion type from the dropdown
+- Enter your prompt and watch the AI refine its response
+- See critique-revision cycles happen in real-time
+- View cosine similarity scores update live
+- Export results with one click
+
+This isn't a demo - it's a production-ready application included with the framework!
+
+### Other Examples
+```bash
+# Minimal example
+python demos/quick_setup.py
+
+# Multi-agent orchestration
+python multi_agent_demos/multi_agent_demo_raw_rc.py
+
+# LangGraph integration
+python multi_agent_demos/multi_agent_langgraph_demo.py
+```
 ---
-## 🧠 The Core Innovation: Strategic Decomposition Protocol
 
-While others prompt-engineer, we've embedded a philosophical framework that guides agents through:
-
-```text
-PHASE 1: Initial Decomposition
-↓ Map visible territory without premature patterns
-
-PHASE 2: Pattern Compression
-↓ Find where symptoms share hidden roots
-
-PHASE 3: Structural Synthesis
-Let compressed patterns expand into implications
-```
-This protocol (```templates/protocol_context.txt```) transforms every companion into a pattern-discovery engine. Problems know their own solutions—we just create conditions for revelation.
-
-while others hard-code prompts, we've built a **modular "thinking" system**:
-
-- **Protocol Layer**: HOW to think (injectable philosophy)
-- **System Templates**: WHO you are (domain identity)
-- **User Templates**: WHAT to do (task framing)
-- **Mix & Match**: Any combination works!
-
-### The Real Magic: Protocol Injection
-
-```python
-# Your protocol shapes thinking, but WHERE it applies is flexible:
-if key.endswith("_sys"):  # Default: protocols guide system identity
-    content = content.format(context=protocol_context)
-
-# But you could:
-# - Inject only into critique phase for "guided criticism"
-# - Use different protocols for different phases
-# - Skip protocols entirely for rapid iteration
-# - Compose multiple protocols dynamically
-```
-### Advanced: Rethinking the Protocol Layer
-
-```python
-# Morning vs Evening protocols
-build_templates(protocol="exploration_protocol" if morning else "convergence_protocol")
-
-# Phase-specific protocols
-build_templates(critique_sys="harsh_critique", critique_protocol="academic_rigor")
-
-# Protocol-free companions for baseline comparison
-build_templates(skip_protocol=True)
-```
-
-
----
 ## 🏗️ Architecture: Clean Layers, Clear Purpose
+→ See the [Architecture Documentation](docs/RC_architecture.md)
+
 ```text
 Your Code
     ↓ imports
@@ -124,33 +122,19 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 - **Prompt Engineers** → templates/ + template_load_utils.py
 - **UI Developers** → streamlit.py (progress containers)
 
----
-## 🎯 Technical Deep Dive
+### Why This Architecture Matters
 
-**The Engine** (core/chains.py)
-```python
-class BaseCompanion:
-    """
-    Three-phase critique/revision with mathematical convergence.
-    No hand-waving—cosine similarity decides when insight emerges.
-    """
-```
-Key Innovations:
-- **Global embeddings client** for process-wide efficiency
-- **Two convergence mechanisms**:
-    - Cosine similarity > threshold (default 0.98)
-    - Critique phrases ("no further improvements")
-- **History injection** via MessagesPlaceholder
-- **Callable pattern**: Instances behave like functions
-
-Domain Specialization (Tuned for Purpose)
-
-| Companion | Loops | Temperature | Similarity | Purpose                |
-|-----------|-------|-------------|------------|------------------------|
-| Marketing | 2     | 0.7         | 0.98       | Fast audience insights |
-| BugTriage | 3     | 0.7         | 0.98       | Root cause depth       |
-| Strategy  | 3     | 0.7         | 0.97       | Synthesis flexibility  |
-| Generic   | 3     | 0.7         | 0.98       | Domain-agnostic        |
+1. **Mathematical Convergence > Arbitrary Limits**
+    - Not "stop after 3 tries"
+    - Stop when `cosine_from_embeddings(revision[n-1], revision[n]) > 0.98`
+2. **Companions as Callables = Composability**
+- Works in Jupyter: `agent("question")`
+- Works in LangGraph: `RunnableLambda(agent)`
+- Works in Streamlit: Live visualization of critique-revision cycles!
+3. **Templates as Data = Evolution Without Refactoring**
+- Change prompts in production
+- A/B test different protocols
+- Domain experts can contribute without coding
 
 ### Multi-Agent Orchestration
 
@@ -195,26 +179,44 @@ graph.add_edges(
 - **Template hot-reload:** Change prompts without code
 
 ---
-## 🚀 Quick Start
+## 🚀 Quick Start & Full Streamlit App
 
 ### Install
 ```bash
-pip install -r requirements.txt
+pip install -e .  # or pip install . for non-editable
 export OPENAI_API_KEY=sk-...
+
+# For Jupyter/Python (more secure):
+# Create .env file with:
+# OPENAI_API_KEY=sk-...
+# Then in your code:
+# from dotenv import load_dotenv
+# load_dotenv()
 ```
 
-### Verify
+### Run the Complete Streamlit Application
 ```bash
+streamlit run streamlit_app.py
+```
+
+**You get a full interactive application:**
+- Select any companion type from the dropdown
+- Enter your prompt and watch the AI refine its response
+- See critique-revision cycles happen in real-time
+- View cosine similarity scores update live
+- Export results with one click
+
+This isn't a demo - it's a production-ready application included with the framework!
+
+### Other Examples
+```bash
+# Minimal example
 python demos/quick_setup.py
-```
 
-### See multi-agent in action
-```bash
+# Multi-agent orchestration
 python multi_agent_demos/multi_agent_demo_raw_rc.py
-```
 
-###  With LangGraph
-```bash
+# LangGraph integration
 python multi_agent_demos/multi_agent_langgraph_demo.py
 ```
 ---
@@ -251,30 +253,15 @@ fin = FinancialCompanion()
 analysis = fin("Q3 revenue variance exceeds 2 standard deviations") 
 ```
 ---
-## 💡 Why This Architecture Matters
+## 🎓 The Strategic Decomposition Protocol
 
-1. **Mathematical Convergence > Arbitrary Limits**
-    - Not "stop after 3 tries"
-    - Stop when `cosine(draft[n-1], draft[n]) > 0.98`
-2. **Companions as Callables = Composability**
-- Works in Jupyter: 'agent("question")'
-- Works in LangGraph: 'RunnableLambda(agent)'
-- Works in APIs: 'return agent(request.prompt)'
-3. **Templates as Data = Evolution Without Refactoring**
-- Change prompts in production
-- A/B test different protocols
-- Domain experts can contribute without coding
+Read ```templates/protocol_context.txt``` to see the structured reasoning framework that guides agents through:
 
----
-## 🎓 Understanding the Magic
+- Multi-layered problem analysis
+- Iterative pattern recognition
+- Systematic refinement cycles
 
-The power isn't only a modular/flexible code base—it's in the protocol. Read ```templates/protocol_context.txt``` to understand how we guide LLMs to:
-
-- Treat problems as having "hidden architectures"
-- Use iteration to create "conditions for emergence"
-- Recognize when "compression precedes breakthrough"
-
-This isn't mystical—it's a structured approach to recursive problem decomposition that consistently outperforms single-pass analysis.
+This structured approach to recursive problem decomposition consistently outperforms single-pass analysis.
 
 ---
 ## 📊 Benchmarks & Examples

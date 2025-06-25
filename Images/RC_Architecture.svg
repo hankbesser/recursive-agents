@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1000"
+   height="900"
+   viewBox="0 0 1000 900"
+   version="1.1"
+   id="svg65"
+   sodipodi:docname="RC_Architecture.svg"
+   inkscape:version="1.4.2 (2aeb623e1d, 2025-05-12)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.79333333"
+     inkscape:cx="499.78992"
+     inkscape:cy="450"
+     inkscape:window-width="1920"
+     inkscape:window-height="964"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg65" />
+  <rect
+     x="2.3809524"
+     y="2.3809524"
+     width="1000"
+     height="900"
+     fill="#ffffff"
+     id="rect1" />
+  <path
+     d="m 524.4895,558.42725 c 24.37087,0.77544 36.32771,4.84132 35.8705,12.19763 -0.45718,7.35631 -46.36829,12.22258 -130.55847,9.54378 -19.93978,-0.63445 -29.68107,-4.62983 -29.22389,-11.98615 0.18288,-2.94253 0.98822,-6.97087 2.41601,-12.08504"
+     fill="none"
+     stroke="#666666"
+     stroke-width="0.464538"
+     stroke-dasharray="5, 5"
+     marker-end="url(#arrowhead)"
+     id="path9"
+     style="stroke-width:1.94596;stroke-dasharray:3.89193, 1.94596;stroke-dashoffset:5.0595;marker-end:url(#arrow-18)"
+     sodipodi:nodetypes="csssc">
+    <animate
+       attributeName="opacity"
+       values="0;1"
+       dur="0.5s"
+       begin="3.2s"
+       fill="freeze"
+       style="marker-end:url(#arrow-18)" />
+    <animate
+       attributeName="stroke-dashoffset"
+       values="0;-10"
+       dur="1s"
+       begin="3.7s"
+       repeatCount="indefinite"
+       style="marker-end:url(#arrow-18)" />
+  </path>
+  <line
+     x1="475.18024"
+     y1="662.28058"
+     x2="560.73169"
+     y2="687.27765"
+     stroke="#000000"
+     marker-end="url(#arrow-1)"
+     id="line50-9"
+     style="stroke-width:3;marker-end:url(#arrow-1);stroke-dasharray:none"
+     stroke-width="1.5" />
+  <text
+     x="469.74789"
+     y="22.787115"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text1"
+     font-size="20px"
+     font-family="sans-serif">The Example's Architecture in One Picture</text>
+  <rect
+     x="675.8844"
+     y="65.296173"
+     width="247.81102"
+     height="182.27881"
+     fill="none"
+     stroke="#000000"
+     stroke-width="2.27988"
+     id="rect2" />
+  <text
+     x="781.50433"
+     y="84.0476"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text2"
+     style="font-size:16.6812px;stroke-width:1.39011"
+     font-size="16"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">5 Templates:</text>
+  <text
+     x="738.65497"
+     y="105.95006"
+     id="text3"
+     style="stroke-width:1.39011"
+     font-size="15.9592px"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">• initial_sys</text>
+  <text
+     x="738.65497"
+     y="126.09587"
+     id="text4"
+     style="stroke-width:1.39011"
+     font-size="15.9592px"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">• critique_sys</text>
+  <text
+     x="738.65497"
+     y="146.24167"
+     id="text5"
+     style="stroke-width:1.39011"
+     font-size="15.9592px"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">• revision_sys</text>
+  <text
+     x="738.65497"
+     y="166.38748"
+     id="text6"
+     style="stroke-width:1.39011"
+     font-size="15.9592px"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">• critique_user</text>
+  <text
+     x="738.65497"
+     y="186.53331"
+     id="text7"
+     style="stroke-width:1.39011"
+     font-size="15.9592px"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">• revision_user</text>
+  <text
+     x="785.39978"
+     y="215.78653"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text2-5"
+     style="font-size:16.6812px;stroke-width:1.39011"
+     font-size="16"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">1 Protocol:</text>
+  <text
+     x="717.76776"
+     y="235.62495"
+     id="text9"
+     style="stroke-width:1.39011"
+     font-size="15.9592px"
+     font-family="sans-serif"
+     transform="scale(1.0155649,0.98467366)">• protocol_context</text>
+  <text
+     x="343.60825"
+     y="52.500107"
+     text-anchor="middle"
+     id="text10"
+     style="font-size:17.1735px;stroke-width:1.43113"
+     font-size="14"
+     font-family="sans-serif"
+     transform="scale(1.265917,0.78994122)">Input</text>
+  <line
+     x1="432.76178"
+     y1="46.743217"
+     x2="432.76178"
+     y2="73.099342"
+     stroke="#000000"
+     marker-end="url(#arrow)"
+     id="line10"
+     style="stroke-width:3;stroke-dasharray:none"
+     stroke-width="1.5" />
+  <rect
+     x="251.32826"
+     y="73.099342"
+     width="355.67679"
+     height="210.84897"
+     fill="#f0f0f0"
+     stroke="#000000"
+     stroke-width="2"
+     id="rect10" />
+  <text
+     x="435.71102123175"
+     y="93.3534625416132"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text11"
+     style="font-size:18.7566px;stroke-width:1.56304"
+     font-size="16"
+     font-family="sans-serif">BaseCompanion (The Engine)</text>
+  <text
+     x="367.06226"
+     y="114.30032"
+     id="text12"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">• build_chains()</text>
+  <text
+     x="371.29593"
+     y="128.39261"
+     id="text13"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">(runs in __init__)</text>
+  <rect
+     x="348.48746"
+     y="140.91524"
+     width="156.98116"
+     height="85.898773"
+     fill="#ffffff"
+     stroke="#000000"
+     id="rect13"
+     style="stroke-width:0.831572" />
+  <text
+     x="381.90222"
+     y="163.2999"
+     id="text14"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">Draft | LLM</text>
+  <text
+     x="381.90222"
+     y="185.45094"
+     id="text15"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">Critique | LLM</text>
+  <text
+     x="381.90222"
+     y="207.60201"
+     id="text16"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">Revision | LLM</text>
+  <text
+     x="397.38437"
+     y="247.62692"
+     id="text17"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">• loop()</text>
+  <text
+     x="339.79626"
+     y="266.94702"
+     id="text19"
+     style="stroke-width:1.20256"
+     font-size="14px"
+     font-family="sans-serif">⟳ MAX_LOOPS, similarity stop</text>
+  <line
+     x1="391.22491"
+     y1="282.78711"
+     x2="391.22491"
+     y2="344.01959"
+     stroke="#808080"
+     stroke-width="1.5636"
+     id="line19"
+     marker-end="url(#arrow)"
+     style="stroke-width:3.13171;stroke-dasharray:3.13171, 3.13171;stroke-dashoffset:0" />
+  <text
+     x="434.61111"
+     y="305.45486"
+     text-anchor="middle"
+     id="text20"
+     style="stroke-width:1.53459"
+     font-size="14.5936px"
+     font-family="sans-serif"
+     transform="scale(0.99823114,1.001772)">subclasses inherit all functionality</text>
+  <text
+     x="435.27997"
+     y="337.56625"
+     text-anchor="middle"
+     id="text21"
+     style="stroke-width:1.52723"
+     font-size="15.2682px"
+     font-family="sans-serif"
+     transform="scale(1.0443762,0.95750937)">— each calls inherited loop() —</text>
+  <rect
+     x="44.176907"
+     y="353.24405"
+     width="202.35973"
+     height="138.25183"
+     fill="#ffffff"
+     stroke="#000000"
+     stroke-width="2.20517"
+     id="rect21" />
+  <text
+     x="147.792319529135"
+     y="376.70883410654"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text22"
+     style="font-size:17.431px;stroke-width:1.45257"
+     font-size="16"
+     font-family="sans-serif">GenericCompanion</text>
+  <text
+     x="62.373184"
+     y="411.49454"
+     id="text23"
+     style="stroke-width:1.42566"
+     font-size="14px"
+     font-family="sans-serif">5 templates</text>
+  <text
+     x="62.373184"
+     y="431.38254"
+     id="text24"
+     style="stroke-width:1.42566"
+     font-size="14px"
+     font-family="sans-serif">(system templates</text>
+  <text
+     x="62.373184"
+     y="451.27057"
+     id="text25"
+     style="stroke-width:1.42566"
+     font-size="14px"
+     font-family="sans-serif">have protocol_context ⚙)</text>
+  <rect
+     x="269.02106"
+     y="353.24405"
+     width="202.35973"
+     height="138.25183"
+     fill="#ffffff"
+     stroke="#000000"
+     stroke-width="2.20517"
+     id="rect26" />
+  <text
+     x="383.17023"
+     y="363.10471"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text27"
+     style="font-size:16.7931px;stroke-width:1.39942"
+     font-size="16"
+     font-family="sans-serif"
+     transform="scale(0.96767911,1.0334004)">MarketingCompanion</text>
+  <text
+     x="288.28793"
+     y="406.53345"
+     id="text28"
+     style="stroke-width:1.50219"
+     font-size="14px"
+     font-family="sans-serif">initial_sys = marketing</text>
+  <text
+     x="291.6763"
+     y="429.76724"
+     id="text29"
+     style="stroke-width:1.56638"
+     font-size="14px"
+     font-family="sans-serif">+ protocol_context ⚙</text>
+  <text
+     x="289.78708"
+     y="473.21579"
+     id="text30"
+     style="stroke-width:1.13808"
+     font-size="14px"
+     font-family="sans-serif"><tspan
+       id="tspan1"
+       x="293.69547"
+       y="467.55688">(other 4 from</tspan><tspan
+       id="tspan2"
+       x="293.69547"
+       y="483.20551">GENERIC_TEMPLATES)</tspan></text>
+  <rect
+     x="493.8652"
+     y="353.24405"
+     width="202.35973"
+     height="138.25183"
+     fill="#ffffff"
+     stroke="#000000"
+     stroke-width="2.20517"
+     id="rect30" />
+  <text
+     x="625.3111"
+     y="356.4603"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text31"
+     style="font-size:16.9272px;stroke-width:1.41059"
+     font-size="16"
+     font-family="sans-serif"
+     transform="scale(0.95063875,1.0519243)">BugTriageCompanion</text>
+  <text
+     x="504.8647380744951"
+     y="405.62486316864"
+     id="text32"
+     style="stroke-width:1.41701"
+     font-size="14"
+     font-family="sans-serif">initial_sys = bug_triage</text>
+  <text
+     x="509.41354"
+     y="428.57678"
+     id="text33"
+     style="stroke-width:1.55067"
+     font-size="14px"
+     font-family="sans-serif">+ protocol_context ⚙</text>
+  <text
+     x="528.84674"
+     y="457.73962"
+     id="text34"
+     style="stroke-width:1.17505"
+     font-size="14px"
+     font-family="sans-serif"><tspan
+       id="tspan3"
+       x="518.98438"
+       y="467.06982">(other 4 from</tspan><tspan
+       id="tspan4"
+       x="518.98438"
+       y="483.22684">GENERIC_TEMPLATES)</tspan></text>
+  <rect
+     x="718.70929"
+     y="353.24405"
+     width="202.35973"
+     height="138.25183"
+     fill="#ffffff"
+     stroke="#000000"
+     stroke-width="2.20517"
+     id="rect34" />
+  <text
+     x="843.49365"
+     y="364.91916"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text35"
+     style="font-size:16.7595px;stroke-width:1.39662"
+     font-size="16"
+     font-family="sans-serif"
+     transform="scale(0.97461128,1.0260501)">StrategyCompanion</text>
+  <text
+     x="728.3658219169201"
+     y="401.59012837510005"
+     id="text36"
+     style="stroke-width:1.66163"
+     font-size="14"
+     font-family="sans-serif">initial_sys = strategy</text>
+  <text
+     x="733.13593"
+     y="425.86719"
+     id="text37"
+     style="stroke-width:1.48853"
+     font-size="14px"
+     font-family="sans-serif">+ protocol_context ⚙</text>
+  <text
+     x="764.32819"
+     y="444.62534"
+     id="text38"
+     style="stroke-width:1.22123"
+     font-size="14px"
+     font-family="sans-serif"><tspan
+       id="tspan5"
+       x="730.92957"
+       y="467.01489">(other 4 from</tspan><tspan
+       id="tspan6"
+       x="730.92957"
+       y="483.80676">GENERIC_TEMPLATES)</tspan></text>
+  <line
+     x1="394.04761"
+     y1="339.5238"
+     x2="134.04762"
+     y2="349.5238"
+     stroke="#000000"
+     id="line38"
+     marker-end="url(#arrow)"
+     stroke-width="1.5"
+     style="marker-end:url(#ThreeDots);stroke-width:2;stroke-dasharray:none" />
+  <line
+     x1="394.04761"
+     y1="339.5238"
+     x2="334.04761"
+     y2="349.5238"
+     stroke="#000000"
+     id="line39"
+     marker-end="url(#arrow)"
+     stroke-width="1.5"
+     style="marker-end:url(#ThreeDots);stroke-width:2;stroke-dasharray:none" />
+  <line
+     x1="394.04761"
+     y1="339.5238"
+     x2="534.04761"
+     y2="349.5238"
+     stroke="#000000"
+     id="line40"
+     marker-end="url(#arrow)"
+     stroke-width="1.5"
+     style="marker-end:url(#ThreeDots);stroke-width:2;stroke-dasharray:none" />
+  <line
+     x1="392.80316"
+     y1="338.38031"
+     x2="745.62555"
+     y2="348.29202"
+     stroke="#000000"
+     id="line41"
+     marker-end="url(#arrow)"
+     stroke-width="1.52126"
+     style="marker-end:url(#ThreeDots);stroke-width:2;stroke-dasharray:none" />
+  <text
+     x="593.50696"
+     y="317.12567"
+     id="text41"
+     style="stroke-width:1.63967"
+     font-size="14.5936px"
+     font-family="sans-serif"
+     transform="scale(0.99823114,1.001772)">(can be any # of domains)</text>
+  <line
+     x1="140.68462"
+     y1="492.98944"
+     x2="301.21942"
+     y2="551.13971"
+     stroke="#000000"
+     id="line42"
+     style="stroke-width:3;stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <line
+     x1="366.62949"
+     y1="491.49588"
+     x2="366.62949"
+     y2="524.27179"
+     stroke="#000000"
+     id="line43"
+     style="stroke-width:3.18964;stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <line
+     x1="592.66412"
+     y1="491.49588"
+     x2="592.66412"
+     y2="524.06171"
+     stroke="#000000"
+     id="line44"
+     style="stroke-width:3;stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <line
+     x1="819.22675"
+     y1="493.88864"
+     x2="671.74213"
+     y2="552.62134"
+     stroke="#000000"
+     id="line45"
+     style="stroke-width:3;stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <text
+     x="478.555374315036"
+     y="526.8169588104919"
+     text-anchor="middle"
+     id="text45"
+     style="stroke-width:1.32941"
+     font-size="14"
+     font-family="sans-serif">(after instantiation)</text>
+  <text
+     x="478.555374315036"
+     y="553.936335256948"
+     text-anchor="middle"
+     id="text46"
+     style="stroke-width:1.32941"
+     font-size="14"
+     font-family="sans-serif">Draft → Critique → Revision → Final draft</text>
+  <text
+     x="479.81592"
+     y="596.18176"
+     text-anchor="middle"
+     id="text47"
+     style="stroke-width:1.32941"
+     font-size="14px"
+     font-family="sans-serif">history / run_log 🗄</text>
+  <text
+     x="470.99237"
+     y="611.95654"
+     text-anchor="middle"
+     id="text48"
+     style="opacity:1;stroke-width:1.32941"
+     font-size="14px"
+     font-family="sans-serif">UI / tests</text>
+  <rect
+     x="310.84299"
+     y="510.50974"
+     width="340.80029"
+     height="107.87721"
+     fill="#f0f0f0"
+     stroke="#000000"
+     stroke-width="1.40034"
+     id="rect10-6"
+     style="display:inline;opacity:1;mix-blend-mode:darken;fill:#cccccc;fill-opacity:0;stroke-width:1.4;stroke-dasharray:none" />
+  <line
+     x1="60.547321"
+     y1="624.99347"
+     x2="954.59467"
+     y2="624.99347"
+     stroke="#000000"
+     stroke-dasharray="4.95077, 4.95077"
+     id="line48"
+     style="stroke-width:2.12409449;marker-end:url(#ThreeDots);stroke-dasharray:10.62048259,10.62048259;stroke-dashoffset:0"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <text
+     x="490.1927999103889"
+     y="650.41706069455"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text49"
+     style="font-size:19.7091px;stroke-width:1.64242"
+     font-size="18"
+     font-family="sans-serif">Example multi-agent orchestration:</text>
+  <line
+     x1="404.35425"
+     y1="664.16882"
+     x2="318.98206"
+     y2="687.8999"
+     stroke="#000000"
+     marker-end="url(#arrow)"
+     id="line50"
+     style="stroke-width:3;stroke-dasharray:none"
+     stroke-width="1.5" />
+  <text
+     x="200.674122966576"
+     y="673.9110768049406"
+     text-anchor="middle"
+     id="text51"
+     style="font-size:16.2229px;stroke-width:1.3519"
+     font-size="14"
+     font-family="sans-serif">Marketing view</text>
+  <text
+     x="184.58296"
+     y="692.72766"
+     text-anchor="middle"
+     id="text56-2"
+     style="stroke-width:1.32931"
+     font-size="16px"
+     font-weight="bold"
+     font-family="sans-serif">(from MarketingCompanion)</text>
+  <text
+     x="200.674122966576"
+     y="714.0081249059083"
+     text-anchor="middle"
+     id="text53"
+     style="stroke-width:1.3519"
+     font-size="14"
+     font-family="sans-serif">gpt-4o-mini</text>
+  <text
+     x="200.674122966576"
+     y="734.0565945804752"
+     text-anchor="middle"
+     id="text54"
+     style="stroke-width:1.3519"
+     font-size="14"
+     font-family="sans-serif">temp = 0.8</text>
+  <text
+     x="697.669071807065"
+     y="673.9111136722059"
+     text-anchor="middle"
+     id="text55"
+     style="font-size:15.9518px;stroke-width:1.32931"
+     font-size="14"
+     font-family="sans-serif">Engineering view</text>
+  <text
+     x="697.669071807065"
+     y="693.959582741736"
+     text-anchor="middle"
+     id="text56"
+     style="stroke-width:1.32931"
+     font-size="16"
+     font-weight="bold"
+     font-family="sans-serif">(from BugTriageCompanion)</text>
+  <text
+     x="697.669071807065"
+     y="714.00811213856"
+     text-anchor="middle"
+     id="text57"
+     style="stroke-width:1.32931"
+     font-size="14"
+     font-family="sans-serif">gpt-4.1</text>
+  <text
+     x="697.669071807065"
+     y="734.0565812080899"
+     text-anchor="middle"
+     id="text58"
+     style="stroke-width:1.32931"
+     font-size="14"
+     font-family="sans-serif">temp = 0.3</text>
+  <line
+     x1="209.60274"
+     y1="740.05255"
+     x2="209.60274"
+     y2="750.8855"
+     stroke="#000000"
+     id="line58"
+     style="stroke-width:3;stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <line
+     x1="704.21661"
+     y1="740.05255"
+     x2="704.21661"
+     y2="750.8855"
+     stroke="#000000"
+     id="line59"
+     style="stroke-width:3;stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <line
+     x1="209.60274"
+     y1="751.48071"
+     x2="700.69983"
+     y2="751.48071"
+     stroke="#000000"
+     id="line60"
+     style="stroke-width:3;marker-end:url(#ThreeDots);stroke-dasharray:none"
+     marker-end="url(#arrow)"
+     stroke-width="1.5" />
+  <line
+     x1="462.86203"
+     y1="752.07599"
+     x2="462.86203"
+     y2="762.90887"
+     stroke="#000000"
+     marker-end="url(#arrow)"
+     id="line61"
+     style="stroke-width:2.7;stroke-dasharray:none"
+     stroke-width="1.5" />
+  <text
+     x="466.4006954132147"
+     y="776.0576105656289"
+     text-anchor="middle"
+     id="text61"
+     style="font-size:18.8674px;stroke-width:1.57228"
+     font-size="14"
+     font-family="sans-serif">merged views</text>
+  <line
+     x1="461.07629"
+     y1="783.06018"
+     x2="461.07629"
+     y2="794.50677"
+     stroke="#000000"
+     marker-end="url(#arrow)"
+     id="line62"
+     style="stroke-width:2.5;stroke-dasharray:none"
+     stroke-width="1.5" />
+  <rect
+     x="352.13669"
+     y="800.2301"
+     width="217.87926"
+     height="45.786369"
+     fill="#ffffff"
+     stroke="#000000"
+     stroke-width="2.17746"
+     id="rect62" />
+  <text
+     x="458.55533"
+     y="816.82074"
+     text-anchor="middle"
+     id="text62"
+     style="font-size:14.9819px;stroke-width:1.24849"
+     font-size="14"
+     font-family="sans-serif">StrategyComp</text>
+  <text
+     x="461.07632"
+     y="837.77222"
+     text-anchor="middle"
+     id="text63"
+     style="stroke-width:1.24849"
+     font-size="14px"
+     font-family="sans-serif">(synthesis layer)</text>
+  <line
+     x1="461.07629"
+     y1="843.49542"
+     x2="461.07629"
+     y2="860.66541"
+     stroke="#000000"
+     marker-end="url(#arrow)"
+     id="line63"
+     style="stroke-width:2.5;stroke-dasharray:none"
+     stroke-width="1.5" />
+  <text
+     x="464.78778"
+     y="875.52448"
+     text-anchor="middle"
+     id="text64"
+     style="font-size:14.9819px;stroke-width:1.24849"
+     font-size="14"
+     font-family="sans-serif">history / run_log 🗄</text>
+  <text
+     x="462.26677800839"
+     y="893.954796673899"
+     text-anchor="middle"
+     id="text65"
+     style="stroke-width:1.24849"
+     font-size="14"
+     font-family="sans-serif">(audit &amp; tuning)</text>
+  <defs
+     id="defs1">
+    <marker
+       orient="auto-start-reverse"
+       refY="0"
+       refX="0"
+       id="ThreeDots"
+       style="overflow:visible"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       preserveAspectRatio="xMidYMid">
+      <g
+         transform="scale(0.5)"
+         id="g33">
+        <circle
+           cx="4"
+           cy="0"
+           r="1"
+           style="fill:context-stroke;stroke:context-stroke"
+           id="circle31" />
+        <circle
+           cx="8"
+           cy="0"
+           r="1"
+           style="fill:context-stroke;stroke:context-stroke"
+           id="circle32" />
+        <circle
+           cx="12"
+           cy="0"
+           r="1"
+           style="fill:context-stroke;stroke:context-stroke"
+           id="circle33" />
+      </g>
+    </marker>
+    <marker
+       id="arrow"
+       markerWidth="5.14285701"
+       markerHeight="3.5999999"
+       refX="10"
+       refY="3.5"
+       orient="auto"
+       markerUnits="strokeWidth"
+       viewBox="0 0 10 7"
+       preserveAspectRatio="xMidYMid">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="black"
+         id="polygon1" />
+    </marker>
+    <marker
+       id="arrow-1"
+       markerWidth="5.14285701"
+       markerHeight="3.5999999"
+       refX="10"
+       refY="3.5"
+       orient="auto"
+       markerUnits="strokeWidth"
+       viewBox="0 0 10 7"
+       preserveAspectRatio="xMidYMid">
+      <polygon
+         points="10,3.5 0,7 0,0 "
+         fill="#000000"
+         id="polygon1-2" />
+    </marker>
+    <marker
+       id="arrow-18"
+       markerWidth="5.14285701"
+       markerHeight="3.5999999"
+       refX="10"
+       refY="3.5"
+       orient="auto"
+       markerUnits="strokeWidth"
+       viewBox="0 0 10 7"
+       preserveAspectRatio="xMidYMid">
+      <polygon
+         points="10,3.5 0,7 0,0 "
+         fill="#000000"
+         id="polygon1-7" />
+    </marker>
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="5"
+       orient="auto"
+       viewBox="0 0 10 10"
+       preserveAspectRatio="xMidYMid">
+      <polygon
+         points="0,0 10,5 0,10 "
+         fill="#000000"
+         id="polygon11" />
+    </marker>
+  </defs>
+  <text
+     x="347.55115"
+     y="844.83337"
+     text-anchor="middle"
+     id="text10-5"
+     style="font-size:17.1735px;stroke-width:1.43113"
+     font-size="14"
+     font-family="sans-serif"
+     transform="scale(1.265917,0.78994121)">Input</text>
+</svg>
