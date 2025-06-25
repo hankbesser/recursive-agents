@@ -14,22 +14,22 @@ Why bother to do this?
 
  Any Companion can now slot into LangChain tooling (RunnableLambda, Retry, StreamingWrapper, etc.) because of the  __call__ alias
 """
-from langchain.runnables import RunnableLambda
-from langchain.graphs import StateGraph
+from langchain_core.runnables import RunnableLambda
+from langgraph.graph import StateGraph
+from typing import TypedDict
 from recursive_companion import MarketingCompanion, BugTriageCompanion, StrategyCompanion
 
 # 1 - Wrap in a RunnableLambda
 llm_fast  = "gpt-4o-mini"
 llm_deep  = "gpt-4.1-mini" 
 
-mkt   = MarketingCompanion(llm=llm_fast, temperature=0.8, verbose=True)
+mkt   = MarketingCompanion(llm=llm_fast, temperature=0.8)
 bug   = BugTriageCompanion(llm=llm_deep, temperature=0.3)
-plan = StrategyCompanion(llm=llm_fast, return_transcript=True)
+plan = StrategyCompanion(llm=llm_fast)
 
 # Each node is now a first-class Runnable; you get built-in tracing, concurrency, retries, etc., without rewriting your engine.
 mkt_node  = RunnableLambda(mkt)          # __call__ alias does the trick
 bug_node  = RunnableLambda(bug)
-
 
 
 # merge-lambda joins text views into one string
@@ -44,26 +44,35 @@ merge_node = RunnableLambda(
 plan_node  = RunnableLambda(plan)
 
 
-# 3 - Inline LangGraph example (fan-in)
+# Define the state schema for LangGraph
+class GraphState(TypedDict):
+    input: str
+    marketing: str
+    engineering: str
+    merged: str
+    final_plan: str
+
+# Inline LangGraph example (fan-in)
 # No extra prompts, no schema gymnastics: simply passing text between the callables the classes already expose.
-graph = StateGraph()
-graph.add_node("marketing",    mkt_node)
-graph.add_node("engineering",  bug_node)
-graph.add_node("merge",        merge_node)
-graph.add_node("strategy",     plan_node)
+graph = StateGraph(GraphState)
+graph.add_node("marketing_agent",    lambda state: {"marketing": mkt_node.invoke(state["input"])})
+graph.add_node("engineering_agent",  lambda state: {"engineering": bug_node.invoke(state["input"])})
+graph.add_node("merge_agent",        lambda state: {"merged": merge_node.invoke(state)})
+graph.add_node("strategy_agent",     lambda state: {"final_plan": plan_node.invoke(state["merged"])})
 
-graph.add_edges(
-    ("marketing",   "merge"),
-    ("engineering", "merge"),
-    ("merge",       "strategy"),
-)
+graph.add_edge("marketing_agent", "merge_agent")
+graph.add_edge("engineering_agent", "merge_agent")
+graph.add_edge("merge_agent", "strategy_agent")
 
-graph.set_entry_point("marketing", "engineering")
+graph.add_edge("__start__", "marketing_agent")
+graph.add_edge("__start__", "engineering_agent")
+graph.set_finish_point("strategy_agent")
 workflow = graph.compile()
 
-final, steps = workflow.invoke(
-    "App ratings fell to 3.2★ and uploads crash on iOS 17.2. Diagnose & propose next steps."
+result = workflow.invoke(
+    {"input": "App ratings fell to 3.2★ and uploads crash on iOS 17.2. Diagnose & propose next steps."}
 )
+final = result.get("final_plan", "")
 
 print("\n=== FINAL PLAN ===\n")
 print(final)

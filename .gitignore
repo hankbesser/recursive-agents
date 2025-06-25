@@ -36,3 +36,7 @@ htmlcov/
 *.egg-info/
 dist/
 build/
+
+# WEB_APP folders
+WEB_APP_Proprietary/
+WEB_APP_recursive_companion_complete/
