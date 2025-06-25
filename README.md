@@ -86,7 +86,7 @@ streamlit run streamlit_app.py
 - View cosine similarity scores update live
 - Export results with one click
 
-This isn't a demo - it's a production-ready application included with the framework!
+This is a full testing and observability app included with the framework.
 
 ### Other Examples
 ```bash
@@ -157,6 +157,13 @@ graph.add_edges(
 )
 # Companions need ZERO changes to work as graph nodes!
 ```
+### Other Examples
+```bash
+# Minimal example
+python demos/quick_setup.py
+
+n multi_agent_demos/multi_agent_langgraph_demo.py
+```
 ---
 ## 🔧 Production Features
 
@@ -179,48 +186,24 @@ graph.add_edges(
 - **Template hot-reload:** Change prompts without code
 
 ---
-## 🚀 Quick Start & Full Streamlit App
 
-### Install
-```bash
-pip install -e .  # or pip install . for non-editable
-export OPENAI_API_KEY=sk-...
 
-# For Jupyter/Python (more secure):
-# Create .env file with:
-# OPENAI_API_KEY=sk-...
-# Then in your code:
-# from dotenv import load_dotenv
-# load_dotenv()
-```
-
-### Run the Complete Streamlit Application
-```bash
-streamlit run streamlit_app.py
-```
-
-**You get a full interactive application:**
-- Select any companion type from the dropdown
-- Enter your prompt and watch the AI refine its response
-- See critique-revision cycles happen in real-time
-- View cosine similarity scores update live
-- Export results with one click
-
-This isn't a demo - it's a production-ready application included with the framework!
-
-### Other Examples
-```bash
-# Minimal example
-python demos/quick_setup.py
-
-# Multi-agent orchestration
-python multi_agent_demos/multi_agent_demo_raw_rc.py
-
-# LangGraph integration
-python multi_agent_demos/multi_agent_langgraph_demo.py
-```
 ---
-## 📝 Creating Your Own Companion
+
+## 🎓 The Strategic Decomposition Protocol
+
+Read ```templates/protocol_context.txt``` to see the structured reasoning framework that guides agents through:
+
+- Multi-layered problem analysis
+- Iterative pattern recognition
+- Systematic refinement cycles
+
+This structured approach to recursive problem decomposition consistently outperforms single-pass analysis.
+
+---
+
+
+### 📝 Creating Your Own Companion
 
 ### 1. Write your
 ```text
@@ -253,28 +236,26 @@ fin = FinancialCompanion()
 analysis = fin("Q3 revenue variance exceeds 2 standard deviations") 
 ```
 ---
-## 🎓 The Strategic Decomposition Protocol
-
-Read ```templates/protocol_context.txt``` to see the structured reasoning framework that guides agents through:
-
-- Multi-layered problem analysis
-- Iterative pattern recognition
-- Systematic refinement cycles
-
-This structured approach to recursive problem decomposition consistently outperforms single-pass analysis.
 
 ---
-## 📊 Benchmarks & Examples
 
-See multi_agent_demos/ for complete examples:
+## What Makes RC Unique
 
-- Raw RC: Simple, sequential, readable
-- LangGraph: Parallel, traceable, production-scale
+| Code Pattern | Why It Matters | Rare in OSS? |
+|--------------|----------------|--------------|
+| **`Draft\|LLM → Critique\|LLM → Revision\|LLM` chains built once** | Three-phase self-improvement is automatic - no manual wiring | ✓✓ |
+| **One `protocol_context.txt` feeds all system prompts** | Change reasoning style everywhere with one edit | ✓ |
+| **Templates live as `.txt` files on disk** | Git tracks prompt changes; hot-reload without restarting | ✓ |
+| **New expert domain = inherit BaseCompanion + point to template** | Three lines of code gets you a complete agent | ✓✓ |
+| **Every companion works as `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | ✓ |
+| **Built-in `run_log` tracks all iterations** | See why decisions were made without adding instrumentation | ✓✓ |
 
-Both use identical companion objects. No refactoring needed.
+✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
+
+For detailed comparison with LangGraph capabilities, see [LANGGRAPH_COMPARISON.md](docs/LANGGRAPH_COMPARISON.md).
 
 ---
-*Built on the principle that true understanding emerges through iteration, and that the best frameworks disappear into your code.*
+*Agents that refine their responses through iteration, integrated seamlessly into your existing code.*
 
 **License**
 
@@ -289,12 +270,16 @@ Special interest in:
 - Alternative embedding models for similarity
 - Convergence visualization tools
 
-This README inteded overall intentions:
+This README's design philosophy:
 
 1. **Three-level structure** mirrors the codebase organization
-2. **Technical depth** with actual code snippets and architecture
-3. **Clear separation** of who should look where
-4. **Production focus** with real implementation details
-5. **Philosophy + Mathematics** showing it's not just prompts
+2. **Technical depth** with actual code snippets and architecture diagrams
+3. **Clear separation** of who should look where (users → base.py, engineers → chains.py)
+4. **Production focus** with real implementation details (Streamlit app, live demos)
+5. **Protocol + Templates** flexible composition for different applications
 6. **Clean examples** demonstrating the "companions as callables" pattern
 7. **Practical guidance** for extending the framework
+8. **Visual learning** - Sequence diagram up front, architecture docs linked
+9. **What makes it unique** - Ending with the rare patterns table
+
+The goal: Show what makes Recursive Companion different and how to use it effectively.

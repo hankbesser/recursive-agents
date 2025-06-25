@@ -28,14 +28,27 @@ The system uses five templates that define agent behavior:
 
 All templates are plain text files in the `templates/` directory, making them easy to modify without touching code.
 
-### 2. Engine Layer (BaseCompanion)
-The core engine in `core/chains.py` provides:
-- `build_chains()` - Constructs three LangChain chains from templates
-- `loop()` - Executes the iterative refinement process
-- Convergence detection via cosine similarity of embeddings
-- History management and run_log tracking
+### 2. Engine Layer (BaseCompanion in core/chains.py)
+The core engine provides:
 
-### 3. Domain Layer
+(See the comprehensive docstring at the top of chains.py for design philosophy and detailed documentation)
+
+**Key Methods:**
+- `__init__()` - Accepts llm (string or ChatOpenAI), templates, similarity_threshold, max_loops, temperature, return_transcript, verbose
+- `loop(user_input)` - Executes the three-phase refinement process, returns final answer (or tuple with run_log)
+- `__call__()` - Alias for loop(), making companions callable like functions
+- `transcript_as_markdown()` - Formats run_log for human reading
+
+**Instance Attributes:**
+- `history` - Conversation memory (HumanMessage/AIMessage pairs)
+- `run_log` - Detailed record of all iterations (drafts, critiques, revisions)
+- `max_loops`, `similarity_threshold` - Convergence parameters
+
+**Internal Functions:**
+- `build_chains()` - Constructs three LangChain chains from templates
+- `cosine_from_embeddings()` - Calculates similarity between text embeddings
+
+### 3. Domain Layer (recursive_companion/base.py)
 Companion classes inherit from BaseCompanion:
 - GenericCompanion - Domain-agnostic baseline
 - MarketingCompanion - Overrides initial_sys for marketing expertise
@@ -44,6 +57,8 @@ Companion classes inherit from BaseCompanion:
 
 Each companion can override class-level defaults (MAX_LOOPS, SIM_THRESHOLD, etc.) while inheriting the full engine.
 
+(Note: Each companion class includes detailed docstrings with usage examples)
+
 ## Three-Phase Process
 
 ![Sequence Flow](../Images/Sequence_Summary.svg)
@@ -51,8 +66,9 @@ Each companion can override class-level defaults (MAX_LOOPS, SIM_THRESHOLD, etc.
 The iterative process (each `|` represents a LangChain chain combining prompt + LLM):
 
 1. **Initial Draft Generation**
-   - Uses init_prompt with conversation history
-   - Incorporates previous context via MessagesPlaceholder
+   - Responds to the user's question or problem
+   - Generates initial analysis based on domain expertise
+   - (Technical: Can incorporate conversation history via MessagesPlaceholder if needed)
 
 2. **Critique Generation**
    - Analyzes the draft for weaknesses
@@ -64,7 +80,6 @@ The iterative process (each `|` represents a LangChain chain combining prompt + 
 
 This cycle repeats until:
 - Cosine similarity of embeddings between iterations > threshold (default 0.98)
-- Critique contains completion phrases ("no further improvements")
 - Maximum iterations reached
 
 ## Template Composition
