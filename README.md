@@ -5,7 +5,7 @@
 Recursive Companion implements a **three-phase iterative refinement architecture** where AI agents critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
 
 ![Sequence Flow](Images/Sequence_Summary.svg)
-See the [Architecture Documentation](docs/RC_architecture.md) for detailed system design.
+- See the [Architecture Documentation](docs/RC_architecture.md) for detailed system design.
 
 ### Why Recursive Companion?
 

@@ -2,12 +2,12 @@
 <!-- Sequence Summary with embedded solid white background -->
 
 <svg
-   viewBox="0 0 781 337"
+   viewBox="0 0 731 259"
    version="1.1"
    id="svg12"
    sodipodi:docname="Sequence_Summary.svg"
-   width="781"
-   height="337"
+   width="731"
+   height="259"
    inkscape:version="1.4.2 (2aeb623e1d, 2025-05-12)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -20,11 +20,11 @@
      borderopacity="0.25"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="false"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.54125"
-     inkscape:cx="342.25466"
-     inkscape:cy="150.52717"
+     inkscape:cx="365.28792"
+     inkscape:cy="182.96837"
      inkscape:window-width="1920"
      inkscape:window-height="964"
      inkscape:window-x="0"
@@ -34,47 +34,47 @@
      showgrid="false" />
   <!-- Solid white background rectangle (belt‑and‑suspenders) -->
   <rect
-     width="87.920013%"
-     height="79.718712%"
-     x="-1.9672916e-06"
-     y="3.2441263"
+     width="99.799889%"
+     height="98.394058%"
+     x="0.64882123"
+     y="-1.2976371"
      fill="#ffffff"
      fill-opacity="1"
      id="rect1"
-     style="stroke-width:0.837186" />
+     style="stroke-width:0.99094" />
   <!-- Title -->
   <text
-     x="369.86124"
-     y="31.414778"
+     x="381.83939"
+     y="25.353996"
      text-anchor="middle"
-     font-size="18.175px"
+     font-size="17.9728px"
      font-weight="bold"
      font-family="Arial, sans-serif"
      id="text1"
-     transform="scale(0.99943772,1.0005626)"
-     style="stroke-width:1.00973">Sequence Summary</text>
+     transform="scale(1.0137184,0.98646723)"
+     style="stroke-width:0.998499">Sequence Summary</text>
   <!-- User input prompt - moved much higher -->
   <text
-     x="69.494255"
-     y="50.341022"
+     x="84.813438"
+     y="44.069717"
      text-anchor="middle"
-     font-size="12.1179px"
+     font-size="11.9831px"
      font-family="Arial, sans-serif"
      id="text2"
-     transform="scale(0.99943772,1.0005626)"
-     style="stroke-width:1.00973">User input prompt <animate
+     transform="scale(1.0137184,0.98646723)"
+     style="stroke-width:0.998499">User input prompt <animate
    attributeName="opacity"
    values="0;1;1"
    dur="0.5s"
    fill="freeze" /></text>
   <!-- Arrow down - now longer -->
   <line
-     x1="64.88485"
-     y1="55.420891"
-     x2="64.88485"
-     y2="105.93655"
+     x1="81.392883"
+     y1="48.398335"
+     x2="81.392883"
+     y2="97.648376"
      stroke="#808080"
-     stroke-width="1.00973"
+     stroke-width="0.998499"
      marker-end="url(#arrowhead)"
      id="line2">
     <animate
@@ -87,7 +87,7 @@
   <!-- Main pipeline -->
   <g
      id="pipeline"
-     transform="matrix(1.0091774,0,0,1.0103131,-34.017577,1.1230638)">
+     transform="matrix(1.0122117,0,0,0.98500071,-17.80692,-4.5391267)">
     <!-- init_prompt | LLM -->
     <rect
        x="50"
@@ -232,12 +232,12 @@
   </g>
   <!-- Arrows up from each box -->
   <line
-     x1="102.22135"
-     y1="112.25749"
-     x2="102.22135"
-     y2="92.051277"
+     x1="118.84164"
+     y1="103.81095"
+     x2="118.84164"
+     y2="84.110962"
      stroke="#666666"
-     stroke-width="1.51454"
+     stroke-width="1.49769"
      marker-end="url(#arrowhead-small)"
      id="line5">
     <animate
@@ -248,12 +248,12 @@
        fill="freeze" />
   </line>
   <line
-     x1="293.96515"
-     y1="112.25749"
-     x2="293.96515"
-     y2="92.051277"
+     x1="311.16193"
+     y1="103.81095"
+     x2="311.16193"
+     y2="84.110962"
      stroke="#666666"
-     stroke-width="1.51454"
+     stroke-width="1.49769"
      marker-end="url(#arrowhead-small)"
      id="line6">
     <animate
@@ -264,12 +264,12 @@
        fill="freeze" />
   </line>
   <line
-     x1="495.80051"
-     y1="112.25749"
-     x2="495.80051"
-     y2="92.051277"
+     x1="513.60419"
+     y1="103.81095"
+     x2="513.60419"
+     y2="84.110962"
      stroke="#666666"
-     stroke-width="1.51454"
+     stroke-width="1.49769"
      marker-end="url(#arrowhead-small)"
      id="line7">
     <animate
@@ -281,45 +281,45 @@
   </line>
   <!-- Labels above arrows -->
   <text
-     x="102.27888"
-     y="81.902039"
+     x="117.23339"
+     y="75.279678"
      text-anchor="middle"
-     font-size="12.1179px"
+     font-size="11.9831px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text7"
-     transform="scale(0.99943772,1.0005626)"
-     style="stroke-width:1.00973">Generates <animate
+     transform="scale(1.0137184,0.98646723)"
+     style="stroke-width:0.998499">Generates <animate
    attributeName="opacity"
    values="0;1"
    dur="0.3s"
    begin="1.3s"
    fill="freeze" /></text>
   <text
-     x="294.1304"
-     y="81.902039"
+     x="306.95096"
+     y="75.279678"
      text-anchor="middle"
-     font-size="12.1179px"
+     font-size="11.9831px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text8"
-     transform="scale(0.99943772,1.0005626)"
-     style="stroke-width:1.00973">Critiques <animate
+     transform="scale(1.0137184,0.98646723)"
+     style="stroke-width:0.998499">Critiques <animate
    attributeName="opacity"
    values="0;1"
    dur="0.3s"
    begin="2.1s"
    fill="freeze" /></text>
   <text
-     x="496.07938"
-     y="81.902039"
+     x="506.6535"
+     y="75.279678"
      text-anchor="middle"
-     font-size="12.1179px"
+     font-size="11.9831px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text9"
-     transform="scale(0.99943772,1.0005626)"
-     style="stroke-width:1.00973">Revises <animate
+     transform="scale(1.0137184,0.98646723)"
+     style="stroke-width:0.998499">Revises <animate
    attributeName="opacity"
    values="0;1"
    dur="0.3s"
@@ -327,10 +327,10 @@
    fill="freeze" /></text>
   <!-- Loop indicator -->
   <path
-     d="m 563.19224,143.79854 q 109.35327,0 109.35327,44.84499 0,44.84496 -377.76576,44.84496 -89.4709,0 -89.4709,-44.84496 0,-17.93801 4.9706,-49.32948"
+     d="m 581.19854,134.56175 q 109.68206,0 109.68206,43.72144 0,43.72142 -378.9016,43.72142 -89.73991,0 -89.73991,-43.72142 0,-17.48858 4.98554,-48.09357"
      fill="none"
      stroke="#666666"
-     stroke-width="1.88857"
+     stroke-width="1.86756"
      stroke-dasharray="5, 5"
      marker-end="url(#arrowhead)"
      id="path9">
@@ -349,15 +349,15 @@
   </path>
   <!-- Loop text -->
   <text
-     x="435.49469"
-     y="253.55875"
+     x="446.7428"
+     y="245.02702"
      text-anchor="middle"
-     font-size="13.1272px"
+     font-size="12.9812px"
      font-family="Arial, sans-serif"
      fill="#666666"
      id="text10"
-     transform="scale(0.99943772,1.0005626)"
-     style="stroke-width:1.00973">⟳ up to MAX_LOOPS (similarity stop) <animate
+     transform="scale(1.0137184,0.98646723)"
+     style="stroke-width:0.998499">⟳ up to MAX_LOOPS (similarity stop) <animate
    attributeName="opacity"
    values="0;1"
    dur="0.5s"
@@ -368,16 +368,16 @@
   <!-- Hidden paths -->
   <path
      id="firstPassPath"
-     d="m 87.083703,107.20594 v 25.25782 H 278.82739 480.66286"
+     d="M 103.65848,98.885952 V 123.51096 H 295.97869 498.42101"
      fill="none"
      stroke="none"
-     style="stroke-width:1.00973" />
+     style="stroke-width:0.998499" />
   <path
      id="loopPath"
-     d="m 278.82739,132.46376 h 201.83547 q 191.74371,0 191.74371,50.51566 0,50.51565 -237.15668,50.51565 -237.15669,0 -237.15669,-50.51565 0,-50.51566 80.73419,-50.51566"
+     d="m 295.97869,123.51096 h 202.44232 q 192.32023,0 192.32023,49.25003 0,49.25004 -237.86973,49.25004 -237.86977,0 -237.86977,-49.25004 0,-49.25003 80.97695,-49.25003"
      fill="none"
      stroke="none"
-     style="stroke-width:1.00973" />
+     style="stroke-width:0.998499" />
   <!-- Arrow definitions -->
   <defs
      id="defs12">
@@ -389,7 +389,7 @@
        refY="5"
        orient="auto">
       <polygon
-         points="0,10 0,0 10,5 "
+         points="0,0 10,5 0,10 "
          fill="#000000"
          id="polygon11" />
     </marker>
@@ -401,7 +401,7 @@
        refY="4"
        orient="auto">
       <polygon
-         points="0,8 0,0 8,4 "
+         points="0,0 8,4 0,8 "
          fill="#666666"
          id="polygon12" />
     </marker>
