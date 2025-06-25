@@ -24,12 +24,12 @@ llm_fast  = "gpt-4o-mini"
 llm_deep  = "gpt-4.1-mini" 
 
 mkt   = MarketingCompanion(llm=llm_fast, temperature=0.8)
-bug   = BugTriageCompanion(llm=llm_deep, temperature=0.3)
+eng   = BugTriageCompanion(llm=llm_deep, temperature=0.3)
 plan = StrategyCompanion(llm=llm_fast)
 
 # Each node is now a first-class Runnable; you get built-in tracing, concurrency, retries, etc., without rewriting your engine.
 mkt_node  = RunnableLambda(mkt)          # __call__ alias does the trick
-bug_node  = RunnableLambda(bug)
+eng_node  = RunnableLambda(eng)
 
 
 # merge-lambda joins text views into one string
@@ -56,7 +56,7 @@ class GraphState(TypedDict):
 # No extra prompts, no schema gymnastics: simply passing text between the callables the classes already expose.
 graph = StateGraph(GraphState)
 graph.add_node("marketing_agent",    lambda state: {"marketing": mkt_node.invoke(state["input"])})
-graph.add_node("engineering_agent",  lambda state: {"engineering": bug_node.invoke(state["input"])})
+graph.add_node("engineering_agent",  lambda state: {"engineering": eng_node.invoke(state["input"])})
 graph.add_node("merge_agent",        lambda state: {"merged": merge_node.invoke(state)})
 graph.add_node("strategy_agent",     lambda state: {"final_plan": plan_node.invoke(state["merged"])})
 
