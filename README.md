@@ -4,7 +4,7 @@
 
 Recursive Companion implements a **three-phase iterative refinement architecture** where AI agents critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
 
-![Sequence Flow](Images/Sequence_Summary.svg)
+![Sequence Flow](images/Sequence_Summary.svg)
 - See the [Architecture Documentation](docs/RC_architecture.md) for detailed system design.
 
 ### Why Recursive Companion?
@@ -13,7 +13,7 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 *Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
 
-**Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial_sys), apply protocols to specific phases (usually throughout system templates for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
+**Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial system template per domain), apply overarching protocols to specific phases (usually throughout system templates in all realted domains for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
 
 
 ---
@@ -116,7 +116,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 ```
 **Where to Look (Separation of Concerns):**
 
-- **Engineers** → core/chains.py (the mathematics of convergence)
+- **Engineers** → core/chains.py (how to build the chains, what is being stored/cached/how memory is handled, etc.)
 - **Users** → recursive_companion/base.py (picking companions)
 - **Prompt Engineers** → templates/ + template_load_utils.py
 - **UI Developers** → streamlit.py (progress containers)
@@ -128,7 +128,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
     - Stop when `cosine_from_embeddings(revision[n-1], revision[n]) > 0.98`
 2. **Companions as Callables = Composability**
 - Works in Jupyter: `agent("question")`
-- Works in LangGraph: `RunnableLambda(agent)`
+- Works with LangGraph: `RunnableLambda(agent)`
 - Works in Streamlit: Live visualization of critique-revision cycles!
 3. **Templates as Data = Evolution Without Refactoring**
 - Change prompts in production
@@ -160,16 +160,14 @@ graph.add_edges(
 ```bash
 # Minimal example
 python demos/quick_setup.py
-
-n multi_agent_demos/multi_agent_langgraph_demo.py
 ```
 ---
 ## 🔧 Production Features
 
 #### Observability
 
-- **Verbose mode**: See every phase of thinking
-- **Transcript capture**: Full run_log for debugging
+- **Verbose mode**: prints every phase of thinking live
+- **Transcript capture**: return full run_log for debugging along with the final analysis (the instatiated object will have have it own run_log though)
 - **Standard logging**: Integration-ready
 
 ### Efficiency
@@ -180,12 +178,27 @@ n multi_agent_demos/multi_agent_langgraph_demo.py
 
 ### Flexibility
 
-- **Any OpenAI model**: "gpt-4o-mini", "gpt-4", custom endpoints
+- **Any OpenAI model**: "gpt-4o-mini", "gpt-4.1", custom endpoints
 - **Configurable everything**: Per-instance overrides
 - **Template hot-reload:** Change prompts without code
 
 ---
+## What Makes RC Unique
 
+| Code Pattern | Why It Matters | Rare in OSS? |
+|--------------|----------------|--------------|
+| **`Draft\|LLM → Critique\|LLM → Revision\|LLM` chains built once** | Three-phase self-improvement is automatic - no manual wiring | ✓✓ |
+| **One `protocol_context.txt` feeds all system prompts** | Change reasoning style everywhere with one edit | ✓ |
+| **Templates live as `.txt` files on disk** | Git tracks prompt changes; hot-reload without restarting | ✓ |
+| **New expert domain = inherit BaseCompanion + point to template** | Three lines of code gets you a complete agent | ✓✓ |
+| **Every companion works as `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | ✓ |
+| **Built-in `run_log` tracks all iterations** | See why decisions were made without adding instrumentation | ✓✓ |
+
+✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
+
+For detailed comparison with LangGraph capabilities, see [LANGGRAPH_COMPARISON.md](docs/LANGGRAPH_COMPARISON.md).
+
+---
 
 ---
 
@@ -238,22 +251,6 @@ analysis = fin("Q3 revenue variance exceeds 2 standard deviations")
 
 ---
 
-## What Makes RC Unique
-
-| Code Pattern | Why It Matters | Rare in OSS? |
-|--------------|----------------|--------------|
-| **`Draft\|LLM → Critique\|LLM → Revision\|LLM` chains built once** | Three-phase self-improvement is automatic - no manual wiring | ✓✓ |
-| **One `protocol_context.txt` feeds all system prompts** | Change reasoning style everywhere with one edit | ✓ |
-| **Templates live as `.txt` files on disk** | Git tracks prompt changes; hot-reload without restarting | ✓ |
-| **New expert domain = inherit BaseCompanion + point to template** | Three lines of code gets you a complete agent | ✓✓ |
-| **Every companion works as `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | ✓ |
-| **Built-in `run_log` tracks all iterations** | See why decisions were made without adding instrumentation | ✓✓ |
-
-✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
-
-For detailed comparison with LangGraph capabilities, see [LANGGRAPH_COMPARISON.md](docs/LANGGRAPH_COMPARISON.md).
-
----
 *Agents that refine their responses through iteration, integrated seamlessly into your existing code.*
 
 **License**

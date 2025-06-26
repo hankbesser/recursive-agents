@@ -6,9 +6,48 @@ Recursive Companion implements a modular architecture where AI agents automatica
 
 ## System Architecture
 
-![RC Architecture](../Images/RC_Architecture.svg)
+![RC Architecture](../images/RC_Architecture.svg)
 
-The architecture consists of three main layers:
+## Key ideas before getting into the nitty gritty
+
+### Introspection Capabilities
+
+Every companion maintains:
+- `history`: Conversation memory (HumanMessage/AIMessage pairs)
+- `run_log`: Detailed iteration data with drafts, critiques, revisions
+- `transcript_as_markdown()`: Formatted view of the thinking process
+
+This data persists after execution, enabling debugging and analysis even in complex workflows.
+
+### Design Principles
+
+1. **Separation of Concerns**
+   - Templates define behavior (look in ```templates/``` folder and ```recursive_companion/template_load_utitls.py```)
+   - Engine provides mechanics(look in ```core/chains.py```)
+   - Companions specialize domains(look in ```recursive_companion/base.py```)
+
+2. **Composability**
+   - Each layer works independently
+   - Components mix without conflicts
+   - New domains require minimal code
+
+3. **Transparency**
+   - All decisions are traceable
+   - No hidden state
+   - Full inspection capability
+
+### Extension Points
+
+The architecture supports extension through:
+- New companion classes (one template file + minimal code)
+- Custom protocols (different reasoning patterns)
+- Alternative templates (critique/revision strategies)
+- UI integrations (beyond Streamlit)
+
+All extensions inherit the core capabilities without reimplementation.
+
+--------------------------------------------
+## The architecture consists of three main layers:
 
 ### 1. Template Layer
 
@@ -28,8 +67,11 @@ The system uses five templates that define agent behavior:
 
 All templates are plain text files in the `templates/` directory, making them easy to modify without touching code.
 
+This protocol (```templates/protocol_context.txt```) transforms every companion into a pattern-discovery engine. Problems know their own solutions—we just create conditions for revelation.
+
 ### 2. Engine Layer (BaseCompanion in core/chains.py)
 The core engine provides:
+
 
 (See the comprehensive docstring at the top of chains.py for design philosophy and detailed documentation)
 
@@ -61,7 +103,7 @@ Each companion can override class-level defaults (MAX_LOOPS, SIM_THRESHOLD, etc.
 
 ## Three-Phase Process
 
-![Sequence Flow](../Images/Sequence_Summary.svg)
+![Sequence Flow](../images/Sequence_Summary.svg)
 
 The iterative process (each `|` represents a LangChain chain combining prompt + LLM):
 
@@ -100,66 +142,28 @@ Key features:
 - User templates remain protocol-free
 - Complete flexibility in composition
 
-## Multi-Agent Orchestration
+ *modularty isn't only confined to the code you can change how the change how to agents obtain the protocol (and system and user prompts as well) by modyfiying txt files and changing ```recursive_companion/template_load_utils.py```:*
 
-The architecture supports multiple deployment patterns:
-
-### Sequential (Raw Python)
 ```python
-mkt_view = MarketingCompanion()(problem)
-eng_view = BugTriageCompanion()(problem)
-final = StrategyCompanion()(f"{mkt_view}\n{eng_view}")
-```
+# Your protocol shapes thinking, but WHERE it applies is flexible:
+if key.endswith("_sys"):  # Default: protocols guide system identity
+    content = content.format(context=protocol_context)
 
-### Parallel (LangGraph)
-Companions work as graph nodes without modification:
+# But you could:
+# - Inject only into critique phase for "guided criticism"
+# - Use different protocols for different phases
+# - Skip protocols entirely for rapid iteration
+# - Compose multiple protocols dynamically
+```
+##### Advanced: Rethinking the Protocol Layer
+
 ```python
-mkt_node = RunnableLambda(MarketingCompanion())
-eng_node = RunnableLambda(BugTriageCompanion())
+# Morning vs Evening protocols
+build_templates(protocol="exploration_protocol" if morning else "convergence_protocol")
+
+# Phase-specific protocols
+build_templates(critique_sys="harsh_critique", critique_protocol="academic_rigor")
+
+# Protocol-free companions for baseline comparison
+build_templates(skip_protocol=True)
 ```
-
-### Key Insight
-Companions are callables (`__call__` method aliases `loop()`), making them compatible with any framework that accepts functions.
-
-## Introspection Capabilities
-
-Every companion maintains:
-- `history`: Conversation memory (HumanMessage/AIMessage pairs)
-- `run_log`: Detailed iteration data with drafts, critiques, revisions
-- `transcript_as_markdown()`: Formatted view of the thinking process
-
-This data persists after execution, enabling debugging and analysis even in complex workflows.
-
-## Streamlit Integration
-
-The `streamlit.py` module provides UI-enabled versions:
-- StreamlitBaseCompanion adds progress_container support
-- Live updates during critique-revision cycles
-- Same functionality, added visualization
-
-## Design Principles
-
-1. **Separation of Concerns**
-   - Templates define behavior
-   - Engine provides mechanics
-   - Companions specialize domains
-
-2. **Composability**
-   - Each layer works independently
-   - Components mix without conflicts
-   - New domains require minimal code
-
-3. **Transparency**
-   - All decisions are traceable
-   - No hidden state
-   - Full inspection capability
-
-## Extension Points
-
-The architecture supports extension through:
-- New companion classes (one template file + minimal code)
-- Custom protocols (different reasoning patterns)
-- Alternative templates (critique/revision strategies)
-- UI integrations (beyond Streamlit)
-
-All extensions inherit the core capabilities without reimplementation.
