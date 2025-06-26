@@ -1,15 +1,15 @@
 # Recursive Companion 🔄
 
-## A Meta-Framework for Self-Improving AI Agents
+## A Meta-Framework for Self-Improving Agents
 
-Recursive Companion implements a **three-phase iterative refinement architecture** where AI agents critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
+Recursive Companion implements a **three-phase iterative refinement architecture** where LLM agents (instances of Classes) critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
 
 ![Sequence Flow](images/Sequence_Summary.svg)
 - See the [Architecture Documentation](docs/RC_architecture.md) for detailed system design.
 
 ### Why Recursive Companion?
 
-**See inside your AI's thinking.*** While other frameworks show you what happened, RC shows you why. Every agent maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
+**See inside the thinking.*** While other frameworks show you what happened, RC shows you why. Every agent maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
 
 *Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
 
@@ -35,10 +35,10 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 ```
 **Where to Look (Separation of Concerns):**
 
-- **Engineers** → core/chains.py (how to build the chains, what is being stored/cached/how memory is handled, the iteration process, etc.)
-- **Users** → recursive_companion/base.py (picking companions)
-- **Prompt Engineers** → templates/ + template_load_utils.py
-- **UI Developers** → streamlit.py (progress containers)
+- **Engineers** → ```core/chains.py``` (how to build the chains, what is being stored/cached/how memory is handled, the iteration process, etc.)
+- **Users** → ```recursive_companion/base.py``` (picking companions)
+- **Prompt Engineers** → ```templates/``` folder + ```template_load_utils.py```
+- **UI Developers** → ```streamlit.py``` (progress containers)
 
 
 ---
