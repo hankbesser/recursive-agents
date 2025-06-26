@@ -21,14 +21,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="0.79333333"
-     inkscape:cx="499.78992"
+     inkscape:cx="500.42017"
      inkscape:cy="450"
      inkscape:window-width="1920"
      inkscape:window-height="964"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg65" />
+     inkscape:current-layer="svg65"
+     showgrid="false" />
   <rect
      x="2.3809524"
      y="2.3809524"
@@ -709,7 +710,7 @@
      y2="751.48071"
      stroke="#000000"
      id="line60"
-     style="stroke-width:3;marker-end:url(#ThreeDots);stroke-dasharray:none"
+     style="stroke-width:3;stroke-dasharray:none;marker-end:url(#ThreeDots);marker-start:url(#ThreeDots);marker-mid:url(#ThreeDots)"
      marker-end="url(#arrow)"
      stroke-width="1.5" />
   <line
