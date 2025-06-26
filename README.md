@@ -9,7 +9,7 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 ### Why Recursive Companion?
 
-**See inside the thinking.*** While other frameworks show you what happened, RC shows you why. Every agent maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
+**See inside the thinking.*** While other frameworks show you what happened, RC shows you why. Every instance maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
 
 *Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
 
@@ -276,12 +276,11 @@ Special interest in:
 1. **Three-level structure** mirrors the codebase organization
 2. **Technical depth** with actual code snippets and architecture diagrams
 3. **Clear separation** of who should look where (users → base.py, engineers → chains.py)
-4. **Production focus** with real implementation details (Streamlit app, live demos)
+4. **Future focus on production** with real implementation details (Streamlit app, live demos for full scale app with a more dynmic RC implementation)
 5. **Protocol + Templates** flexible composition for different applications
 6. **Clean examples** demonstrating the "companions as callables" pattern
 7. **Practical guidance** for extending the framework
 8. **Visual learning** - Sequence diagram up front, architecture docs linked
-9. **What makes it unique** - Ending with the rare patterns table
 
 #### The goal: Show what makes Recursive Companion different and how to use it effectively. 
 Note: Besides the first section, any of the sections in the README 
