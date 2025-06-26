@@ -39,6 +39,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 - **Users** → ```recursive_companion/base.py``` (picking companions)
 - **Prompt Engineers** → ```templates/``` folder + ```template_load_utils.py```
 - **UI Developers** → ```streamlit.py``` (progress containers)
+- *or any combination of these* 
 
 
 ---
@@ -126,7 +127,7 @@ python multi_agent_demos/multi_agent_langgraph_demo.py
 ---
 
 
-### Why This Architecture Matters
+## Why This Architecture Matters
 
 1. **Mathematical Convergence > Arbitrary Limits**
     - Not "stop after 3 tries"

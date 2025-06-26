@@ -49,7 +49,7 @@ All extensions inherit the core capabilities without reimplementation.
 --------------------------------------------
 ## The architecture consists of three main layers:
 
-### 1. Template Layer
+### 1. Template Layer (```templates/``` folder) 
 
 The system uses five templates that define agent behavior:
 
@@ -69,7 +69,7 @@ All templates are plain text files in the `templates/` directory, making them ea
 
 This protocol (```templates/protocol_context.txt```) transforms every companion into a pattern-discovery engine. Problems know their own solutions—we just create conditions for revelation.
 
-### 2. Engine Layer (BaseCompanion in core/chains.py)
+### 2. Engine Layer (BaseCompanion in ```core/chains.py```)
 The core engine provides:
 
 
@@ -90,7 +90,7 @@ The core engine provides:
 - `build_chains()` - Constructs three LangChain chains from templates
 - `cosine_from_embeddings()` - Calculates similarity between text embeddings
 
-### 3. Domain Layer (recursive_companion/base.py)
+### 3. Domain Layer (```recursive_companion/base.py```)
 Companion classes inherit from BaseCompanion:
 - GenericCompanion - Domain-agnostic baseline
 - MarketingCompanion - Overrides initial_sys for marketing expertise
@@ -126,7 +126,7 @@ This cycle repeats until:
 
 ## Template Composition
 
-The `build_templates()` utility in `template_load_utils.py` enables sophisticated composition:
+The `build_templates()` utility in `recursive_companion/template_load_utils.py` enables sophisticated composition:
 
 ```python
 def build_templates(**overrides):
