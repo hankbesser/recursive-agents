@@ -1,13 +1,7 @@
 import streamlit as st
 from pathlib import Path
-import json
-import asyncio
-from typing import Any, Dict, List
-import threading
-import time
-
 from langchain.callbacks.base import BaseCallbackHandler
-from langchain.schema import LLMResult
+
 
 from recursive_companion import (
     GenericCompanion, 
@@ -66,8 +60,15 @@ st.set_page_config(
 #</style>
 #""", unsafe_allow_html=True)
 
-st.title("🔄 Recursive Companion Studio")
-st.markdown("Watch AI agents critique and refine their own responses in real-time")
+col_title, col_github = st.columns([4, 1])
+with col_title:
+    st.title("🔄 Recursive Companion Studio")
+with col_github:
+    st.markdown("<br>", unsafe_allow_html=True)  # Spacing to align with title
+    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Recursive%20Companion-blue?logo=github)](https://github.com/yourusername/recursive-companion)")
+
+st.markdown("Watch the three-phase loop in action: draft, critique, and revision happening live • See how ideas deepen through recursive self-improvement")
+st.markdown("<p style='color: #00ccff; font-size: 15px;'><strong>💡 Note:</strong> Click 'Apply Settings' in the sidebar to activate configuration changes • Settings changes will stop any analysis in progress</p>", unsafe_allow_html=True)
 
 # Initialize session state for results persistence
 if 'results' not in st.session_state:
@@ -85,13 +86,13 @@ if 'applied_settings' not in st.session_state:
         'selected_template': 'generic',
         'show_critique': True,
         'show_metrics': True,
-        'live_preview': False
+        'live_preview': True
     }
 
 # Sidebar configuration
 with st.sidebar:
     st.header("⚙️ Configuration")
-    st.caption("💡 Tip: Click » in top corner to collapse")
+    st.markdown("<p style='color: #00ccff; font-size: 13px;'>💡 Tip: Click » in top corner to collapse</p>", unsafe_allow_html=True)
     
     # Use a form to prevent reruns while changing settings
     with st.form("config_form"):
@@ -130,7 +131,7 @@ with st.sidebar:
         )
         
         # Display options
-        live_preview = st.checkbox("Live Preview", value=False, help="Show critique/revision process in real-time as it happens")
+        live_preview = st.checkbox("Live Preview", value=True, help="Show critique/revision process in real-time as it happens")
         # Disable show_critique if live_preview is on (live preview replaces it)
         show_critique = st.checkbox(
             "Show Critique Process", 
@@ -159,27 +160,29 @@ with st.sidebar:
     
     # Show what settings will be used
     st.divider()
-    st.caption("**Settings for next analysis:**")
-    st.caption(f"Template Set: {st.session_state.applied_settings['selected_template']}")
-    st.caption(f"Model: {st.session_state.applied_settings['model']}")
-    st.caption(f"Temperature: {st.session_state.applied_settings['temperature']}")
-    st.caption(f"Max Critique Loops: {st.session_state.applied_settings['max_loops']}")
-    st.caption(f"Similarity Threshold: {st.session_state.applied_settings['similarity_threshold']}")
-    st.caption(f"Show Critique Process: {'✓' if st.session_state.applied_settings['show_critique'] else '✗'}")
-    st.caption(f"Show Metrics: {'✓' if st.session_state.applied_settings['show_metrics'] else '✗'}")
-    st.caption(f"Live Preview: {'✓' if st.session_state.applied_settings['live_preview'] else '✗'}")
+    st.markdown("<p style='color: #00ccff; font-size: 14px;'><strong>Settings for next analysis:</strong></p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Template Set: {st.session_state.applied_settings['selected_template']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Model: {st.session_state.applied_settings['model']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Temperature: {st.session_state.applied_settings['temperature']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Max Critique Loops: {st.session_state.applied_settings['max_loops']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Similarity Threshold: {st.session_state.applied_settings['similarity_threshold']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Show Critique Process: {'✓' if st.session_state.applied_settings['show_critique'] else '✗'}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Show Metrics: {'✓' if st.session_state.applied_settings['show_metrics'] else '✗'}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #00ccff; font-size: 14px;'>Live Preview: {'✓' if st.session_state.applied_settings['live_preview'] else '✗'}</p>", unsafe_allow_html=True)
     
 
 # Main interface
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns([1, 1])
 
 with col1:
     # Input area
+    st.markdown("##### Enter your problem or question:")
     user_input = st.text_area(
-        "Enter your problem or question:",
+        "Input",  # Non-empty label required by Streamlit
         height=150,  # Taller box so text can wrap properly
         placeholder="Example: Our customer retention dropped 25% after the latest update. Support tickets mention confusion with the new interface. What's happening?",
-        help="Press Ctrl+Enter (or Cmd+Enter on Mac) to analyze"
+        help="Press Ctrl+Enter (or Cmd+Enter on Mac) to analyze",
+        label_visibility="collapsed"
     )
     
     # Process button - only run analysis if it's a new input or settings changed
@@ -294,7 +297,7 @@ with col1:
                 total_text = results['user_input'] + results['final_answer']
                 for step in results['run_log']:
                     total_text += step.get("draft", "") + step.get("critique", "") + step.get("revision", "")
-                token_estimate = len(total_text) // 4
+                token_estimate = len(total_text) // 3.7
                 st.metric("~Tokens Used", f"{token_estimate:,}")
             
             with metrics_col3:
@@ -304,9 +307,9 @@ with col1:
 
 with col2:
     # Template viewer
-    st.markdown("### 📄 Active Templates")
+    st.markdown("#### 📄 Active System Templates and Protocol")
     
-    template_tabs = st.tabs(["Initial", "Critique", "Revision"])
+    template_tabs = st.tabs([    "**Initial** ",     "**Critique** ",     "**Revision** ",     "**Protocol** "])
     
     with template_tabs[0]:
         initial_template = f"templates/{selected_template}_initial_sys.txt"
@@ -328,14 +331,22 @@ with col2:
             st.code(Path(revision_template).read_text(), language="text")
         else:
             st.code(Path("templates/generic_revision_sys.txt").read_text(), language="text")
+    
+    with template_tabs[3]:
+        protocol_path = Path("templates/protocol_context.txt")
+        if protocol_path.exists():
+            st.code(protocol_path.read_text(), language="text")
+        else:
+            st.info("No protocol file found")
 
 # Footer
 st.markdown("---")
 st.markdown(
     """
-    <div style='text-align: center; color: #666;'>
-    Built with Recursive Companion Framework | 
-    Templates are loaded from <code>templates/</code> directory
+    <div style='text-align: center;'>
+    <span style='color: #00ccff;'>Built with Recursive Companion Framework | Templates are loaded from </span>
+    <code style='background-color: #f0f2f6; padding: 2px 6px; border-radius: 3px; color: #ff6b6b;'>templates/</code>
+    <span style='color: #00ccff;'> directory</span>
     </div>
     """, 
     unsafe_allow_html=True
