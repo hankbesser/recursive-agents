@@ -18,6 +18,30 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 ---
 
+
+## 🏗️ Architecture: Clean Layers, Clear Purpose
+→ See the [Architecture Documentation](docs/RC_architecture.md)
+
+```text
+Your Code
+    ↓ imports
+recursive_companion/        # Pick your companion
+    ├── base.py             # Standard: Marketing, Bug, Strategy, Generic
+    └── streamlit.py        # Same companions + live UI updates
+        ↓ inherits
+core/chains.py              # The engine: 3-phase loop, convergence, history
+        ↓ uses
+templates/*.txt             # Hot-swappable prompts + protocol injection
+```
+**Where to Look (Separation of Concerns):**
+
+- **Engineers** → core/chains.py (how to build the chains, what is being stored/cached/how memory is handled, the iteration process, etc.)
+- **Users** → recursive_companion/base.py (picking companions)
+- **Prompt Engineers** → templates/ + template_load_utils.py
+- **UI Developers** → streamlit.py (progress containers)
+
+
+---
 ## 📚 Three Levels of Understanding
 
 ### Level 1: Just Use It (5 minutes)
@@ -52,7 +76,8 @@ marketing_node = RunnableLambda(marketing)  # It's a Runnable!
 ### Level 3: Extend the Framework (2 hours)
 
 ```python
-# Create new domains by overriding one template
+# Create new domains by overriding one template - 
+# the domains intial system template
 LEGAL_TEMPLATES = build_templates(initial_sys="legal_initial_sys")
 class LegalCompanion(BaseCompanion):
     TEMPLATES = LEGAL_TEMPLATES
@@ -100,26 +125,6 @@ python multi_agent_demos/multi_agent_langgraph_demo.py
 ```
 ---
 
-## 🏗️ Architecture: Clean Layers, Clear Purpose
-→ See the [Architecture Documentation](docs/RC_architecture.md)
-
-```text
-Your Code
-    ↓ imports
-recursive_companion/        # Pick your companion
-    ├── base.py             # Standard: Marketing, Bug, Strategy, Generic
-    └── streamlit.py        # Same companions + live UI updates
-        ↓ inherits
-core/chains.py              # The engine: 3-phase loop, convergence, history
-        ↓ uses
-templates/*.txt             # Hot-swappable prompts + protocol injection
-```
-**Where to Look (Separation of Concerns):**
-
-- **Engineers** → core/chains.py (how to build the chains, what is being stored/cached/how memory is handled, etc.)
-- **Users** → recursive_companion/base.py (picking companions)
-- **Prompt Engineers** → templates/ + template_load_utils.py
-- **UI Developers** → streamlit.py (progress containers)
 
 ### Why This Architecture Matters
 
@@ -266,7 +271,7 @@ Special interest in:
 - Alternative embedding models for similarity
 - Convergence visualization tools
 
-This README's design philosophy:
+## Bonus Section: This README's design philosophy:
 
 1. **Three-level structure** mirrors the codebase organization
 2. **Technical depth** with actual code snippets and architecture diagrams
@@ -278,4 +283,6 @@ This README's design philosophy:
 8. **Visual learning** - Sequence diagram up front, architecture docs linked
 9. **What makes it unique** - Ending with the rare patterns table
 
-The goal: Show what makes Recursive Companion different and how to use it effectively.
+#### The goal: Show what makes Recursive Companion different and how to use it effectively. 
+Note: Besides the first section, any of the sections in the README 
+could be placed in any order-- a testament to the design of this framework.
