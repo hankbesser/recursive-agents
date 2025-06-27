@@ -183,6 +183,8 @@ class BaseCompanion:
                 level=logging.DEBUG,
                 format="%(levelname)s | %(message)s"
             )
+            # Suppress noisy httpx debug logs
+            logging.getLogger("httpx").setLevel(logging.WARNING)
 
     # ---------- main recursive loop -----------------------------------
     def loop(self, user_input: str) ->  str | tuple[str, list]:

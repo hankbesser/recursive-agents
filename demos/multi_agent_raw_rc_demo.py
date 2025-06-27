@@ -6,11 +6,11 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 
-# demos/multi_agent_demo_raw_rc.py
+# demos/multi_agent_raw_rc_demo.py
 """
-Multi-agent demo pipeline
-=========================
-Runs a realistic workflow:
+Multi-agent demo pipeline (Pure RC)
+===================================
+Runs a realistic workflow using pure Recursive Companion (no LangGraph):
 
 1. **MarketingCompanion** - surfaces audience-level symptoms.
 2. **BugTriageCompanion** - surfaces engineering/root-cause clues.
@@ -18,7 +18,7 @@ Runs a realistic workflow:
 
 Usage
 -----
-$ OPENAI_API_KEY=sk-...  python -m companion.multi_agent_demo
+$ OPENAI_API_KEY=sk-...  python demos/multi_agent_raw_rc_demo.py
 
 The script prints:
 • Each domain-specific analysis (debug on for Marketing).
@@ -57,9 +57,18 @@ combined_views = (
 )
 
 # 3) Synthesis agent produces the cross-functional plan
-synth          = StrategyCompanion(llm="gpt-4o-mini", temperature=0.55, return_transcript=True)
-action_plan, _ = synth.loop(combined_views)
+synth = StrategyCompanion(llm="gpt-4o-mini", temperature=0.55)
+action_plan = synth.loop(combined_views)
 
 print("\n=== Synthesised action plan ===\n")
 print(action_plan)
-# print(synth.transcript_as_markdown())   # inner reasoning trail (optional)
+
+# Show convergence analysis
+print("\n=== Convergence Analysis ===")
+print(f"Marketing iterations: {len(mkt.run_log)}")
+print(f"Engineering iterations: {len(bug.run_log)}")
+print(f"Strategy iterations: {len(synth.run_log)}")
+
+# Uncomment to see the strategy agent's thinking process:
+# print("\n=== Strategy Thinking Process ===")
+# print(synth.transcript_as_markdown())

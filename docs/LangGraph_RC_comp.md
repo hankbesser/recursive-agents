@@ -1,3 +1,11 @@
+```python
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) [2025] [Henry Besser]
+#
+# This software is licensed under the MIT License.
+# See the LICENSE file in the project root for the full license text.
+```
 # LangGraph & Recursive Companion: Complementary Observability
 
 ## The Power of Simple, Modular Design
@@ -66,9 +74,10 @@ print(mkt.run_log[-1]["critique"])         # Why it stopped iterating
 
 1. **Workflow Execution Visibility**
 ```python
-# Debug mode provides comprehensive workflow insights
+# Debug mode prints workflow insights to stdout
 for chunk in workflow.stream({"input": "..."}, print_mode="debug"):
-    print(chunk)  # Task scheduling, node I/O, state transitions, timing
+    pass  # Debug info prints automatically, but isn't available as data
+# Note: Debug output is text-only, not structured data
 ```
 
 2. **State Management & Tracking**
@@ -85,9 +94,11 @@ graph.get_graph().draw_mermaid()  # Interactive workflow diagram
 
 4. **Built-in Features**
 - Streaming support for real-time monitoring
-- Error handling and retry visibility
+- Error handling and retry visibility  
 - Conditional routing transparency
 - Checkpointing and persistence
+
+**Important Note**: Debug visibility comes at a cost - when using `print_mode="debug"`, the debug information is only printed to stdout as text. You cannot programmatically access this data, forcing you to choose between visibility (debug mode) or getting results (normal mode).
 
 ### What's Not Visible Without RC:
 
@@ -99,37 +110,49 @@ graph.get_graph().draw_mermaid()  # Interactive workflow diagram
 
 **This isn't a LangGraph limitation** - they solve different problems. LangGraph excels at orchestration; RC adds reasoning transparency.
 
-## Accessing Results: Complex Parsing vs Simple Attributes
+## Accessing Results: Debug Mode Trade-offs vs Always-Available Data
 
-### LangGraph Debug Stream (Complex Extraction)
+### LangGraph's Debug Mode Dilemma
 ```python
-# To get results from LangGraph's debug stream:
-debug_chunks = []
+# Option 1: Debug mode for visibility
 for chunk in workflow.stream(input, print_mode="debug"):
-    debug_chunks.append(chunk)  # Must capture everything
+    pass  # Prints to stdout, but data isn't accessible programmatically
+# Result: Can see what's happening, but can't access the actual results!
 
-# Extract a specific agent's result - look at this complexity!
-for chunk in reversed(debug_chunks):
-    if (chunk.get('type') == 'task_result' and 
-        chunk.get('payload', {}).get('name') == 'strategy_agent'):
-        result = chunk['payload']['result'][0][1]  # Nested path!
-        break
+# Option 2: Normal mode for results  
+result = workflow.invoke(input)
+# Result: Get the final state, but no visibility into the process
 
-# Still no access to:
-# - How many iterations happened
-# - What critiques were generated
-# - Why the agent stopped iterating
+# You must choose: visibility OR programmatic access, not both
+
+# Debug output includes:
+# [debug] task: When agents start
+# [debug] task_result: When agents complete  
+# But it's text with ANSI color codes - not structured data
 ```
 
 ### RC Direct Access (Simple & Complete)
 ```python
-# With RC, after the same workflow:
-strategy.run_log                    # Full iteration history
-len(strategy.run_log)              # Number of iterations
-strategy.run_log[-1]['critique']   # Final critique
-strategy.transcript_as_markdown()  # Formatted thinking process
+# Setup: Create RC agents (they maintain their own history)
+mkt = MarketingCompanion()
+eng = BugTriageCompanion()
+strategy = StrategyCompanion()
+
+# Use them in your workflow (LangGraph or standalone)
+result = workflow.invoke(input)  # Normal execution, no debug mode needed
+
+# Full visibility is always available on each agent:
+mkt.run_log                         # Marketing's iteration history
+eng.run_log                         # Engineering's iteration history
+strategy.run_log                    # Strategy's iteration history
+
+# Access any detail you need:
+len(strategy.run_log)               # Number of iterations
+strategy.run_log[-1]['critique']    # Final critique
+strategy.transcript_as_markdown()   # Formatted thinking process
 
 # Everything is a simple attribute - no parsing needed!
+# No trade-offs: visibility and programmatic access together
 
 # BONUS: Beautiful formatted output for humans
 print(strategy.transcript_as_markdown())
@@ -145,6 +168,12 @@ print(strategy.transcript_as_markdown())
 ```
 
 ## How Others Try to Add Observability
+
+### The Fundamental Challenge
+Without built-in introspection, developers face a difficult choice:
+- Use debug mode to see what's happening (but lose programmatic access)
+- Run normally to get results (but lose visibility)
+- Try to build their own observability (complex and error-prone)
 
 ### Manual State Tracking (Painful!)
 ```python
