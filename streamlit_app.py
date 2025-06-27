@@ -6,6 +6,43 @@
 # See the LICENSE file in the project root for the full license text.
 
 # streamlit_app.py
+"""
+Recursive Companion Studio - Interactive Demo Application
+========================================================
+
+A Streamlit application that demonstrates the Recursive Companion framework's
+three-phase critique and revision process with real-time visualization.
+
+Features:
+---------
+- Live Preview Mode: Watch critique/revision cycles happen in real-time
+- Multiple Companion Types: Generic, Marketing, Bug Triage, and Strategy
+- Configurable Parameters: Model selection, temperature, convergence thresholds
+- Template Viewer: See the actual prompts and protocols being used
+- Metrics Dashboard: Track iterations, convergence, and token usage
+
+Usage:
+------
+Run the application with:
+    streamlit run streamlit_app.py
+
+Then navigate to http://localhost:8501 in your browser.
+
+Architecture:
+------------
+The app provides two viewing modes:
+1. Standard Mode: Shows results after completion
+2. Live Preview Mode: Displays each phase as it happens using StreamlitBaseCompanion
+
+The template viewer shows the active templates including the protocol context,
+allowing users to understand how the recursive thinking process is structured.
+
+Requirements:
+------------
+Requires the optional streamlit dependencies:
+    pip install recursive-companion[streamlit]
+"""
+
 import streamlit as st
 from pathlib import Path
 from langchain.callbacks.base import BaseCallbackHandler
