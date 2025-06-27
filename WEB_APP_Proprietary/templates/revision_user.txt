@@ -1,7 +1,0 @@
-Original request: "{user_input}"
-Current draft: "{draft}"
-Critique feedback: "{critique}"
-
-Now, revise the draft based on the critique. 
-Produce an improved version that addresses all the issues raised. 
-Maintain the original intent and information while improving clarity, accuracy, and style.

@@ -1,9 +1,0 @@
-Original request: "{user_input}"
-Draft response: "{draft}"
-
-Provide a detailed critique of the draft above. 
-Identify any issues with clarity, accuracy, completeness, or style. 
-- Point out factual errors or inconsistencies.
-- Suggest improvements in structure or wording.
-- Note any missing information relevant to the request.
-Conclude with an overall assessment and suggestions for revision.
