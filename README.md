@@ -82,7 +82,9 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 - **Users** → ```recursive_companion/base.py``` (picking companions)
 - **Prompt Engineers** → ```templates/``` folder + ```template_load_utils.py```
 - **UI Developers** → ```streamlit.py``` (progress containers)
-- *or any combination of these* 
+- *or any combination of these*
+
+💡 **Tip:** Each module includes extensive docstrings explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
 
 
 ---
@@ -314,4 +316,15 @@ patterns emerge across different domains and scales.
 7. **Practical guidance** for extending the framework
 8. **Visual learning** - Sequence diagram up front, architecture docs linked
 
-#### The goal: Show what makes Recursive Companion different and how to use it effectively. 
+#### The goal: Show what makes Recursive Companion different and how to use it effectively.
+
+---
+
+## Built Through Collaboration
+
+This framework emerged from intensive human-AI collaboration over 3 weeks:
+- Solo developer working recursively with multiple LLMs
+- Built using the very patterns it now enables  
+- The architecture mirrors the discovery process itself
+
+The rapid development was possible because the framework design emerged naturally from the recursive dialogue process—we were building what we were already doing. 
