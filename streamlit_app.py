@@ -28,15 +28,6 @@ Run the application with:
 
 Then navigate to http://localhost:8501 in your browser.
 
-Architecture:
-------------
-The app provides two viewing modes:
-1. Standard Mode: Shows results after completion
-2. Live Preview Mode: Displays each phase as it happens using StreamlitBaseCompanion
-
-The template viewer shows the active templates including the protocol context,
-allowing users to understand how the recursive thinking process is structured.
-
 Requirements:
 ------------
 Requires the optional streamlit dependencies:
