@@ -27,12 +27,12 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 | **One `protocol_context.txt` feeds all system prompts** | Change reasoning style everywhere with one edit | ✓ |
 | **Templates live as `.txt` files on disk** | Git tracks prompt changes; hot-reload without restarting | ✓ |
 | **New expert domain = inherit BaseCompanion + point to template** | Three lines of code gets you a complete agent | ✓✓ |
-| **Every companion works as `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | ✓ |
+| **Every Companion instance  is itself an `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | ✓ |
 | **Built-in `run_log` tracks all iterations** | See why decisions were made without adding instrumentation | ✓✓ |
 
 ✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
 
-For detailed comparison with LangGraph capabilities, see [LANGGRAPH_COMPARISON.md](docs/LANGGRAPH_COMPARISON.md).
+For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_comparison_compliment.md).
 
 ---
 ### 🔧 Quick Clone
@@ -152,7 +152,6 @@ streamlit run streamlit_app.py
 - Enter your prompt and watch the AI refine its response
 - See critique-revision cycles happen in real-time
 - View cosine similarity scores update live
-- Export results with one click
 
 This is a full testing and observability app included with the framework.
 

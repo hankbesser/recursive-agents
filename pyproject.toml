@@ -25,12 +25,12 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-    "langchain>=0.3.0",
-    "langchain-openai>=0.3.0",
+    "langchain>=0.3.20",
+    "langchain-openai>=0.3.20",
     "langchain-core>=0.3.0",
-    "openai>=1.0.0",
-    "numpy>=2.0.0",
-    "python-dotenv>=1.0.0",
+    "openai>=1.90.0",
+    "numpy>=2.3.0",
+    "python-dotenv>=1.1.0",
 ]
 
 [project.optional-dependencies]
@@ -38,15 +38,11 @@ streamlit = [
     "streamlit>=1.40.0",
 ]
 demos = [
-    "langgraph>=0.2.0",
+    "langgraph>=0.4.0",
 ]
-dev = [
-    "pytest>=7.0.0",
-    "black>=22.0.0",
-    "ruff>=0.0.261",
-]
+
 all = [
-    "recursive-companion[streamlit,demos,dev]",
+    "recursive-companion[streamlit,demos]",
 ]
 
 [project.urls]
