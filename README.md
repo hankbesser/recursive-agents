@@ -323,7 +323,7 @@ patterns emerge across different domains and scales.
 ## Built Through Collaboration
 
 This framework emerged from intensive human-AI collaboration over 3 weeks:
-- Solo developer working recursively with multiple LLMs
+- Solo developer working with multiple LLMs
 - Built using the very patterns it now enables  
 - The architecture mirrors the discovery process itself
 

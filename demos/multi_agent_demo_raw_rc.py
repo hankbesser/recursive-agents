@@ -1,5 +1,12 @@
 #!/usr/bin/env python
-# multi_agent_demo_raw_rc.py
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) [2025] [Henry Besser]
+#
+# This software is licensed under the MIT License.
+# See the LICENSE file in the project root for the full license text.
+
+# demos/multi_agent_demo_raw_rc.py
 """
 Multi-agent demo pipeline
 =========================

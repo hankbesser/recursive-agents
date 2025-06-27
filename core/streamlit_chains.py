@@ -1,3 +1,10 @@
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) [2025] [Henry Besser]
+#
+# This software is licensed under the MIT License.
+# See the LICENSE file in the project root for the full license text.
+
 # core/streamlit_chains.py
 """
 Streamlit-specific version of chains.py with live update capabilities

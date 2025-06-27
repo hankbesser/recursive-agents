@@ -1,4 +1,11 @@
-# template_load_utils.py
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) [2025] [Henry Besser]
+#
+# This software is licensed under the MIT License.
+# See the LICENSE file in the project root for the full license text.
+
+# recursive_companion/template_load_utils.py
 """
 Template loading utilities for the Recursive Companion framework.
 ================================================================
