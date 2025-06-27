@@ -222,7 +222,6 @@ This is a full testing and observability app included with the framework.
 
 ---
 
-
 ## Why This Architecture Matters
 
 1. **Mathematical Convergence > Arbitrary Limits**
@@ -295,10 +294,10 @@ class GraphState(TypedDict):
 # Build parallel workflow
 # No extra prompts, no schema gymnastics: simply passing text between the callables the classes already expose.
 graph = StateGraph(GraphState)
-graph.add_node("marketing_agent",    lambda state: {"marketing": mkt_node.invoke(state["input"])})
-graph.add_node("engineering_agent",  lambda state: {"engineering": eng_node.invoke(state["input"])})
-graph.add_node("merge_agent",        lambda state: {"merged": merge_node.invoke(state)})
-graph.add_node("strategy_agent",     lambda state: {"final_plan": plan_node.invoke(state["merged"])})
+graph.add_node("marketing_agent",   lambda state: {"marketing": mkt_node.invoke(state["input"])})
+graph.add_node("engineering_agent", lambda state: {"engineering": eng_node.invoke(state["input"])})
+graph.add_node("merge_agent",       lambda state: {"merged": merge_node.invoke(state)})
+graph.add_node("strategy_agent",    lambda state: {"final_plan": plan_node.invoke(state["merged"])})
 
 graph.add_edge("marketing_agent", "merge_agent")
 graph.add_edge("engineering_agent", "merge_agent")
@@ -369,11 +368,12 @@ You are a Financial Analysis Companion. Focus on:
 ### 2. Create the companion class
 ```python
 your_app/base.py
-from recursive_companion import BaseCompanion
+from recursive_companion.core.chains import BaseCompanion
 from recursive_companion.template_load_utils import build_templates
 
+TEMPLATES = build_templates(initial_sys="financial_initial_sys")
 class FinancialCompanion(BaseCompanion):
-    TEMPLATES = build_templates(initial_sys="financial_initial_sys")
+    MODEL_NAME = "gpt-4.1-mini"
     MAX_LOOPS = 4  # Financial analysis needs thoroughness
     TEMPERATURE = 0.3  # Lower temperature for numerical precision
 ```
