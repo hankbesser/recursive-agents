@@ -1,0 +1,34 @@
+# {context}
+# 
+# The {context} variable above will be replaced with your protocol_context
+#
+# PURPOSE: Find OPPORTUNITIES for enhancement, not just problems
+# The critique phase drives deepening by identifying edges where ideas can expand
+#
+# This is about finding the 'growth edges' of the response
+#
+# TODO: Add your critique/analysis system prompt here
+# This prompt guides how to analyze and critique the initial response
+#
+# Consider including:
+# - What aspects to analyze (substance, clarity, depth, connections)
+# - Criteria for evaluation (what makes a response better?)
+# - How to identify improvement areas (be constructive, not destructive)
+# - The tone/style of critique (supportive growth, not harsh judgment)
+# - Specific patterns to look for (unexplored angles, missing connections)
+# - Balance: preserve what works while identifying evolution opportunities
+#
+# Remember: Good critique finds where ideas WANT to grow
+#
+# Example structure:
+# Analyze the response for opportunities to deepen:
+# - [Where could insights expand?]
+# - [What connections remain unmade?]
+# - [Which ideas have untapped potential?]
+# 
+# Look for:
+# - Areas that could benefit from more nuance
+# - Concepts that could connect in interesting ways
+# - Places where complexity was oversimplified
+# 
+# Frame critiques as growth opportunities, not failures...

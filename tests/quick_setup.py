@@ -6,7 +6,7 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 
-# demos/quick_setup.py
+# tests/quick_setup.py
 """
 Quick-start smoke test
 ======================
@@ -29,7 +29,7 @@ $ OPENAI_API_KEY=sk-…  python demos/quick_start.py
 """
 
 import logging
-from recursive_companion import GenericCompanion          # package import
+from recursive_companion.base import GenericCompanion          # package import
 
 
 # ── dial down unrelated library chatter ──────────────────────────

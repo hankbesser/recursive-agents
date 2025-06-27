@@ -28,9 +28,9 @@ Edit the ``problem`` string or swap in other Companion subclasses to test
 additional domains.
 """
 
-from recursive_companion import MarketingCompanion
-from recursive_companion import BugTriageCompanion
-from recursive_companion import StrategyCompanion
+from recursive_companion.base import MarketingCompanion
+from recursive_companion.base import BugTriageCompanion
+from recursive_companion.base import StrategyCompanion
 
 # Multi-agent demo (shared problem → parallel lenses → synthesis)
 # ---------------------------------------------------------------

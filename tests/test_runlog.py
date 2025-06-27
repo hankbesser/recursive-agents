@@ -7,7 +7,7 @@
 # See the LICENSE file in the project root for the full license text.
 
 # tests/test_runlog.py
-from recursive_companion import GenericCompanion
+from recursive_companion.base import GenericCompanion
 
 # Create companion with verbose to see what's happening
 companion = GenericCompanion(llm="gpt-4o-mini", max_loops=2, return_transcript=True)

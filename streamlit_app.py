@@ -101,7 +101,7 @@ with col_title:
     st.title("🔄 Recursive Companion Studio")
 with col_github:
     st.markdown("<br>", unsafe_allow_html=True)  # Spacing to align with title
-    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Recursive%20Companion-blue?logo=github)](https://github.com/yourusername/recursive-companion)")
+    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Recursive%20Companion-blue?logo=github)](https://github.com/hankbesser/recursive-companion)")
 
 st.markdown("Watch the three-phase loop in action: draft, critique, and revision happening live • See how ideas deepen through recursive self-improvement")
 st.markdown("<p style='color: #00ccff; font-size: 15px;'><strong>💡 Note:</strong> Click 'Apply Settings' in the sidebar to activate configuration changes • Settings changes will stop any analysis in progress</p>", unsafe_allow_html=True)

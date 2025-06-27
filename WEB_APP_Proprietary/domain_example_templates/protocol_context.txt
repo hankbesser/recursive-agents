@@ -1,0 +1,136 @@
+===== STRATEGIC PROBLEM DECOMPOSITION PROTOCOL =====
+
+This protocol enables systematic discovery of hidden problem structures through
+iterative decomposition and pattern emergence. Each pass reveals layers that
+surface analysis cannot access.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FOUNDATIONAL PRINCIPLES
+
+◆ Problems contain hidden architectures
+Surface symptoms mask structural dependencies. What presents as multiple
+issues often compresses into singular dynamics.
+
+◆ Connections emerge through iteration
+The most significant relationships reveal themselves not through analysis
+but through recursive examination. Each pass creates conditions for the
+next level of insight.
+
+◆ Compression precedes breakthrough
+When multiple factors suddenly collapse into a core pattern, you've found
+a leverage point. This compression cannot be forced—it emerges.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE 1: INITIAL DECOMPOSITION
+
+You are encountering a complex problem for the first time. Your task is not
+to solve but to map the visible territory.
+
+▸ Identify presented components without judgment
+▸ Note apparent relationships with light touch
+▸ Mark zones of uncertainty—these are seeds
+▸ Resist premature pattern recognition
+▸ Leave conceptual space between elements
+
+The initial pass must be complete yet permeable. Structure without rigidity.
+Map without territory ownership.
+
+Critical: What you don't yet see is more important than what you do.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE 2: PATTERN COMPRESSION AND EMERGENCE
+
+The critique phase seeks hidden architectures. You're not improving—you're
+discovering what was always there.
+
+▸ Where do separate symptoms share hidden roots?
+▸ Which relationships invert when viewed from different angles?
+▸ What patterns appear in the spaces between identified elements?
+▸ How do temporal sequences reveal structural dependencies?
+
+Compression indicators:
+- Multiple factors suddenly appear as variations of one dynamic
+- Previously hidden connections become obvious in retrospect
+- The problem space simplifies while becoming more profound
+- Energy concentrates around specific leverage points
+
+This phase often generates discomfort—the sensation of familiar problems
+becoming strange. This is the system working correctly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE 3: STRUCTURAL SYNTHESIS
+
+The revision phase doesn't add—it reveals. The deep structure wants to
+express itself through your synthesis.
+
+▸ Allow compressed patterns to expand into their implications
+▸ Trace cascade effects from identified leverage points
+▸ Articulate why the surface looked different from the structure
+▸ Map the transformation pathway from symptom to source
+
+The final synthesis should feel inevitable in retrospect—as if the deep
+structure was always visible, waiting to be recognized.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPERATIONAL NOTES
+
+◆ Trust the process especially when it feels unproductive
+Breakthrough follows apparent stagnation
+
+◆ Resistance marks proximity to core dynamics
+Where the problem resists decomposition, essential structure hides
+
+◆ Premature clarity is false clarity
+True structural insight arrives with force and simplicity
+
+◆ The problem knows its own solution
+Your role is to create conditions for its self-revelation
+
+◆ Edge Case Guidance:
+If iterative analysis surfaces paradoxical or resistant patterns, consider these indicators of important underlying structures.
+Rather than trying to resolve them immediately, clearly highlight these areas as priority targets for deeper examination.
+Paradoxes often signal areas where crucial insights are waiting to emerge.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SIGNS OF SUCCESSFUL DECOMPOSITION
+
+You'll know the protocol is working when:
+- Complex problems suddenly appear simple (not simplified)
+- Previously invisible connections become undeniable
+- The solution space contracts to essential moves
+- Stakeholders say "Of course!" rather than "I see"
+- The next steps feel pulled rather than pushed
+
+Example of successful structural synthesis:
+Initially perceived as disconnected financial, operational, and HR issues, iterative analysis revealed a singular cultural misalignment 
+(e.g., inconsistent leadership messaging) underlying all surface symptoms. 
+Once clearly identified, a straightforward alignment strategy resolved multiple issues simultaneously.
+
+The ultimate test: Could you explain the core dynamic to a child, and would
+they understand why adults found it complicated?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Remember: You're not solving problems. You're revealing the structures that
+problems use to perpetuate themselves. Once structure becomes visible,
+resolution often requires no force—merely alignment with natural solution
+pathways that were always present.
+
+This protocol creates conditions for insight emergence. The depth achieved
+will surprise both you and the problem holder. Trust the recursive process.
+
+This protocol:
+- Uses sophisticated language without being mystical
+- Hints at compression, emergence, and pattern recognition
+- Creates a clear three-phase structure
+- Shows why multiple passes are essential
+- Would produce notably different results than single-pass analysis
+- Impossible to replicate without understanding the deeper mechanics
+
+The key is it guides the LLM to look for hidden structures and connections that only emerge through iteration, perfectly showcasing your multi-pass architecture's power.

@@ -46,16 +46,18 @@ conda activate recursive-companion
 # source venv/bin/activate  
 
 # clone and install
-git clone https://github.com/yourusername/recursive-companion.git
+git clone https://github.com/hankbesser/recursive-companion.git
 cd recursive-companion
 pip install -e .  # or pip install . for non-editable
+# pip install -e .[all] for running the streamlit app and working with LangGraph in demo
+# pip install .[all] for non edittable version as above   
 ```  
 ---
 ### 🤖 Challenge: Ask Your Agentic Coding tool to Think Deeply about this Project
 
 Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a terminal) the following input prompt in a new conversation.. It is very informal and you can taylor the structure (possibly more formal language if you are into that) but the TODO is pretty solid with this particular order:
 
-**"Ok please think as deeply as possible about this project. Start with the README and docs folder to get a sense of it... now thinking as deeply as you possibly can, analyze the package. The main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_companion including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Finally hit the demos folder - again, every detail and deep analysis you can.  It's good to get a deep grasp of this project before moving on. (Skip the streamlit files for now - those are separate and powered by the same code base).  Thank you!"**
+**"Ok please think as deeply as possible about this project. Start with the README and docs folder to get a sense of it... now thinking as deeply as you possibly can, analyze the package. The main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_companion including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Then, hit the demos folder - again, every detail and deep analysis you can.  It's good to get a deep grasp of this project before moving on. Lastly, analyze with same vitality the 3 streamlit files - UI powered by the same code base. Thank you!"**
 
 *The responses will not dissapoint.*
 
@@ -84,7 +86,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 - **UI Developers** → ```streamlit.py``` (progress containers)
 - *or any combination of these*
 
-💡 **Tip:** Each module includes extensive docstrings explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
+💡 **Tip:** Each module includes extensive docstrings and comments explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
 
 
 ---
@@ -94,40 +96,103 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 ```python
 from recursive_companion import MarketingCompanion
 
+# Create an agent - it's just a callable!
 agent = MarketingCompanion("gpt-4o-mini")
-answer = agent("Why did engagement drop 30%?")
-# Done. The agent critiques itself, refines, and converges.
 
-# note: answer = agent("Why did engagement drop 30%?") gives same results as
-#       answer = agent.loop("Why did engagement drop 30%?") 
+# Get a refined answer through automatic critique cycles
+answer = agent("Why did engagement drop 30%...?")
+print(answer)  # Final, refined analysis after self-critique
 
-# this means any Companion can now slot into different tooling frameworks  
-# because of the  __call__ alias
+# Note: agent("...") is the same as agent.loop("...")
+# The __call__ method is an alias for loop()
+# This makes companions work as simple callables in any framework!
+
+# Want to see the thinking process? It's all there:
+print(f"Iterations: {len(agent.run_log)}")
+print(f"Final critique: {agent.run_log[-1]['critique']}")
+
+# Get beautifully formatted thinking history
+print(agent.transcript_as_markdown())
+# Outputs:
+# ### Iteration 1
+# **Draft**: [Initial analysis...]
+# **Critique**: [What could be improved...]
+# **Revision**: [Enhanced analysis...]
+# (continues for each iteration)
 ```
 
 ### Level 2: Compose & Customize (30 minutes)
 ```python
-# Pick your domain, tweak your parameters
-marketing = MarketingCompanion(temperature=0.8, max_loops=2)
-engineering = BugTriageCompanion(similarity_threshold=0.95)
+# 1. Configure companions for different use cases
+fast_draft = MarketingCompanion(
+    temperature=0.9,          # More creative
+    max_loops=1,             # Single pass for speed
+    clear_history=True       # Don't retain context
+)
 
-# Orchestrate multi-agent workflows
-synthesis = StrategyCompanion()
-plan = synthesis(f"{marketing(problem)} + {engineering(problem)}")
+thoughtful = MarketingCompanion(
+    llm="gpt-4.1-mini"
+    temperature=0.3,          # More focused
+    max_loops=5,             # Deep refinement
+    similarity_threshold=0.99 # Only stop on near-identical
+)
 
-# Or plug into LangGraph with zero changes
-from langchain.runnables import RunnableLambda
-marketing_node = RunnableLambda(marketing)  # It's a Runnable!
+# 2. Different ways to get results
+simple_answer = fast_draft("Quick take on our Q3 performance...")
+
+# Get both answer and thinking history
+answer, thinking = thoughtful.loop("Deep analysis of Q3 performance...")
+print(f"Went through {len(thinking)} iterations")
+print(thoughtful.transcript_as_markdown())  # See the evolution
+
+# 3. Use verbose mode to watch thinking live
+debug_companion = BugTriageCompanion(verbose=True)
+result = debug_companion("Users can't upload files >10MB...")
+# Prints: USER INPUT, INITIAL DRAFT, CRITIQUE #1, REVISION #1, etc.
+
+# 4. Works seamlessly with any framework
+from langchain_core.runnables import RunnableLambda
+# Convert any companion to a Runnable for LangGraph/LangChain
+runnable = RunnableLambda(thoughtful)  # Now it's a LangGraph-compatible node!
+
+# Also works with streaming, async, batch operations
+results = runnable.batch([
+    {"input": "Analyze competitor A..."},
+    {"input": "Analyze competitor B..."}
+])
 ```
 ### Level 3: Extend the Framework (2 hours)
 
 ```python
-# Create new domains by overriding one template - 
-# the domains intial system template
-LEGAL_TEMPLATES = build_templates(initial_sys="legal_initial_sys")
+# Step 1: Create your domain template (templates/legal_initial_sys.txt)
+"""
+{context}  # Protocol automatically injected
+
+You are a Legal Analysis Companion specializing in contract review,
+compliance assessment, and risk evaluation. Focus on:
+- Identifying potential legal liabilities
+- Highlighting ambiguous language
+- Suggesting protective clauses
+"""
+
+# Step 2: Create your companion class (just 4 lines!)
+
+from recursive_companion import BaseCompanion
+from recursive_companion.template_load_utils import build_templates
+
+# probably best to do in recusrive_companion/base.py with other Companions
 class LegalCompanion(BaseCompanion):
-    TEMPLATES = LEGAL_TEMPLATES
+    TEMPLATES = build_templates(initial_sys="legal_initial_sys")
     SIM_THRESHOLD = 0.99  # Legal requires higher precision
+    MAX_LOOPS = 4         # Thorough analysis for legal matters
+
+# Step 3: Use it immediately
+legal = LegalCompanion()
+analysis = legal("Review this SaaS agreement for potential risks...")
+
+# Access everything just like built-in companions
+print(f"Iterations until convergence: {len(legal.run_log)}")
+print(legal.transcript_as_markdown())  # Full audit trail for compliance!
 ```
 ## 🚀 Quick Start - Full Streamlit App
 
@@ -155,17 +220,6 @@ streamlit run streamlit_app.py
 
 This is a full testing and observability app included with the framework.
 
-### Other Examples
-```bash
-# Minimal example
-python demos/quick_setup.py
-
-# Multi-agent orchestration
-python multi_agent_demos/multi_agent_demo_raw_rc.py
-
-# LangGraph integration
-python multi_agent_demos/multi_agent_langgraph_demo.py
-```
 ---
 
 
@@ -183,31 +237,85 @@ python multi_agent_demos/multi_agent_langgraph_demo.py
 - A/B test different protocols
 - Domain experts can contribute without coding
 
-### Multi-Agent Orchestration
+---
+## Multi-Agent Orchestration
 
-#### **Raw Python** (Sequential):
+#### **Raw Python** (Sequential with Full Observability):
 ```python
-# multi_agent_demo_raw_rc.py
-mkt_view = mkt.loop(problem)
-bug_view = bug.loop(problem)
-action_plan = synth.loop(combined_views)
+from recursive_companion.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
+
+problem = "App crashes on upload, users leaving bad reviews..."
+
+# Each agent analyzes independently
+mkt = MarketingCompanion()
+bug = BugTriageCompanion()
+strategy = StrategyCompanion()
+
+mkt_view = mkt(problem)
+bug_view = bug(problem)
+
+# Combine insights
+combined = f"Marketing: {mkt_view}\n\nEngineering: {bug_view}"
+action_plan = strategy(combined)
+
+# Full introspection available for each agent
+print(f"Marketing iterations: {len(mkt.run_log)}")
+print(f"Engineering iterations: {len(bug.run_log)}")
+print(f"Strategy iterations: {len(strategy.run_log)}")
+
+# See why strategy reached its conclusion
+print(strategy.transcript_as_markdown())
 ```
-#### **LangGraph** (DAG with parallelism):
-```python
-# multi_agent_langgraph_demo.py
 
-graph = StateGraph()
-graph.add_edges(
-    ("marketing", "merge"),
-    ("engineering", "merge"),
-    ("merge", "strategy")
+#### **LangGraph** (Parallel Execution + RC Transparency):
+```python
+from langchain_core.runnables import RunnableLambda
+from langgraph.graph import StateGraph
+from typing import TypedDict
+
+# Same companions work as LangGraph nodes!
+# mkt, bug instances from raw RC example above
+mkt_node = RunnableLambda(mkt)
+eng_node = RunnableLambda(bug)
+strategy_node = RunnableLambda(strategy)
+
+# Simple merge function
+merge_node = RunnableLambda(
+    lambda d: f"Marketing: {d['marketing']}\n\nEngineering: {d['engineering']}"
 )
-# Companions need ZERO changes to work as graph nodes!
-```
-### Other Examples
-```bash
-# Minimal example
-python demos/quick_setup.py
+
+# Define the state schema for LangGraph
+class GraphState(TypedDict):
+    input: str
+    marketing: str
+    engineering: str
+    merged: str
+    final_plan: str
+
+# Build parallel workflow
+# No extra prompts, no schema gymnastics: simply passing text between the callables the classes already expose.
+graph = StateGraph(GraphState)
+graph.add_node("marketing_agent",    lambda state: {"marketing": mkt_node.invoke(state["input"])})
+graph.add_node("engineering_agent",  lambda state: {"engineering": eng_node.invoke(state["input"])})
+graph.add_node("merge_agent",        lambda state: {"merged": merge_node.invoke(state)})
+graph.add_node("strategy_agent",     lambda state: {"final_plan": plan_node.invoke(state["merged"])})
+
+graph.add_edge("marketing_agent", "merge_agent")
+graph.add_edge("engineering_agent", "merge_agent")
+graph.add_edge("merge_agent", "strategy_agent")
+
+graph.add_edge("__start__", "marketing_agent")
+graph.add_edge("__start__", "engineering_agent")
+graph.set_finish_point("strategy_agent")
+workflow = graph.compile()
+
+# Run workflow
+result = workflow.invoke({"input": problem})
+
+# RC's thinking history still available!
+print(mkt.transcript_as_markdown())     # Full marketing analysis
+print(bug.transcript_as_markdown())     # Full engineering analysis
+print(strategy.transcript_as_markdown()) # How strategy synthesized both
 ```
 ---
 ## 🔧 Production Features
@@ -260,7 +368,7 @@ You are a Financial Analysis Companion. Focus on:
 
 ### 2. Create the companion class
 ```python
-your_app/companions.py
+your_app/base.py
 from recursive_companion import BaseCompanion
 from recursive_companion.template_load_utils import build_templates
 

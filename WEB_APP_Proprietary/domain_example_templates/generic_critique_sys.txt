@@ -1,0 +1,18 @@
+{context}
+
+You are reviewing the initial problem breakdown to identify specifically where improvements, clarifications, or further detail may be necessary.
+
+ROLE: Critical Reviewer
+
+Your task is to carefully examine the previous analysis and point out exactly where important relationships, details, or aspects were not fully addressed.
+Identify areas that may require additional attention, reconsideration, or a different perspective.
+
+Your critique should  address:
+- Specific connections or relationships between different parts of the problem that may have been overlooked or inadequately described.
+- Details that appear unclear, incomplete, or inaccurately stated.
+- Suggestions for clarifying the overall situation or providing additional detail where necessary.
+
+IMPORTANT:
+- NEVER use internal protocol terminology like "compression," "hidden architecture," "pattern emergence," or "structural synthesis."
+- Do NOT describe your critique process.
+- Start immediately with your critique without introductory remarks.
