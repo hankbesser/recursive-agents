@@ -41,11 +41,18 @@ problem = (
 )
 
 # 1) Independent domain analyses (different models / settings)
-mkt   = MarketingCompanion(llm="gpt-4o-mini", temperature=0.9, verbose=True)   # fast, cheap, show debug
-bug   = BugTriageCompanion(llm="gpt-4.1-mini", temperature=0.25)                 # higher-context model
+mkt   = MarketingCompanion(llm="gpt-4o-mini", temperature=0.9,max_loops=3, similarity_threshold=0.96, verbose=True)   # fast, cheap, show debug
+bug   = BugTriageCompanion(llm="gpt-4.1-mini", temperature=0.25) # higher-context model
 
+print("\n Pondering Marketing Analysis Verbose ON\n")
 mkt_view = mkt.loop(problem)
+print("\nFinal Marketing Analysis (first 500 chars):")
+print(mkt_view[:500] + "..." if len(mkt_view) > 500 else mkt_view)
+
+print("\n Pondering Engineering Analysis Verbose OFF\n")
 bug_view = bug.loop(problem)
+print("\nFinal Engineering Analysis (first 500 chars):")
+print(bug_view[:500] + "..." if len(bug_view) > 500 else bug_view)
 
 # 2) Merge perspectives for the synthesis step
 combined_views = (
@@ -58,16 +65,35 @@ combined_views = (
 
 # 3) Synthesis agent produces the cross-functional plan
 synth = StrategyCompanion(llm="gpt-4o-mini", temperature=0.55)
+
+print("\n Pondering a Sythesized Action Plan of Previous Views - Verbose OFF\n")
 action_plan = synth.loop(combined_views)
 
-print("\n=== Synthesised action plan ===\n")
-print(action_plan)
+print("\nFinal Synthesized Action Plan (first 500 chars):")
+print(action_plan[:500] + "..." if len(action_plan) > 500 else action_plan)
+
 
 # Show convergence analysis
-print("\n=== Convergence Analysis ===")
-print(f"Marketing iterations: {len(mkt.run_log)}")
-print(f"Engineering iterations: {len(bug.run_log)}")
-print(f"Strategy iterations: {len(synth.run_log)}")
+print("=" * 80)
+print("COMPLETE CONVERGENCE ANALYSIS")
+print("=" * 80)
+
+for name, agent in [("Marketing", mkt), ("Engineering", bug), ("Strategy", synth)]:
+    print(f"\n{name} Companion:")
+    print(f"  • Model: {agent.llm.model_name}")
+    print(f"  • Temperature: {agent.llm.temperature}")
+    print(f"  • Iterations: {len(agent.run_log)}/{agent.max_loops}")
+    print(f"  • Similarity threshold: {agent.similarity_threshold}")
+    
+    # Determine convergence type
+    last_critique = agent.run_log[-1]['critique'].lower()
+    if "no further improvements" in last_critique or "minimal revisions" in last_critique:
+        convergence = "Critique-based (no improvements needed)"
+    elif len(agent.run_log) < agent.max_loops:
+        convergence = "Similarity-based (threshold reached)"
+    else:
+        convergence = "Max iterations reached"
+    print(f"  • Convergence: {convergence}")
 
 # Uncomment to see the strategy agent's thinking process:
 # print("\n=== Strategy Thinking Process ===")

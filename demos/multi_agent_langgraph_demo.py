@@ -30,7 +30,7 @@ from recursive_companion.base import MarketingCompanion, BugTriageCompanion, Str
 llm_fast  = "gpt-4o-mini"
 llm_deep  = "gpt-4.1-mini" 
 
-mkt   = MarketingCompanion(llm=llm_fast, temperature=0.8)
+mkt   = MarketingCompanion(llm=llm_fast, temperature=0.8,max_loops=3, similarity_threshold=0.96)
 eng   = BugTriageCompanion(llm=llm_deep, temperature=0.3)
 plan = StrategyCompanion(llm=llm_fast)
 
@@ -76,6 +76,9 @@ graph.add_edge("__start__", "engineering_agent")
 graph.set_finish_point("strategy_agent")
 workflow = graph.compile()
 
+
+
+print("\n Pondering through the compiled graph workflow\n")
 result = workflow.invoke(
     {"input": "App ratings fell to 3.2★ and uploads crash on iOS 17.2. Diagnose & propose next steps."}
 )
@@ -91,13 +94,34 @@ print(f"Marketing iterations: {len(mkt.run_log)}")
 print(f"Engineering iterations: {len(eng.run_log)}")
 print(f"Strategy iterations: {len(plan.run_log)}")
 # Show why each converged
-print("\n📊 CONVERGENCE ANALYSIS:")
+print("=" * 80)
+print("COMPLETE CONVERGENCE ANALYSIS")
+print("=" * 80)
+
 for name, agent in [("Marketing", mkt), ("Engineering", eng), ("Strategy", plan)]:
-    if len(agent.run_log) < agent.max_loops:
-        print(f"{name}: Converged early (quality threshold reached)")
+    print(f"\n{name} Companion:")
+    print(f"  • Model: {agent.llm.model_name}")
+    print(f"  • Temperature: {agent.llm.temperature}")
+    print(f"  • Iterations: {len(agent.run_log)}/{agent.max_loops}")
+    print(f"  • Similarity threshold: {agent.similarity_threshold}")
+    
+    # Determine convergence type
+    last_critique = agent.run_log[-1]['critique'].lower()
+    if "no further improvements" in last_critique or "minimal revisions" in last_critique:
+        convergence = "Critique-based (no improvements needed)"
+    elif len(agent.run_log) < agent.max_loops:
+        convergence = "Similarity-based (threshold reached)"
     else:
-        print(f"{name}: Used all {agent.max_loops} iterations")
+        convergence = "Max iterations reached"
+    print(f"  • Convergence: {convergence}")
 
+# Want to see the last critique? Just access it directly!
+print("\n Strategy's final critique (no parsing needed) (first 1000 chars):")
+print(f"{plan.run_log[-1]['critique'][:1000]}...")
 
-print("\n=== INNER STEPS ===\n")
-print(plan.transcript_as_markdown())
+print("=" * 80)
+print("\n\n Compare this to extracting from debug chunks - night and day!\n")
+print("=" * 80)
+# Uncomment to see the strategy agent's thinking process:
+#print("\n=== INNER STEPS ===\n")
+#print(plan.transcript_as_markdown())
