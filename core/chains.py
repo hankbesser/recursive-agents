@@ -331,5 +331,3 @@ class BaseCompanion:
                 out.append(last_step["revision"])
         
         return "\n".join(out)
-
-

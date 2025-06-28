@@ -201,17 +201,19 @@ export OPENAI_API_KEY="sk-..." # in terminal
 ```bash
 streamlit run streamlit_app.py
 ```
-[![Your video title](https://cdn.loom.com/sessions/thumbnails/b0e2e87908d6472db5db5e7a120e9fbf-097bd51a4fc397ed-full-play.gif)](https://www.loom.com/share/b0e2e87908d6472db5db5e7a120e9fbf)
-
-
-
-
+<a href="images/Streamlit_App_Screenshot.png">
+    <img src="images/Streamlit_App_Screenshot.png" width="890" height="450">
+</a>
 
 **You get a full interactive application:**
 - Select any companion type from the dropdown
+- Adjust features in side bar
 - Enter your prompt and watch the AI refine its response
+- System template and protocol viewer (updated when changes made in `templates/` and app reloads)
 - See critique-revision cycles happen in real-time
 - View cosine similarity scores update live
+
+
 
 This is a full testing and observability app included with the framework.
 

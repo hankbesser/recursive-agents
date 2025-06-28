@@ -39,11 +39,14 @@ from pathlib import Path
 from langchain.callbacks.base import BaseCallbackHandler
 
 
-from recursive_companion import (
+from recursive_companion.base import (
     GenericCompanion, 
     MarketingCompanion, 
     BugTriageCompanion, 
-    StrategyCompanion,
+    StrategyCompanion
+)
+
+from recursive_companion.streamlit import (
     StreamlitGenericCompanion,
     StreamlitMarketingCompanion,
     StreamlitBugTriageCompanion,
