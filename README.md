@@ -19,7 +19,6 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 **Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial system template per domain), apply overarching protocols to specific phases (usually throughout system templates in all realted domains for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
 
-
 ---
 
 ## What Makes RC Unique
@@ -171,8 +170,9 @@ from recursive_companion import BaseCompanion
 from recursive_companion.template_load_utils import build_templates
 
 # probably best to do in recusrive_companion/base.py with other Companions
+LEGAL_TEMPLATES = build_templates(initial_sys="legal_initial_sys")
 class LegalCompanion(BaseCompanion):
-    TEMPLATES = build_templates(initial_sys="legal_initial_sys")
+    TEMPLATES = LEGAL_TEMPLATES
     SIM_THRESHOLD = 0.99  # Legal requires higher precision
     MAX_LOOPS = 4         # Thorough analysis for legal matters
 
@@ -371,8 +371,9 @@ your_app/base.py
 from recursive_companion.core.chains import BaseCompanion
 from recursive_companion.template_load_utils import build_templates
 
-TEMPLATES = build_templates(initial_sys="financial_initial_sys")
+FINANCE_TEMPLATES = build_templates(initial_sys="financial_initial_sys")
 class FinancialCompanion(BaseCompanion):
+    TEMPLATES = FINANCE_TEMPLATES
     MODEL_NAME = "gpt-4.1-mini"
     MAX_LOOPS = 4  # Financial analysis needs thoroughness
     TEMPERATURE = 0.3  # Lower temperature for numerical precision
