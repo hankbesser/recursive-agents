@@ -183,8 +183,10 @@ class BaseCompanion:
                 level=logging.DEBUG,
                 format="%(levelname)s | %(message)s"
             )
-            # Suppress noisy httpx debug logs
+            # Suppress noisy HTTP client debug logs
             logging.getLogger("httpx").setLevel(logging.WARNING)
+            logging.getLogger("httpcore").setLevel(logging.WARNING)
+            logging.getLogger("openai").setLevel(logging.WARNING)
 
     # ---------- main recursive loop -----------------------------------
     def loop(self, user_input: str) ->  str | tuple[str, list]:

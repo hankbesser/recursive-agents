@@ -6,34 +6,46 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 ```
-# LangGraph & Recursive Companion: Complementary Observability
+# LangGraph & Recursive Companion: Complete Agent Observability
 
-## The Power of Simple, Modular Design
+## The Missing Piece in Agent Development
 
-**Recursive Companion agents are just callables** - no abstract base classes, complex interfaces, or framework lock-in:
+When an LLM agent produces unexpected output, developers need to understand both what happened and why. Current tools excel at workflow orchestration but lack visibility into agent reasoning.
+
+Recursive Companion fills this gap. RC agents are Python callables that automatically maintain their complete thinking history - every iteration, critique, and refinement is preserved for inspection.
+
+### Clean Architecture
+
+RC takes a different approach - no complex class hierarchies, no message schemas, no framework-specific primitives:
 
 ```python
-# Any companion is a simple callable
+# RC: Just a callable
 agent = MarketingCompanion()
 result = agent("Why did sales drop?")  # That's it!
 
-# Same agent works everywhere:
-result = agent.loop("...")              # Explicit method
-node = RunnableLambda(agent)           # LangGraph node
-response = await agent_api(agent)       # Web service
+# Compare to typical LangChain patterns:
+# - Need SystemMessage, HumanMessage, AIMessage classes
+# - Must understand Chains, Agents, Tools, Memory abstractions
+# - Requires specific invoke() patterns and schemas
+# - Deep nesting: chain.steps[0].agent.memory.messages[0].content
+
+# RC works everywhere without modification:
+result = agent.loop("...")              # Direct call
+node = RunnableLambda(agent)           # Instant LangGraph node
+response = await agent_api(agent)       # Web service ready
 ```
 
-Compare this to typical LangChain patterns that require learning multiple abstractions (Chains, Agents, Tools, Memory, etc.). RC focuses on **modular, composable design** where each piece does one thing well.
+**No nested data structures**. Access what you need directly: `agent.run_log`, `agent.history`. No digging through layers of abstractions.
 
 ## Executive Summary
 
-LangGraph and Recursive Companion solve different but complementary problems:
+Building reliable AI systems requires understanding both workflow execution and agent reasoning. Today's tools only solve half this equation.
 
-- **LangGraph** excels at **workflow orchestration** - managing how agents connect, execute in parallel, handle errors, and pass data between nodes. It's the industry standard for complex agent workflows.
+- **LangGraph** excels at **workflow orchestration** - managing how agents connect, execute in parallel, handle errors, and pass data between nodes. It shows you the "what" of your system.
 
-- **Recursive Companion** provides **modular, transparent agents** - simple callables that show why they reach conclusions through visible critique/revision cycles. No framework lock-in, just functions that explain their thinking.
+- **Recursive Companion** provides **thinking transparency** - agents that automatically maintain their complete reasoning history through iterative refinement. It shows you the "why" behind every decision.
 
-**Better Together**: RC companions work as drop-in LangGraph nodes, giving you both workflow orchestration AND thinking transparency with zero integration overhead.
+**The Key Insight**: RC agents work as drop-in LangGraph nodes. You don't choose between tools - you get workflow orchestration AND thinking transparency in one system.
 
 ## What Each Tool Does Best
 
@@ -74,10 +86,10 @@ print(mkt.run_log[-1]["critique"])         # Why it stopped iterating
 
 1. **Workflow Execution Visibility**
 ```python
-# Debug mode prints workflow insights to stdout
-for chunk in workflow.stream({"input": "..."}, print_mode="debug"):
-    pass  # Debug info prints automatically, but isn't available as data
-# Note: Debug output is text-only, not structured data
+# stream_mode="debug" provides structured debug events
+for chunk in workflow.stream({"input": "..."}, stream_mode="debug"):
+    # chunk is a dict with type, timestamp, payload
+    print(chunk)  # {'type': 'task', 'payload': {...}}
 ```
 
 2. **State Management & Tracking**
@@ -98,63 +110,70 @@ graph.get_graph().draw_mermaid()  # Interactive workflow diagram
 - Conditional routing transparency
 - Checkpointing and persistence
 
-**Important Note**: Debug visibility comes at a cost - when using `print_mode="debug"`, the debug information is only printed to stdout as text. You cannot programmatically access this data, forcing you to choose between visibility (debug mode) or getting results (normal mode).
+**Important Note**: While `stream_mode="debug"` provides structured debug events, you still need to parse nested payloads to extract specific information. The debug stream shows workflow orchestration details but doesn't include agent reasoning, critique/revision cycles, or convergence patterns.
 
-### What's Not Visible Without RC:
+### Key Differences
 
-- ❓ **Reasoning Process**: Why did the agent reach this specific conclusion?
-- ❓ **Iteration Details**: How many self-improvement cycles occurred?
-- ❓ **Critique Content**: What specific feedback led to revisions?
-- ❓ **Convergence Patterns**: Quality-based vs iteration limit?
-- ❓ **Thinking Evolution**: How did understanding deepen over iterations?
+Standard LangChain/LangGraph patterns involve:
+- SystemMessage, HumanMessage, AIMessage classes
+- TypedDict schemas and nested payloads
+- Framework-specific patterns
+- Deep nesting: `workflow.nodes[0].state['messages'][0].content`
 
-**This isn't a LangGraph limitation** - they solve different problems. LangGraph excels at orchestration; RC adds reasoning transparency.
+RC provides:
+- Direct access: `agent.run_log`, `agent.history`
+- Universal compatibility across environments
+- String in, string out interface
+- Automatic history tracking
 
-## Accessing Results: Debug Mode Trade-offs vs Always-Available Data
+## Accessing Results: Structured Debug Data vs Always-Available Introspection
 
-### LangGraph's Debug Mode Dilemma
+### LangGraph's Debug Stream Approach
 ```python
-# Option 1: Debug mode for visibility
-for chunk in workflow.stream(input, print_mode="debug"):
-    pass  # Prints to stdout, but data isn't accessible programmatically
-# Result: Can see what's happening, but can't access the actual results!
+# Using stream_mode="debug" for structured debug data
+debug_chunks = []
+for chunk in workflow.stream(input, stream_mode="debug"):
+    debug_chunks.append(chunk)  # Capture structured debug events
 
-# Option 2: Normal mode for results  
-result = workflow.invoke(input)
-# Result: Get the final state, but no visibility into the process
+# You get debug events like:
+# {'type': 'task', 'payload': {'name': 'agent_name', ...}}
+# {'type': 'task_result', 'payload': {'result': [(...)]}}
 
-# You must choose: visibility OR programmatic access, not both
+# But to extract specific results requires parsing:
+for chunk in debug_chunks:
+    if chunk.get('type') == 'task_result':
+        # Navigate nested structure to find what you need
+        pass
 
-# Debug output includes:
-# [debug] task: When agents start
-# [debug] task_result: When agents complete  
-# But it's text with ANSI color codes - not structured data
+# Note: Still no access to agent reasoning or iterations
 ```
 
-### RC Direct Access (Simple & Complete)
+### RC Direct Access (Automatic & Complete)
+
+The key difference: RC agents automatically maintain their history with zero configuration.
+
 ```python
-# Setup: Create RC agents (they maintain their own history)
+# Create agents - that's it, introspection is built-in
 mkt = MarketingCompanion()
 eng = BugTriageCompanion()
 strategy = StrategyCompanion()
 
-# Use them in your workflow (LangGraph or standalone)
-result = workflow.invoke(input)  # Normal execution, no debug mode needed
+# Use normally - no special flags, modes, or configuration
+result = workflow.invoke(input)  
 
-# Full visibility is always available on each agent:
-mkt.run_log                         # Marketing's iteration history
-eng.run_log                         # Engineering's iteration history
-strategy.run_log                    # Strategy's iteration history
+# Complete history is automatically available:
+mkt.run_log                         # Every iteration preserved
+eng.run_log                         # All critiques and revisions
+strategy.run_log                    # Full thinking evolution
 
-# Access any detail you need:
-len(strategy.run_log)               # Number of iterations
-strategy.run_log[-1]['critique']    # Final critique
-strategy.transcript_as_markdown()   # Formatted thinking process
+# Direct access to any detail:
+len(strategy.run_log)               # Iteration count
+strategy.run_log[-1]['critique']    # Why it stopped
+strategy.transcript_as_markdown()   # Human-readable history
 
-# Everything is a simple attribute - no parsing needed!
-# No trade-offs: visibility and programmatic access together
+# Zero overhead, always on, no trade-offs
 
-# BONUS: Beautiful formatted output for humans
+# BONUS: Formatted output ready for humans
 print(strategy.transcript_as_markdown())
 # Outputs:
 # ### Iteration 1
@@ -170,57 +189,39 @@ print(strategy.transcript_as_markdown())
 ## How Others Try to Add Observability
 
 ### The Fundamental Challenge
-Without built-in introspection, developers face a difficult choice:
-- Use debug mode to see what's happening (but lose programmatic access)
-- Run normally to get results (but lose visibility)
-- Try to build their own observability (complex and error-prone)
 
-### Manual State Tracking (Painful!)
-```python
-# They have to manually build this:
-class GraphState(TypedDict):
-    input: str
-    marketing: str
-    marketing_iterations: list  # Manual tracking
-    marketing_metadata: dict    # Manual tracking
-    engineering: str
-    engineering_iterations: list  # Manual tracking
-    
-def marketing_node(state):
-    iterations = []
-    for i in range(3):
-        response = llm.invoke(...)
-        iterations.append(response)  # Manual logging
-    
-    return {
-        "marketing": response,
-        "marketing_iterations": iterations  # Have to pass it along
-    }
-```
+Without built-in introspection, developers resort to painful workarounds:
 
-### Callbacks (Limited)
+**Option 1: Manual State Tracking**  
+Add custom fields to TypedDict schemas, implement logging in every node, and carefully pass metadata through the entire graph. Complex, error-prone, and still incomplete.
+
+**Option 2: Callbacks**  
 ```python
 from langchain.callbacks import FileCallbackHandler
 handler = FileCallbackHandler("./logs.txt")
 workflow.invoke({"input": "..."}, config={"callbacks": [handler]})
-# Just logs raw LLM calls, no structure
+# Just logs raw LLM calls, no structured thinking history
 ```
 
-### External Services (Expensive)
+**Option 3: External Services**  
 ```python
 # LangSmith - requires API key, costs money
-# Still doesn't give you critique/revision cycles
+# Still doesn't capture iterative refinement process
 ```
+
+None of these approaches provide the automatic, structured thinking history that RC delivers out of the box.
 
 ## RC + LangGraph: Best of Both Worlds
 
-### Setup (Zero Extra Work!)
+### Zero-Friction Integration
+
 ```python
-# Just wrap your companions
+# Create companions
 mkt = MarketingCompanion()
 eng = BugTriageCompanion()
 plan = StrategyCompanion()
 
+# Use with LangGraph
 mkt_node = RunnableLambda(mkt)
 eng_node = RunnableLambda(eng)
 plan_node = RunnableLambda(plan)
@@ -235,147 +236,76 @@ result = workflow.invoke({"input": "App crashed, users leaving"})
 # 1. Overall flow (LangGraph)
 print(result)  # Final outputs
 
-# 2. Deep introspection PER NODE (RC magic)
-print(f"Marketing iterations: {len(mkt.run_log)}")
-print(f"Engineering iterations: {len(eng.run_log)}")
-print(f"Strategy iterations: {len(plan.run_log)}")
+# 2. Direct attribute access - no digging through nested structures
+print(f"Marketing iterations: {len(mkt.run_log)}")  # Straightforward!
+print(f"Final output: {mkt.history[-1].content}")   # Direct!
 
-# 3. Convergence analysis
-for agent_name, agent in [("Marketing", mkt), ("Engineering", eng), ("Strategy", plan)]:
-    last_critique = agent.run_log[-1]["critique"]
-    if "no further improvements" in last_critique.lower():
-        print(f"{agent_name}: Converged via critique")
-    elif len(agent.run_log) < agent.max_loops:
-        print(f"{agent_name}: Converged via similarity")
-    else:
-        print(f"{agent_name}: Hit max loops")
+# Compare to typical LangChain access patterns:
+# state['nodes']['marketing']['memory']['chat_memory']['messages'][-1]['content']
+# workflow.memory.chat_memory.messages[-1].content
+# chain.steps[0].outputs[0].generations[0][0].text
 
-# 4. Quality metrics
-def critique_quality(run_log):
-    critiques = [step["critique"] for step in run_log]
-    return {
-        "total_iterations": len(critiques),
-        "avg_critique_length": sum(len(c) for c in critiques) / len(critiques),
-        "converged_early": len(critiques) < 3
-    }
+# 3. Everything is just attributes on the agent instance
+mkt.run_log          # Complete history
+mkt.history          # Conversation memory
+mkt.llm              # The actual model
+mkt.max_loops        # Configuration
+# No framework wrappers, no nested state, no schemas
 
-print("Marketing quality:", critique_quality(mkt.run_log))
-print("Engineering quality:", critique_quality(eng.run_log))
-
-# 5. Full thinking traces - BEAUTIFULLY FORMATTED!
-# No parsing, no JSON manipulation - just readable markdown
-print("\n=== MARKETING THOUGHT PROCESS ===")
-print(mkt.transcript_as_markdown())  # Ready for reports, logs, or UI display!
-
-print("\n=== ENGINEERING THOUGHT PROCESS ===")
-print(eng.transcript_as_markdown())  # Each iteration clearly separated
-
-print("\n=== STRATEGY SYNTHESIS PROCESS ===")
-print(plan.transcript_as_markdown())  # Draft → Critique → Revision for each loop
+# 4. Full thinking traces
+print(mkt.transcript_as_markdown())  # Complete reasoning history
+print(eng.transcript_as_markdown())  # All iterations preserved
+print(plan.transcript_as_markdown())  # Synthesis process visible
 ```
 
-## Specific Code Comparisons
 
-### Task: Debug why an agent made a decision
+## Real-World Impact
 
-**Pure LangGraph:**
+### Case 1: Production Debugging
+
+Your customer success agent gives inappropriate advice. With standard tools, you're blind. With RC:
+
 ```python
-# You get nothing
-result = workflow.invoke({"input": "..."})
-print(result["marketing"])  # Just the final text
-# WHY did it say this? 🤷‍♂️
+# Instant root cause analysis
+print(agent.transcript_as_markdown())
+
+# Output shows:
+# Iteration 1: Agent misunderstood context
+# Critique: "Missing customer's actual pain point"
+# Iteration 2: Better but still generic
+# Critique: "Needs specific technical details"
+# Iteration 3: Addressed the real issue
+
+# Now you know exactly what went wrong and can fix it
 ```
 
-**With RC:**
+### Case 2: Quality Assurance
+
+You need to ensure agents meet quality standards before deployment:
+
 ```python
-result = workflow.invoke({"input": "..."})
-# See EVERYTHING
-for i, step in enumerate(mkt.run_log):
-    print(f"\nIteration {i+1}:")
-    print(f"Critique: {step['critique'][:100]}...")
-    print(f"Key change: {identify_key_change(step['draft'], step['revision'])}")
-```
-
-### Task: Compare agent performance
-
-**Pure LangGraph:**
-```python
-# Have to add timing manually
-import time
-start = time.time()
-result = workflow.invoke(...)
-print(f"Took {time.time() - start}s")
-# But how many iterations? What was the thinking quality? 🤷‍♂️
-```
-
-**With RC:**
-```python
-result = workflow.invoke(...)
-
-# Rich performance data
-for name, agent in [("mkt", mkt), ("eng", eng), ("plan", plan)]:
-    print(f"\n{name}:")
-    print(f"  Iterations: {len(agent.run_log)}")
-    print(f"  Convergence: {agent.run_log[-1].get('similarity', 'critique-based')}")
-    print(f"  Final critique: {agent.run_log[-1]['critique'][:50]}...")
-```
-
-### Task: A/B test different approaches
-
-**Pure LangGraph:**
-```python
-# Run twice, compare final outputs only
-result_a = workflow_a.invoke(input)
-result_b = workflow_b.invoke(input)
-# Which thinking process was better? No idea! 🤷‍♂️
-```
-
-**With RC:**
-```python
-# Run both workflows
-result_a = workflow_a.invoke(input)
-result_b = workflow_b.invoke(input)
-
-# Compare thinking patterns
-print(f"Workflow A: {len(plan_a.run_log)} iterations")
-print(f"Workflow B: {len(plan_b.run_log)} iterations")
-
-# Compare critique quality
-critiques_a = [s["critique"] for s in plan_a.run_log]
-critiques_b = [s["critique"] for s in plan_b.run_log]
-
-print(f"A critique specificity: {measure_specificity(critiques_a)}")
-print(f"B critique specificity: {measure_specificity(critiques_b)}")
-```
-
-## What This Means for Production Systems
-
-### Debugging Production Issues
-
-**Without RC:**
-- "The strategy agent gave bad advice"
-- No way to know why
-- Add logging everywhere (tedious)
-- Still can't see thinking evolution
-
-**With RC:**
-```python
-# In production, after a bad result:
-print(plan.transcript_as_markdown())
-# Immediately see:
-# - Initial draft was too vague
-# - Critique caught the issue
-# - Revision still missed key point
-# - Second critique identified root cause
-# - Final revision addressed it
+def validate_agent_quality(agent, test_cases):
+    for test in test_cases:
+        agent(test.input)
+        
+        # Check reasoning quality
+        if len(agent.run_log) == 1:
+            print(f" No refinement for: {test.input}")
+        
+        # Verify critique thoroughness
+        critiques = [step["critique"] for step in agent.run_log]
+        if any(len(c) < 100 for c in critiques):
+            print(f" Shallow critique detected")
+            
+        # Ensure convergence quality
+        if len(agent.run_log) >= agent.max_loops:
+            print(f" Hit iteration limit - may need tuning")
 ```
 
 ### Performance Monitoring
 
 **Without RC:**
-- Track execution time
-- Count tokens
-- That's about it
+Track execution time and token counts. That's about it.
 
 **With RC:**
 ```python
@@ -391,45 +321,13 @@ metrics = {
 
 ## The Synergy: Better Together
 
-**LangGraph Excels At:**
-- 🔀 Complex workflow orchestration
-- ⚡ Parallel execution and streaming
-- 🔄 State management and persistence
-- 🎯 Conditional routing and error handling
-- 📊 Workflow-level debugging
-
-**Recursive Companion Adds:**
-- 🧠 Thinking process transparency
-- 🔍 Critique/revision audit trails
-- 📈 Convergence metrics and patterns
-- 💡 Reasoning evolution tracking
-- 🎭 Decision rationale capture
-
 **Together = Complete Observability:**
 - See both the workflow (LangGraph) AND the thinking (RC)
-- Debug both orchestration issues AND reasoning problems
-- Understand both what happened AND why it happened
-- Zero integration overhead - RC companions are drop-in nodes
+- Zero integration overhead - RC agents work directly as LangGraph nodes
 
 Your companions become "thoughts-included" nodes that enhance any LangGraph workflow with deep introspection capabilities.
 
-## Code You Can Run Right Now
 
-```python
-# Standard LangGraph - opaque nodes
-def basic_node(state):
-    return {"output": llm.invoke(state["input"])}
+## Start Building Transparent AI Systems Today
 
-# RC-powered - transparent nodes
-companion = MarketingCompanion()
-def rc_node(state):
-    result = companion(state["input"])
-    # Later can access: companion.run_log, companion.transcript_as_markdown()
-    return {"output": result}
-
-# After graph runs:
-# Basic: ¯\_(ツ)_/¯ 
-# RC: Full thinking history available!
-```
-
-This demonstrates the complementary nature: LangGraph provides the orchestration framework, while RC transforms nodes from black boxes into glass box thinking engines. Use both for complete system understanding.
+Recursive Companion transforms opaque LLM calls into transparent reasoning processes. Whether you're debugging production issues, ensuring quality standards, or optimizing agent performance, RC gives you the visibility you need. The future of AI development isn't about choosing between tools - it's about combining the right ones. LangGraph handles the "what," RC reveals the "why," and together they enable truly observable AI systems.
