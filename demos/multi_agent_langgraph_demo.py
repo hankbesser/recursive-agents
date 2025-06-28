@@ -77,8 +77,9 @@ graph.set_finish_point("strategy_agent")
 workflow = graph.compile()
 
 
-
+print("=" * 80)
 print("\n Pondering through the compiled graph workflow\n")
+print("=" * 80)
 result = workflow.invoke(
     {"input": "App ratings fell to 3.2★ and uploads crash on iOS 17.2. Diagnose & propose next steps."}
 )
@@ -86,6 +87,7 @@ final = result.get("final_plan", "")
 
 print("\n=== FINAL PLAN ===\n")
 print(final)
+print("=" * 80)
 
 # === After LangGraph workflow completes ===
 print("\n🔍 DEEP INTROSPECTION - What LangGraph CAN'T normally show you:\n")
@@ -115,12 +117,13 @@ for name, agent in [("Marketing", mkt), ("Engineering", eng), ("Strategy", plan)
         convergence = "Max iterations reached"
     print(f"  • Convergence: {convergence}")
 
+print("\n" + "=" * 80)
 # Want to see the last critique? Just access it directly!
 print("\n Strategy's final critique (no parsing needed) (first 1000 chars):")
 print(f"{plan.run_log[-1]['critique'][:1000]}...")
 
 print("=" * 80)
-print("\n\n Compare this to extracting from debug chunks - night and day!\n")
+print("\nCompare this to extracting from debug chunks - night and day!\n")
 print("=" * 80)
 # Uncomment to see the strategy agent's thinking process:
 #print("\n=== INNER STEPS ===\n")

@@ -330,4 +330,4 @@ Your companions become "thoughts-included" nodes that enhance any LangGraph work
 
 ## Start Building Transparent AI Systems Today
 
-Recursive Companion transforms opaque LLM calls into transparent reasoning processes. Whether you're debugging production issues, ensuring quality standards, or optimizing agent performance, RC gives you the visibility you need. The future of AI development isn't about choosing between tools - it's about combining the right ones. LangGraph handles the "what," RC reveals the "why," and together they enable truly observable AI systems.
+Recursive Companion transforms opaque LLM calls into transparent reasoning processes. Whether you're debugging production issues, ensuring quality standards, or optimizing agent performance, RC gives you the visibility you need. The future of AI development isn't about choosing between tools - it's about combining the right ones. LangGraph handles the "what," RC reveals the "why," and together they enable more observable AI systems.

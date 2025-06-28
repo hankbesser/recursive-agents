@@ -38,12 +38,13 @@ logging.basicConfig(level=logging.WARNING)
 # ── 1. create the agent ──────────────────────────────────────────
 agent = GenericCompanion(
     llm="gpt-4o-mini",
-    verbose=False,             # no debug spam
     return_transcript=True,    # get run_log back with the answer
+    similarity_threshold=0.92   # (most likely only 2 loops with low s.t.)
 )
 
 # ── 2. run one analysis ──────────────────────────────────────────
 prompt = "We doubled support staff but response times got worse—why?"
+print("\n=== Running smoke test - pondering in process===\n")
 final_answer, steps = agent.loop(prompt)
 
 # ── 3. show results ──────────────────────────────────────────────

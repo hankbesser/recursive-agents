@@ -44,15 +44,25 @@ problem = (
 mkt   = MarketingCompanion(llm="gpt-4o-mini", temperature=0.9,max_loops=3, similarity_threshold=0.96, verbose=True)   # fast, cheap, show debug
 bug   = BugTriageCompanion(llm="gpt-4.1-mini", temperature=0.25) # higher-context model
 
+print("\n" + "=" * 80)
 print("\n Pondering Marketing Analysis Verbose ON\n")
+print("=" * 80)
 mkt_view = mkt.loop(problem)
+
+print("\n" + "=" * 80)
 print("\nFinal Marketing Analysis (first 500 chars):")
 print(mkt_view[:500] + "..." if len(mkt_view) > 500 else mkt_view)
 
+
+print("\n" + "=" * 80)
 print("\n Pondering Engineering Analysis Verbose OFF\n")
+print("=" * 80)
 bug_view = bug.loop(problem)
+
+
 print("\nFinal Engineering Analysis (first 500 chars):")
 print(bug_view[:500] + "..." if len(bug_view) > 500 else bug_view)
+
 
 # 2) Merge perspectives for the synthesis step
 combined_views = (
@@ -66,15 +76,19 @@ combined_views = (
 # 3) Synthesis agent produces the cross-functional plan
 synth = StrategyCompanion(llm="gpt-4o-mini", temperature=0.55)
 
+print("\n" + "=" * 80)
 print("\n Pondering a Sythesized Action Plan of Previous Views - Verbose OFF\n")
+print("=" * 80)
 action_plan = synth.loop(combined_views)
 
-print("\nFinal Synthesized Action Plan (first 500 chars):")
-print(action_plan[:500] + "..." if len(action_plan) > 500 else action_plan)
+
+
+print("\nFinal Synthesized Action Plan - full thinking process in raw mardown:")
+print(synth.transcript_as_markdown())
 
 
 # Show convergence analysis
-print("=" * 80)
+print("\n" + "=" * 80)
 print("COMPLETE CONVERGENCE ANALYSIS")
 print("=" * 80)
 
@@ -94,7 +108,3 @@ for name, agent in [("Marketing", mkt), ("Engineering", bug), ("Strategy", synth
     else:
         convergence = "Max iterations reached"
     print(f"  • Convergence: {convergence}")
-
-# Uncomment to see the strategy agent's thinking process:
-# print("\n=== Strategy Thinking Process ===")
-# print(synth.transcript_as_markdown())

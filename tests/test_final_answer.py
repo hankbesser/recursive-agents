@@ -13,6 +13,7 @@ from recursive_companion.base import GenericCompanion
 companion = GenericCompanion(llm="gpt-4o-mini", max_loops=2, return_transcript=True)
 
 # Run a simple test
+print("=== Running final answer match test-  pondering in process===\n")
 final_answer, run_log = companion("What is 2+2?")
 
 print("=== CHECKING IF FINAL ANSWER MATCHES LAST REVISION ===\n")
@@ -28,7 +29,7 @@ if final_answer == last_revision:
     print("✅ CORRECT: Final answer EQUALS last revision")
 else:
     print("❌ BUG: Final answer is DIFFERENT from last revision!")
-    print(f"\nDifference found!")
+    print("\nDifference found!")
     
 # Also show all revisions for clarity
 print("\n=== ALL REVISIONS ===")

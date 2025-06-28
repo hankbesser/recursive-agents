@@ -1,5 +1,8 @@
 # Recursive Companion 🔄
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Contributing](https://img.shields.io/badge/Contributing-Guidelines-blue.svg)](CONTRIBUTING.md)
+
 ## A Meta-Framework for Self-Improving Agents
 
 Recursive Companion implements a **three-phase iterative refinement architecture** where LLM agents (instances of Classes) critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
@@ -32,8 +35,6 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 ✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
 
-For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_comparison_compliment.md).
-
 ---
 ### 🔧 Quick Clone
 
@@ -57,7 +58,7 @@ pip install -e .  # or pip install . for non-editable
 
 Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a terminal) the following input prompt in a new conversation.. It is very informal and you can taylor the structure (possibly more formal language if you are into that) but the TODO is pretty solid with this particular order:
 
-**"Ok please think as deeply as possible about this project. Start with the README and docs folder to get a sense of it... now thinking as deeply as you possibly can, analyze the package. The main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_companion including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Lastly, hit all files in the the demos folder - again, as deep of analysis as you can go.  It's good to get a deep grasp of this project. Thank you!"**
+**"Ok please think as deeply as possible about this project. Start with the README and docs folder to get a sense of it... now thinking as deeply as you possibly can, analyze the package. The main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_companion including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Lastly, hit all files in the the demos folder- again, as deep of analysis as you can go.  It's good to get a deep grasp of this project. Thank you!"**
 
 *The responses will not dissapoint.*
 
@@ -149,17 +150,6 @@ print(thoughtful.transcript_as_markdown())  # See the evolution
 debug_companion = BugTriageCompanion(verbose=True)
 result = debug_companion("Users can't upload files >10MB...")
 # Prints: USER INPUT, INITIAL DRAFT, CRITIQUE #1, REVISION #1, etc.
-
-# 4. Works seamlessly with any framework
-from langchain_core.runnables import RunnableLambda
-# Convert any companion to a Runnable for LangGraph/LangChain
-runnable = RunnableLambda(thoughtful)  # Now it's a LangGraph-compatible node!
-
-# Also works with streaming, async, batch operations
-results = runnable.batch([
-    {"input": "Analyze competitor A..."},
-    {"input": "Analyze competitor B..."}
-])
 ```
 ### Level 3: Extend the Framework (2 hours)
 
@@ -240,6 +230,8 @@ This is a full testing and observability app included with the framework.
 ## Multi-Agent Orchestration
 
 #### **Raw Python** (Sequential with Full Observability):
+- [multi agent RC notebook ](demos/multi_agent_raw_rc_demo.ipynb)
+- [multi agent RC pyton file ](demos/multi_agent_raw_rc_demo.py)
 ```python
 from recursive_companion.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
 
@@ -267,6 +259,9 @@ print(strategy.transcript_as_markdown())
 ```
 
 #### **LangGraph** (Parallel Execution + RC Transparency):
+- [multi agent RC callable / LangGraph notebook ](demos/multi_agent_langgraph_demo.ipynb)
+- [multi agent RC callable / LangGraph python file ](demos/multi_agent_langgraph_demo.py)
+
 ```python
 from langchain_core.runnables import RunnableLambda
 from langgraph.graph import StateGraph
@@ -316,22 +311,20 @@ print(mkt.transcript_as_markdown())     # Full marketing analysis
 print(bug.transcript_as_markdown())     # Full engineering analysis
 print(strategy.transcript_as_markdown()) # How strategy synthesized both
 ```
+For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_RC_comp.md).
+
 ---
 ## 🔧 Production Features
 
-#### Observability
+#### Observability and Flexibility
 
 - **Verbose mode**: prints every phase of thinking live
 - **Transcript capture**: return full run_log for debugging along with the final analysis (the instatiated object will have have it own run_log though)
 - **Standard logging**: Integration-ready
+- **Streamlit App**: visualze all live previews, testing 
 
-### Efficiency
-
-- **Token optimization**: No system prompt in history
 - **Smart caching**: Single embeddings client
 - **Early exit**: Stop when converged, not exhausted
-
-### Flexibility
 
 - **Any OpenAI model**: "gpt-4o-mini", "gpt-4.1", custom endpoints
 - **Configurable everything**: Per-instance overrides
@@ -390,15 +383,17 @@ analysis = fin("Q3 revenue variance exceeds 2 standard deviations")
 
 *Agents that refine their responses through iteration, integrated seamlessly into your existing code.*
 
-**License**
+---
 
-MIT
+## License
 
-**Contributing**
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-PRs welcome! See our ```CONTRIBUTING.md```.
+## Contributing
 
-## 🔮 Future Explorations
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to get started.
+
+## Future Explorations
 
 The Recursive Companion framework opens fascinating research directions:
 
