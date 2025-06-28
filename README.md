@@ -201,15 +201,10 @@ export OPENAI_API_KEY="sk-..." # in terminal
 ```bash
 streamlit run streamlit_app.py
 ```
+[![Your video title](https://cdn.loom.com/sessions/thumbnails/b0e2e87908d6472db5db5e7a120e9fbf-097bd51a4fc397ed-full-play.gif)](https://www.loom.com/share/b0e2e87908d6472db5db5e7a120e9fbf)
 
-![Alt text](<div>
-    <a href="https://www.loom.com/share/b0e2e87908d6472db5db5e7a120e9fbf">
-      <p>Recursive Companion Studio - 28 June 2025 - Watch Video</p>
-    </a>
-    <a href="https://www.loom.com/share/b0e2e87908d6472db5db5e7a120e9fbf">
-      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/b0e2e87908d6472db5db5e7a120e9fbf-097bd51a4fc397ed-full-play.gif">
-    </a>
-  </div>)
+
+
 
 
 **You get a full interactive application:**
