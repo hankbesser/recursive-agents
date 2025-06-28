@@ -84,7 +84,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 - **Engineers** → ```core/chains.py``` (how to build the chains, storage/caching/memory management, observability, iteration process, etc.)
 - **Users** → ```recursive_companion/base.py``` (picking companions)
 - **Prompt Engineers** → ```templates/``` folder + ```template_load_utils.py```
-- **UI Developers** → ```streamlit.py``` (progress containers)
+- **UI Developers** → ```streamlit_app.py``` (progress containers)
 - *or any combination of these*
 
 💡 **Tip:** Each module includes extensive docstrings and comments explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
