@@ -209,7 +209,7 @@ streamlit run streamlit_app.py
 - Select any companion type from the dropdown
 - Adjust features in side bar
 - Enter your prompt and watch the AI refine its response
-- System template and protocol viewer (updated when changes made in `templates/` and app reloads)
+- System templates and protocol viewer (updated when changes made in `templates/` and app reloads)
 - See critique-revision cycles happen in real-time
 - View cosine similarity scores update live
 
