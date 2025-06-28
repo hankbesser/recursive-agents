@@ -38,6 +38,6 @@ pip install -e .[all]  # Install with all dependencies
 
 ## Questions?
 
-Have questions or want to share ideas? Check out our [Discussions](https://github.com/hbesse13/recursive-companion/discussions) tab!
+Have questions or want to share ideas? Check out our [Discussions](https://github.com/hankbesser/recursive-companion/discussions) tab!
 
 Thank you for helping make Recursive Companion better!
