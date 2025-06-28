@@ -36,7 +36,7 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 ✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
 
 ---
-### 🔧 Quick Clone
+### Quick Clone
 
 ```bash
 # Create conda environment
@@ -54,7 +54,7 @@ pip install -e .  # or pip install . for non-editable
 # pip install .[all] for non edittable version as above   
 ```  
 ---
-### 🤖 Challenge: Ask Your Agentic Coding tool to Think Deeply about this Project
+### Challenge: Ask Your Agentic Coding tool to Think Deeply about this Project
 
 Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a terminal) the following input prompt in a new conversation.. It is very informal and you can taylor the structure (possibly more formal language if you are into that) but the TODO is pretty solid with this particular order:
 
@@ -65,7 +65,7 @@ Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a ter
 ---
 
 
-## 🏗️ Architecture: Clean Layers, Clear Purpose
+## Architecture: Clean Layers, Clear Purpose
 → See the [Architecture Documentation](docs/RC_architecture.md)
 
 ```text
@@ -87,11 +87,11 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 - **UI Developers** → ```streamlit_app.py``` (progress containers)
 - *or any combination of these*
 
-💡 **Tip:** Each module includes extensive docstrings and comments explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
+**Tip:** Each module includes extensive docstrings and comments explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
 
 
 ---
-## 📚 Three Levels of Understanding
+## Three Levels of Understanding
 
 ### Level 1: Just Use It (5 minutes)
 ```python
@@ -184,7 +184,7 @@ analysis = legal("Review this SaaS agreement for potential risks...")
 print(f"Iterations until convergence: {len(legal.run_log)}")
 print(legal.transcript_as_markdown())  # Full audit trail for compliance!
 ```
-## 🚀 Quick Start - Full Streamlit App
+## Quick Start - Full Streamlit App
 
 
 ```bash
@@ -319,7 +319,7 @@ print(strategy.transcript_as_markdown()) # How strategy synthesized both
 For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_RC_comp.md).
 
 ---
-## 🔧 Production Features
+## Production Features
 
 #### Observability and Flexibility
 
@@ -337,7 +337,7 @@ For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_c
 
 ---
 
-## 🎓 The Strategic Decomposition Protocol
+## The Strategic Decomposition Protocol
 
 Read ```templates/protocol_context.txt``` to see the structured reasoning framework that guides agents through:
 
@@ -350,7 +350,7 @@ This structured approach to recursive problem decomposition consistently outperf
 ---
 
 
-### 📝 Creating Your Own Companion
+### Creating Your Own Companion
 
 ### 1. Write your
 ```text
