@@ -34,7 +34,7 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings # ChatOpenAI can stay 
 from langchain_core.messages import HumanMessage, AIMessage
 
 # ---------------------------------------------------------------------
-# ❶ Global embeddings + cosine helper
+# ❶ Cosine similarity from embeddings helper
 # ---------------------------------------------------------------------
 
 def cosine_from_embeddings(va: List[float], vb: List[float]) -> float:
