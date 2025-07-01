@@ -18,6 +18,7 @@ ENV/
 .idea/
 *.swp
 *.swo
+.gemini
 
 # OS
 .DS_Store
@@ -36,3 +37,4 @@ htmlcov/
 *.egg-info/
 dist/
 build/
+prop_templates/

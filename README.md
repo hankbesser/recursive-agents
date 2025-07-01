@@ -82,7 +82,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 
 - **Engineers** → ```core/chains.py``` (how to build the chains, storage/caching/memory management, observability, iteration process, etc.)
 - **Users** → ```recursive_companion/base.py``` (picking companions)
-- **Prompt Engineers** → ```templates/``` folder + ```template_load_utils.py```
+- **Context Engineers** → ```templates/``` folder + ```template_load_utils.py```
 - **UI Developers** → ```streamlit_app.py``` (progress containers)
 - *or any combination of these*
 
@@ -166,7 +166,7 @@ compliance assessment, and risk evaluation. Focus on:
 
 # Step 2: Create your companion class (just 4 lines!)
 
-from recursive_companion import BaseCompanion
+from recursive_companion.core.chains import BaseCompanion
 from recursive_companion.template_load_utils import build_templates
 
 # probably best to do in recusrive_companion/base.py with other Companions
