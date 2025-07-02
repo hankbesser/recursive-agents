@@ -10,7 +10,7 @@
 Core plumbing for all Companion subclasses
 ------------------------------------------
 
-* cosine(a:str, b:str) → float
+* cosine_from_embeddings(va: List[float], vb: List[float]) -> float:
     Cached OpenAI-embedding cosine similarity.  Used to decide whether two
     successive revisions are “close enough” to stop looping early.
 
