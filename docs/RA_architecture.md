@@ -11,7 +11,7 @@
 
 ## Overview
 
-Recursive Agents implements a modular architecture where AI agents automatically critique and refine their outputs through a three-phase iterative process. This document details the system design and component interactions.
+Recursive Agents implements a modular architecture where agents automatically critique and refine their outputs through a three-phase iterative process. This document details the system design and component interactions.
 
 ## System Architecture
 
@@ -21,7 +21,7 @@ Recursive Agents implements a modular architecture where AI agents automatically
 
 ### Introspection Capabilities
 
-Every companion maintains:
+Every Companion maintains:
 - `history`: Conversation memory (HumanMessage/AIMessage pairs)
 - `run_log`: Detailed iteration data with drafts, critiques, revisions
 - `transcript_as_markdown()`: Formatted view of the thinking process

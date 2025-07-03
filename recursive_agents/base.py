@@ -10,9 +10,9 @@
 Base Companion Classes for Recursive Agents Framework
 ========================================================
 
-This module contains all standard companion implementations that inherit from
-BaseCompanion. Each companion specializes in a different domain while sharing
-the core 3-phase critique/revision loop.
+This module contains all standard Companion implementations that inherit from
+BaseCompanion. Each Companion is a specialized recursive agent for a different domain that iteratively
+refines its analysis through critique-revision cycles.
 
 Classes:
     GenericCompanion: Domain-agnostic baseline implementation

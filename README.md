@@ -19,6 +19,14 @@ Recursive Agents implements a **three-phase iterative refinement architecture** 
 
 **Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial system template per domain), apply overarching protocols to specific phases (usually throughout system templates in all realted domains for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
 
+### Why "Companions"?
+
+In the Recursive Agents framework, we call our agent implementations
+"Companions" rather than "Agents" for clarity:
+
+- **Framework**: Recursive Agents (what the system does)
+- **Classes**: Companions (what you work with)
+
 ---
 
 ## What Makes RA Unique
