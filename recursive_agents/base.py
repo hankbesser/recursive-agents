@@ -5,9 +5,9 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 
-# recursive_companion/base.py
+# recursive_agents/base.py
 """
-Base Companion Classes for Recursive Companion Framework
+Base Companion Classes for Recursive Agents Framework
 ========================================================
 
 This module contains all standard companion implementations that inherit from
@@ -29,7 +29,7 @@ Template Pattern:
     See template_load_utils.py to customize this behavior.
 
 Usage:
-    from recursive_companion.base import MarketingCompanion
+    from recursive_agents.base import MarketingCompanion
     
     agent = MarketingCompanion(llm="gpt-4o-mini", temperature=0.8)
     
@@ -39,7 +39,7 @@ Usage:
 """
 
 
-from recursive_companion.template_load_utils import build_templates 
+from recursive_agents.template_load_utils import build_templates 
 from core.chains import BaseCompanion
 
 
@@ -57,7 +57,7 @@ class GenericCompanion(BaseCompanion):
 
     Typical Usage
     -------------
-    from recursive_companion.base import GenericCompanion
+    from recursive_agents.base import GenericCompanion
       
     # using loop() method with return_transcript
     generic = GenericCompanion(llm="gpt-4o-mini", return_transcript=True)
@@ -85,7 +85,7 @@ class MarketingCompanion(BaseCompanion):
 
     Typical Usage
     -------------
-    from recursive_companion.base import MarketingCompanion
+    from recursive_agents.base import MarketingCompanion
     
     # using callable with temperature
     marketing = MarketingCompanion(llm="gpt-4o-mini", temperature=0.8)
@@ -121,7 +121,7 @@ class BugTriageCompanion(BaseCompanion):
 
     Typical Usage
     -------------
-    from recursive_companion.base import BugTriageCompanion
+    from recursive_agents.base import BugTriageCompanion
     
     # with similarity threshold and clear_history
     bug = BugTriageCompanion(
@@ -155,9 +155,9 @@ class StrategyCompanion(BaseCompanion):
     # Note: See multi_agent_demos/multi_agent_langgraph_demo.py for
     # LangGraph integration - companions as Runnables with zero code changes.
 
-    from recursive_companion.base import MarketingCompanion
-    from recursive_companion.base import BugTriageCompanion
-    from recursive_companion.base import StrategyCompanion
+    from recursive_agents.base import MarketingCompanion
+    from recursive_agents.base import BugTriageCompanion
+    from recursive_agents.base import StrategyCompanion
    
     problem = "Users report app crashes on photo upload, engagement down 30%"
 

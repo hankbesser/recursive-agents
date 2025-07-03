@@ -3,7 +3,7 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "recursive-companion"
+name = "recursive-agents"
 version = "0.1.0"
 description = "A meta-framework for self-improving LLM responses through recursive critique and revision"
 authors = [{ name="Henry Besser", email="henry.operator.research@gmail.com" }]
@@ -39,17 +39,17 @@ demos = [
 ]
 
 all = [
-    "recursive-companion[streamlit,demos]",
+    "recursive-agents[streamlit,demos]",
 ]
 
 [project.urls]
-Homepage = "https://github.com/hankbesser/recursive-companion"
-Documentation = "https://github.com/hankbesser/recursive-companion#readme"
-Repository = "https://github.com/hankbesser/recursive-companion"
-Issues = "https://github.com/hankbesser/recursive-companion/issues"
+Homepage = "https://github.com/hankbesser/recursive-agents"
+Documentation = "https://github.com/hankbesser/recursive-agents#readme"
+Repository = "https://github.com/hankbesser/recursive-agents"
+Issues = "https://github.com/hankbesser/recursive-agents/issues"
 
 [tool.setuptools]
-packages = ["recursive_companion", "core"]
+packages = ["recursive_agents", "core"]
 include-package-data = true
 
 [tool.setuptools.package-data]

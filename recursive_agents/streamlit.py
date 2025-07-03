@@ -5,7 +5,7 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 
-# recursive_companion/streamlit.py
+# recursive_agents/streamlit.py
 """
 Streamlit-enabled Companion Classes
 ===================================
@@ -18,7 +18,7 @@ These inherit from StreamlitBaseCompanion which adds progress_container
 support for real-time updates in Streamlit apps.
 
 Usage:
-    from recursive_companion.streamlit import StreamlitMarketingCompanion
+    from recursive_agents.streamlit import StreamlitMarketingCompanion
     
     container = st.container()
     agent = StreamlitMarketingCompanion(
@@ -29,7 +29,7 @@ Usage:
     # User sees live updates in container during analysis
 """
 
-from recursive_companion.template_load_utils import build_templates 
+from recursive_agents.template_load_utils import build_templates 
 from core.streamlit_chains import StreamlitBaseCompanion
 
 

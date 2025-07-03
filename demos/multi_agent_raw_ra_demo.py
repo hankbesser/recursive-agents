@@ -8,9 +8,9 @@
 
 # demos/multi_agent_raw_rc_demo.py
 """
-Multi-agent demo pipeline (Pure RC)
+Multi-agent demo pipeline (Pure RA)
 ===================================
-Runs a realistic workflow using pure Recursive Companion (no LangGraph):
+Runs a realistic workflow using pure Recursive Agents (no LangGraph):
 
 1. **MarketingCompanion** - surfaces audience-level symptoms.
 2. **BugTriageCompanion** - surfaces engineering/root-cause clues.
@@ -28,9 +28,9 @@ Edit the ``problem`` string or swap in other Companion subclasses to test
 additional domains.
 """
 
-from recursive_companion.base import MarketingCompanion
-from recursive_companion.base import BugTriageCompanion
-from recursive_companion.base import StrategyCompanion
+from recursive_agents.base import MarketingCompanion
+from recursive_agents.base import BugTriageCompanion
+from recursive_agents.base import StrategyCompanion
 
 # Multi-agent demo (shared problem → parallel lenses → synthesis)
 # ---------------------------------------------------------------

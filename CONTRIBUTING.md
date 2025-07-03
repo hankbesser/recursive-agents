@@ -1,6 +1,6 @@
-# Contributing to Recursive Companion
+# Contributing to Recursive Agents
 
-We welcome contributions to the Recursive Companion framework!
+We welcome contributions to the Recursive Agents framework!
 
 ## How to Contribute
 
@@ -13,7 +13,7 @@ We welcome contributions to the Recursive Companion framework!
 
 - **Documentation**: Improve clarity, add examples, fix typos
 - **Tests**: Expand test coverage and edge cases
-- **Integration Examples**: Show RC working with other tools/frameworks
+- **Integration Examples**: Show RA working with other tools/frameworks
 - **Performance**: Optimization suggestions and improvements
 - **Evaluation Frameworks**: Build benchmarks and metrics for measuring companion effectiveness
 - **New Features**: Implement enhancements from the issue tracker
@@ -22,8 +22,8 @@ We welcome contributions to the Recursive Companion framework!
 ## Development Setup
 
 ```bash
-git clone https://github.com/hankbesser/recursive-companion.git
-cd recursive-companion
+git clone https://github.com/hankbesser/recursive-agents.git
+cd recursive-agents
 pip install -e .[all]  # Install with all dependencies
 ```
 
@@ -38,6 +38,6 @@ pip install -e .[all]  # Install with all dependencies
 
 ## Questions?
 
-Have questions or want to share ideas? Check out our [Discussions](https://github.com/hankbesser/recursive-companion/discussions) tab!
+Have questions or want to share ideas? Check out our [Discussions](https://github.com/hankbesser/recursive-agents/discussions) tab!
 
-Thank you for helping make Recursive Companion better!
+Thank you for helping make Recursive Agents better!

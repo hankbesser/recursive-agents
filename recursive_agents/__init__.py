@@ -5,13 +5,13 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 
-# recursive_companion/__init__.py
+# recursive_agents/__init__.py
 """
-Public API surface for the Recursive Companion package.
+Public API surface for the Recursive Agents package.
 
 Most users should import classes directly from this package root:
 
-    from recursive_companion import GenericCompanion
+    from recursive_agents import GenericCompanion
     agent = GenericCompanion(llm="gpt-4o-mini")
     answer = agent("Analyze this problem...")
 
@@ -49,7 +49,7 @@ from .streamlit import (
 )
 
 # ---------------------------------------------------------------------
-# What `from recursive_companion import *` should expose
+# What `from recursive_agents import *` should expose
 # ---------------------------------------------------------------------
 __all__ = [
     # Core

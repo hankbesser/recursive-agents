@@ -24,7 +24,7 @@ Why bother to do this?
 from langchain_core.runnables import RunnableLambda
 from langgraph.graph import StateGraph
 from typing import TypedDict
-from recursive_companion.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
+from recursive_agents.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
 
 # 1 - Wrap in a RunnableLambda
 llm_fast  = "gpt-4o-mini"

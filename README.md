@@ -1,19 +1,19 @@
-# Recursive Companion 🔄
+# Recursive Agents 🔄
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Contributing](https://img.shields.io/badge/Contributing-Guidelines-blue.svg)](CONTRIBUTING.md)
 
 ## A Meta-Framework for Self-Improving Agents
 
-Recursive Companion implements a **three-phase iterative refinement architecture** where LLM agents (instances of Classes) critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
+Recursive Agents implements a **three-phase iterative refinement architecture** where LLM agents (instances of Classes) critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
 
 ![Sequence Flow](images/Sequence_Summary.svg)
 
-→ See the [Architecture Documentation](docs/RC_architecture.md) for detailed system design.
+→ See the [Architecture Documentation](docs/RA_architecture.md) for detailed system design.
 
-### Why Recursive Companion?
+### Why Recursive Agents?
 
-**See inside the thinking.*** While other frameworks show you what happened, RC shows you why. Every instance maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
+**See inside the thinking.*** While other frameworks show you what happened, RA shows you why. Every instance maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
 
 *Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
 
@@ -21,7 +21,7 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 ---
 
-## What Makes RC Unique
+## What Makes RA Unique
 
 | Code Pattern | Why It Matters | Rare in OSS? |
 |--------------|----------------|--------------|
@@ -39,15 +39,15 @@ Recursive Companion implements a **three-phase iterative refinement architecture
 
 ```bash
 # Create conda environment
-conda create -n recursive-companion python=3.12 -y # (or python=3.13 -y)
-conda activate recursive-companion
+conda create -n recursive-agents python=3.12 -y # (or python=3.13 -y)
+conda activate recursive-agents
 # Or using venv
 # python -m venv venv
 # source venv/bin/activate  
 
 # clone and install
-git clone https://github.com/hankbesser/recursive-companion.git
-cd recursive-companion
+git clone https://github.com/hankbesser/recursive-agents.git
+cd recursive-agents
 pip install -e .  # or pip install . for non-editable
 # pip install -e .[all] for running the streamlit app and working with LangGraph in demo
 # pip install .[all] for non edittable version as above   
@@ -57,7 +57,7 @@ pip install -e .  # or pip install . for non-editable
 
 Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a terminal) the following input prompt in a new conversation.. It is very informal and you can tailor the structure (possibly more formal language if you are into that) but the TODO is pretty solid with this particular order:
 
-**"Ok please think as deeply as possible about this project. Start with the README and docs folder to get a sense of it... now thinking as deeply as you possibly can, analyze the package. The main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_companion including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Lastly, hit all files in the the demos folder- again, as deep of analysis as you can go.  It's good to get a deep grasp of this project. Thank you!"**
+**"Ok please think as deeply as possible about this project. Start with the README and docs folder to get a sense of it... now thinking as deeply as you possibly can, analyze the package. The main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_agents including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Lastly, hit all files in the the demos folder- again, as deep of analysis as you can go.  It's good to get a deep grasp of this project. Thank you!"**
 
 *The responses will not dissapoint.*
 
@@ -65,12 +65,12 @@ Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a ter
 
 
 ## Architecture: Clean Layers, Clear Purpose
-→ See the [Architecture Documentation](docs/RC_architecture.md)
+→ See the [Architecture Documentation](docs/RA_architecture.md)
 
 ```text
 Your Code
     ↓ imports
-recursive_companion/        # Pick your companion
+recursive_agents/        # Pick your companion
     ├── base.py             # Standard: Marketing, Bug, Strategy, Generic
     └── streamlit.py        # Same companions + live UI updates
         ↓ inherits
@@ -81,7 +81,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 **Where to Look (Separation of Concerns):**
 
 - **Engineers** → ```core/chains.py``` (how to build the chains, storage/caching/memory management, observability, iteration process, etc.)
-- **Users** → ```recursive_companion/base.py``` (picking companions)
+- **Users** → ```recursive_agents/base.py``` (picking companions)
 - **Context Engineers** → ```templates/``` folder + ```template_load_utils.py```
 - **UI Developers** → ```streamlit_app.py``` (progress containers)
 - *or any combination of these*
@@ -94,7 +94,7 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 
 ### Level 1: Just Use It (5 minutes)
 ```python
-from recursive_companion import MarketingCompanion
+from recursive_agents import MarketingCompanion
 
 # Create an agent - it's just a callable!
 agent = MarketingCompanion("gpt-4o-mini")
@@ -166,8 +166,8 @@ compliance assessment, and risk evaluation. Focus on:
 
 # Step 2: Create your companion class (just 4 lines!)
 
-from recursive_companion.core.chains import BaseCompanion
-from recursive_companion.template_load_utils import build_templates
+from recursive_agents.core.chains import BaseCompanion
+from recursive_agents.template_load_utils import build_templates
 
 # probably best to do in recusrive_companion/base.py with other Companions
 LEGAL_TEMPLATES = build_templates(initial_sys="legal_initial_sys")
@@ -237,10 +237,10 @@ This is a full testing and observability app included with the framework.
 ## Multi-Agent Orchestration
 
 #### **Raw Python** (Sequential with Full Observability):
-- [multi agent RC notebook ](demos/multi_agent_raw_rc_demo.ipynb)
-- [multi agent RC pyton file ](demos/multi_agent_raw_rc_demo.py)
+- [multi agent RA notebook ](demos/multi_agent_raw_ra_demo.ipynb)
+- [multi agent RA pyton file ](demos/multi_agent_raw_ra_demo.py)
 ```python
-from recursive_companion.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
+from recursive_agents.base import MarketingCompanion, BugTriageCompanion, StrategyCompanion
 
 problem = "App crashes on upload, users leaving bad reviews..."
 
@@ -265,9 +265,9 @@ print(f"Strategy iterations: {len(strategy.run_log)}")
 print(strategy.transcript_as_markdown())
 ```
 
-#### **LangGraph** (Parallel Execution + RC Transparency):
-- [multi agent RC callable / LangGraph notebook ](demos/multi_agent_langgraph_demo.ipynb)
-- [multi agent RC callable / LangGraph python file ](demos/multi_agent_langgraph_demo.py)
+#### **LangGraph** (Parallel Execution + RA Transparency):
+- [multi agent RA callable / LangGraph notebook ](demos/multi_agent_langgraph_demo.ipynb)
+- [multi agent RA callable / LangGraph python file ](demos/multi_agent_langgraph_demo.py)
 
 ```python
 from langchain_core.runnables import RunnableLambda
@@ -275,7 +275,7 @@ from langgraph.graph import StateGraph
 from typing import TypedDict
 
 # Same companions work as LangGraph nodes!
-# mkt, bug instances from raw RC example above
+# mkt, bug instances from raw RA example above
 mkt_node = RunnableLambda(mkt)
 eng_node = RunnableLambda(bug)
 strategy_node = RunnableLambda(strategy)
@@ -313,12 +313,12 @@ workflow = graph.compile()
 # Run workflow
 result = workflow.invoke({"input": problem})
 
-# RC's thinking history still available!
+# RA's thinking history still available!
 print(mkt.transcript_as_markdown())     # Full marketing analysis
 print(bug.transcript_as_markdown())     # Full engineering analysis
 print(strategy.transcript_as_markdown()) # How strategy synthesized both
 ```
-For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_RC_comp.md).
+For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_RA_comp.md).
 
 ---
 ## Production Features
@@ -368,8 +368,8 @@ You are a Financial Analysis Companion. Focus on:
 ### 2. Create the companion class
 ```python
 your_app/base.py
-from recursive_companion.core.chains import BaseCompanion
-from recursive_companion.template_load_utils import build_templates
+from recursive_agents.core.chains import BaseCompanion
+from recursive_agents.template_load_utils import build_templates
 
 FINANCE_TEMPLATES = build_templates(initial_sys="financial_initial_sys")
 class FinancialCompanion(BaseCompanion):
@@ -403,7 +403,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## Future Explorations
 
-The Recursive Companion framework opens fascinating research directions:
+The Recursive Agents framework opens fascinating research directions:
 
 - Advanced convergence analysis beyond embeddings / cosine similarity
 - Richer integration patterns with agentic frameworks
@@ -425,7 +425,7 @@ patterns emerge across different domains and scales.
 7. **Practical guidance** for extending the framework
 8. **Visual learning** - Sequence diagram up front, architecture docs linked
 
-#### The goal: Show what makes Recursive Companion different and how to use it effectively.
+#### The goal: Show what makes Recursive Agents different and how to use it effectively.
 
 ---
 

@@ -6,20 +6,20 @@
 # This software is licensed under the MIT License.
 # See the LICENSE file in the project root for the full license text.
 ```
-# LangGraph & Recursive Companion: Complete Agent Observability
+# LangGraph & Recursive Agents: Complete Agent Observability
 
 ## The Missing Piece in Agent Development
 
 When an LLM agent produces unexpected output, developers need to understand both what happened and why. Current tools excel at workflow orchestration but lack visibility into agent reasoning.
 
-Recursive Companion fills this gap. RC agents are Python callables that automatically maintain their complete thinking history - every iteration, critique, and refinement is preserved for inspection.
+Recursive Agents fills this gap. RA agents are Python callables that automatically maintain their complete thinking history - every iteration, critique, and refinement is preserved for inspection.
 
 ### Clean Architecture
 
-RC takes a different approach - no complex class hierarchies, no message schemas, no framework-specific primitives:
+RA takes a different approach - no complex class hierarchies, no message schemas, no framework-specific primitives:
 
 ```python
-# RC: Just a callable
+# RA: Just a callable
 agent = MarketingCompanion()
 result = agent("Why did sales drop?")  # That's it!
 
@@ -29,7 +29,7 @@ result = agent("Why did sales drop?")  # That's it!
 # - Requires specific invoke() patterns and schemas
 # - Deep nesting: chain.steps[0].agent.memory.messages[0].content
 
-# RC works everywhere without modification:
+# RA works everywhere without modification:
 result = agent.loop("...")              # Direct call
 node = RunnableLambda(agent)           # Instant LangGraph node
 response = await agent_api(agent)       # Web service ready
@@ -43,9 +43,9 @@ Building reliable AI systems requires understanding both workflow execution and 
 
 - **LangGraph** excels at **workflow orchestration** - managing how agents connect, execute in parallel, handle errors, and pass data between nodes. It shows you the "what" of your system.
 
-- **Recursive Companion** provides **thinking transparency** - agents that automatically maintain their complete reasoning history through iterative refinement. It shows you the "why" behind every decision.
+- **Recursive Agents** provides **thinking transparency** - agents that automatically maintain their complete reasoning history through iterative refinement. It shows you the "why" behind every decision.
 
-**The Key Insight**: RC agents work as drop-in LangGraph nodes. You don't choose between tools - you get workflow orchestration AND thinking transparency in one system.
+**The Key Insight**: RA agents work as drop-in LangGraph nodes. You don't choose between tools - you get workflow orchestration AND thinking transparency in one system.
 
 ## What Each Tool Does Best
 
@@ -66,10 +66,10 @@ workflow.batch(...)                  # Batch processing
 # - Error handling and retries
 ```
 
-### Recursive Companion's Addition (Thinking Transparency)
+### Recursive Agents's Addition (Thinking Transparency)
 
 ```python
-# RC adds introspection to any node
+# RA adds introspection to any node
 mkt = MarketingCompanion()
 mkt_node = RunnableLambda(mkt)
 
@@ -120,7 +120,7 @@ Standard LangChain/LangGraph patterns involve:
 - Framework-specific patterns
 - Deep nesting: `workflow.nodes[0].state['messages'][0].content`
 
-RC provides:
+RA provides:
 - Direct access: `agent.run_log`, `agent.history`
 - Universal compatibility across environments
 - String in, string out interface
@@ -148,9 +148,9 @@ for chunk in debug_chunks:
 # Note: Still no access to agent reasoning or iterations
 ```
 
-### RC Direct Access (Automatic & Complete)
+### RA Direct Access (Automatic & Complete)
 
-The key difference: RC agents automatically maintain their history with zero configuration.
+The key difference: RA agents automatically maintain their history with zero configuration.
 
 ```python
 # Create agents - that's it, introspection is built-in
@@ -209,9 +209,9 @@ workflow.invoke({"input": "..."}, config={"callbacks": [handler]})
 # Still doesn't capture iterative refinement process
 ```
 
-None of these approaches provide the automatic, structured thinking history that RC delivers out of the box.
+None of these approaches provide the automatic, structured thinking history that RA delivers out of the box.
 
-## RC + LangGraph: Best of Both Worlds
+## RA + LangGraph: Best of Both Worlds
 
 ### Zero-Friction Integration
 
@@ -263,7 +263,7 @@ print(plan.transcript_as_markdown())  # Synthesis process visible
 
 ### Case 1: Production Debugging
 
-Your customer success agent gives inappropriate advice. With standard tools, you're blind. With RC:
+Your customer success agent gives inappropriate advice. With standard tools, you're blind. With RA:
 
 ```python
 # Instant root cause analysis
@@ -304,10 +304,10 @@ def validate_agent_quality(agent, test_cases):
 
 ### Performance Monitoring
 
-**Without RC:**
+**Without RA:**
 Track execution time and token counts. That's about it.
 
-**With RC:**
+**With RA:**
 ```python
 # Rich metrics for monitoring
 metrics = {
@@ -322,12 +322,12 @@ metrics = {
 ## The Synergy: Better Together
 
 **Together = Complete Observability:**
-- See both the workflow (LangGraph) AND the thinking (RC)
-- Zero integration overhead - RC agents work directly as LangGraph nodes
+- See both the workflow (LangGraph) AND the thinking (RA)
+- Zero integration overhead - RA agents work directly as LangGraph nodes
 
 Your companions become "thoughts-included" nodes that enhance any LangGraph workflow with deep introspection capabilities.
 
 
 ## Start Building Transparent AI Systems Today
 
-Recursive Companion transforms opaque LLM calls into transparent reasoning processes. Whether you're debugging production issues, ensuring quality standards, or optimizing agent performance, RC gives you the visibility you need. The future of AI development isn't about choosing between tools - it's about combining the right ones. LangGraph handles the "what," RC reveals the "why," and together they enable more observable AI systems.
+Recursive Agents transforms opaque LLM calls into transparent reasoning processes. Whether you're debugging production issues, ensuring quality standards, or optimizing agent performance, RA gives you the visibility you need. The future of AI development isn't about choosing between tools - it's about combining the right ones. LangGraph handles the "what," RA reveals the "why," and together they enable more observable AI systems.

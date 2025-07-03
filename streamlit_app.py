@@ -7,10 +7,10 @@
 
 # streamlit_app.py
 """
-Recursive Companion Studio - Interactive Demo Application
+Recursive Agents Studio - Interactive Demo Application
 ========================================================
 
-A Streamlit application that demonstrates the Recursive Companion framework's
+A Streamlit application that demonstrates the Recursive Agents framework's
 three-phase critique and revision process with real-time visualization.
 
 Features:
@@ -31,7 +31,7 @@ Then navigate to http://localhost:8501 in your browser.
 Requirements:
 ------------
 Requires the optional streamlit dependencies:
-    pip install recursive-companion[streamlit]
+    pip install recursive-agents[streamlit]
 """
 
 import streamlit as st
@@ -39,14 +39,14 @@ from pathlib import Path
 from langchain.callbacks.base import BaseCallbackHandler
 
 
-from recursive_companion.base import (
+from recursive_agents.base import (
     GenericCompanion, 
     MarketingCompanion, 
     BugTriageCompanion, 
     StrategyCompanion
 )
 
-from recursive_companion.streamlit import (
+from recursive_agents.streamlit import (
     StreamlitGenericCompanion,
     StreamlitMarketingCompanion,
     StreamlitBugTriageCompanion,
@@ -85,7 +85,7 @@ class StreamingCallbackHandler(BaseCallbackHandler):
 
 # Streamlit app
 st.set_page_config(
-    page_title="Recursive Companion Studio", 
+    page_title="Recursive Agents Studio", 
     page_icon="🔄",
     layout="wide"
 )
@@ -101,19 +101,19 @@ st.set_page_config(
 
 col_title, col_github = st.columns([4, 1])
 with col_title:
-    st.title("🔄 Recursive Companion Studio")
+    st.title("🔄 Recursive Agents Studio")
     # Move description closer to title
     st.markdown("<p style='margin-top: -5px;'>Watch the three-phase loop in action: draft, critique, and revision happening live • See how ideas deepen through recursive self-improvement</p>", unsafe_allow_html=True)
     st.markdown("<p style='color: #00ccff; font-size: 15px; margin-top: -10px;'><strong>💡 Note:</strong> Click 'Apply Settings' in the sidebar to activate configuration changes • Settings changes will stop any analysis in progress</p>", unsafe_allow_html=True)
 with col_github:
     st.markdown("<br>", unsafe_allow_html=True)  # Spacing to align with title
-    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Recursive%20Companion-blue?logo=github)](https://github.com/hankbesser/recursive-companion)")
+    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Recursive%20Companion-blue?logo=github)](https://github.com/hankbesser/recursive-agents)")
     # Full legal copyright notice
     st.markdown("""
     <p style='color: #888; font-size: 12px; margin-top: 8px; line-height: 1.4;'>
     Copyright (c) 2025 Henry Besser<br>
     This software is licensed under the MIT License.<br>
-    <a href="https://github.com/hankbesser/recursive-companion/blob/main/LICENSE" target="_blank" style='color: #00ccff; text-decoration: none;'>View License</a>
+    <a href="https://github.com/hankbesser/recursive-agents/blob/main/LICENSE" target="_blank" style='color: #00ccff; text-decoration: none;'>View License</a>
     </p>
     """, unsafe_allow_html=True)
 
@@ -391,7 +391,7 @@ st.markdown("---")
 st.markdown(
     """
     <div style='text-align: center;'>
-    <span style='color: #00ccff;'>Built with Recursive Companion Framework | Templates are loaded from </span>
+    <span style='color: #00ccff;'>Built with Recursive Agents Framework | Templates are loaded from </span>
     <code style='background-color: #f0f2f6; padding: 2px 6px; border-radius: 3px; color: #ff6b6b;'>templates/</code>
     <span style='color: #00ccff;'> directory</span>
     </div>

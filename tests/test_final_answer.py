@@ -7,7 +7,7 @@
 # See the LICENSE file in the project root for the full license text.
 
 # tests/test_final_answer.py
-from recursive_companion.base import GenericCompanion
+from recursive_agents.base import GenericCompanion
 
 # Create companion with 2 loops
 companion = GenericCompanion(llm="gpt-4o-mini", max_loops=2, return_transcript=True)

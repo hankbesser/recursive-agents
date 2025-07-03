@@ -7,15 +7,15 @@
 # See the LICENSE file in the project root for the full license text.
 ```
 
-# Recursive Companion Architecture
+# Recursive Agents Architecture
 
 ## Overview
 
-Recursive Companion implements a modular architecture where AI agents automatically critique and refine their outputs through a three-phase iterative process. This document details the system design and component interactions.
+Recursive Agents implements a modular architecture where AI agents automatically critique and refine their outputs through a three-phase iterative process. This document details the system design and component interactions.
 
 ## System Architecture
 
-![RC Architecture](../images/RC_Architecture.svg)
+![RA Architecture](../images/RA_Architecture.svg)
 
 ## Key ideas before getting into the nitty gritty
 
@@ -31,9 +31,9 @@ This data persists after execution, enabling debugging and analysis even in comp
 ### Design Principles
 
 1. **Separation of Concerns**
-   - Templates define behavior (look in ```templates/``` folder and ```recursive_companion/template_load_utitls.py```)
+   - Templates define behavior (look in ```templates/``` folder and ```recursive_agents/template_load_utitls.py```)
    - Engine provides mechanics(look in ```core/chains.py```)
-   - Companions specialize domains(look in ```recursive_companion/base.py```)
+   - Companions specialize domains(look in ```recursive_agents/base.py```)
 
 2. **Composability**
    - Each layer works independently
@@ -99,7 +99,7 @@ The core engine provides:
 - `build_chains()` - Constructs three LangChain chains from templates
 - `cosine_from_embeddings()` - Calculates similarity between text embeddings
 
-### 3. Domain Layer (```recursive_companion/base.py```)
+### 3. Domain Layer (```recursive_agents/base.py```)
 Companion classes inherit from BaseCompanion:
 - GenericCompanion - Domain-agnostic baseline
 - MarketingCompanion - Overrides initial_sys for marketing expertise
@@ -135,7 +135,7 @@ This cycle repeats until:
 
 ## Template Composition
 
-The `build_templates()` utility in `recursive_companion/template_load_utils.py` enables sophisticated composition:
+The `build_templates()` utility in `recursive_agents/template_load_utils.py` enables sophisticated composition:
 
 ```python
 def build_templates(**overrides):
@@ -151,7 +151,7 @@ Key features:
 - User templates remain protocol-free
 - Complete flexibility in composition
 
- *modularty isn't only confined to the code you can change how the change how to agents obtain the protocol (and system and user prompts as well) by modyfiying txt files and changing ```recursive_companion/template_load_utils.py```:*
+ *modularty isn't only confined to the code you can change how the change how to agents obtain the protocol (and system and user prompts as well) by modyfiying txt files and changing ```recursive_agents/template_load_utils.py```:*
 
 ```python
 # Your protocol shapes thinking, but WHERE it applies is flexible:

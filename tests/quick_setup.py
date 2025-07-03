@@ -29,7 +29,7 @@ $ OPENAI_API_KEY=sk-…  python demos/quick_start.py
 """
 
 import logging
-from recursive_companion.base import GenericCompanion          # package import
+from recursive_agents.base import GenericCompanion          # package import
 
 
 # ── dial down unrelated library chatter ──────────────────────────
