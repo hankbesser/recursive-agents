@@ -25,7 +25,7 @@ In the Recursive Agents framework, we call our agent implementations
 "Companions" rather than "Agents" for clarity:
 
 - **Framework**: Recursive Agents (what the system does)
-- **C**lasses: **C**ompanions (what you work with)
+- ***C***lasses: ***C***ompanions (what you work with)
 
 ---
 
