@@ -11,7 +11,6 @@ queries, and other data sources.
 
 import logging
 from typing import List, Dict, Any, Optional
-import asyncio
 import json
 import httpx
 from urllib.parse import quote
