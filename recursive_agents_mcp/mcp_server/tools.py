@@ -25,7 +25,7 @@ from recursive_agents.base import (
     StrategyCompanion
 )
 from recursive_agents.template_load_utils import build_templates
-from core.mcp_aware_chains import MCPAwareCompanion
+from ..core.mcp_aware_chains import MCPAwareCompanion
 
 # Companion mapping
 COMPANION_MAP = {
