@@ -6,13 +6,14 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "your.email@example.com"},
+    {name = "Henry Besser", email = "henry.operator.research@gmail.com"},
 ]
 dependencies = [
     "mcp>=0.1.0",
     "recursive-agents @ file://../",  # Points to parent directory
     "python-dotenv>=1.0.0",
     "duckduckgo-search>=6.0.0",  # For web search capability
+    "aiosqlite>=0.19.0",
 ]
 
 [project.optional-dependencies]
