@@ -25,5 +25,8 @@ dev = [
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["recursive_agents_mcp.core", "recursive_agents_mcp.mcp_server"]
+
 [project.scripts]
 recursive-agents-mcp = "mcp_server.server:main"
