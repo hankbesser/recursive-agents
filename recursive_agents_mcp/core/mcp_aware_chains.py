@@ -16,7 +16,7 @@ import asyncio
 from recursive_agents.core.chains import BaseCompanion, cosine_from_embeddings
 from langchain_core.messages import HumanMessage, AIMessage
 from recursive_agents.template_load_utils import build_templates
-from core.data_tools import DataTools
+from .data_tools import DataTools
 
 logger = logging.getLogger(__name__)
 
