@@ -13,6 +13,7 @@ dependencies = [
     "recursive-agents @ file://../",  # Points to parent directory
     "python-dotenv>=1.0.0",
     "duckduckgo-search>=6.0.0",  # For web search capability
+    "aiosqlite>=0.19.0",
 ]
 
 [project.optional-dependencies]

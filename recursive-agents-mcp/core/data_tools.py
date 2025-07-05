@@ -10,11 +10,12 @@ queries, and other data sources.
 """
 
 import logging
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 import asyncio
 import json
 import httpx
 from urllib.parse import quote
+import aiosqlite
 
 logger = logging.getLogger(__name__)
 
@@ -128,30 +129,50 @@ class DataTools:
             # Fall back to DuckDuckGo
             return await self.web_search(query, num_results)
     
-    async def database_query(self, query: str, db_type: str = "sqlite") -> Any:
-        """
-        Query a database for information.
-        
+    async def database_query(
+        self,
+        query: str,
+        db_config: Optional[Union[str, Dict[str, Any]]] = None,
+        db_type: str = "sqlite",
+    ) -> Any:
+        """Query a database for information.
+
         Args:
-            query: SQL query or natural language query
-            db_type: Type of database (sqlite, postgres, etc.)
-            
+            query: SQL query to execute.
+            db_config: Connection string or configuration mapping.
+            db_type: Type of database (currently only ``sqlite`` is supported).
+
         Returns:
-            Query results
+            A dict with ``status`` and list of ``rows``.
         """
+        logger.info(f"Querying {db_type} database: {query}")
+
         try:
-            logger.info(f"Querying {db_type} database: {query}")
-            
-            # Placeholder for actual implementation
-            # TODO: Implement real database access
-            result = {
-                "status": "success",
-                "data": f"Database query result for: {query}",
-                "rows": []
-            }
-            
-            return result
-            
+            if db_type != "sqlite":
+                raise ValueError(f"Unsupported db_type: {db_type}")
+
+            # Determine connection string from config
+            conn_str = None
+            if isinstance(db_config, str):
+                conn_str = db_config
+            elif isinstance(db_config, dict) and db_config:
+                conn_str = (
+                    db_config.get("database")
+                    or db_config.get("path")
+                    or db_config.get("connection_string")
+                )
+
+            if not conn_str:
+                conn_str = ":memory:"
+
+            async with aiosqlite.connect(conn_str) as conn:
+                conn.row_factory = aiosqlite.Row
+                async with conn.execute(query) as cursor:
+                    rows = await cursor.fetchall()
+                    structured = [dict(row) for row in rows]
+
+            return {"status": "success", "rows": structured}
+
         except Exception as e:
             logger.error(f"Database query failed: {e}")
             return {"status": "error", "message": str(e)}
