@@ -1,0 +1,29 @@
+[project]
+name = "recursive-agents-mcp"
+version = "0.1.0"
+description = "MCP server exposing Recursive Agents' thinking methodology"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"},
+]
+dependencies = [
+    "mcp>=0.1.0",
+    "recursive-agents @ file://../",  # Points to parent directory
+    "python-dotenv>=1.0.0",
+    "duckduckgo-search>=6.0.0",  # For web search capability
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+recursive-agents-mcp = "mcp_server.server:main"
