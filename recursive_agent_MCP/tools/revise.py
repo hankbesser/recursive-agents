@@ -206,6 +206,43 @@ async def tool_revise(params: ReviseInput, ctx: Context) -> ReviseOutput:
 
     # Update the sampling info to reflect the latest operation
     row["sampling"] = cfg.model_dump()
+    
+    # Calculate similarity score if conditions are met
+    revisions_after = row["revision"]
+    if (execution_mode == ExecutionMode.SERVER and 
+        len(revisions_after) >= 2):
+        
+        # Check if similarity calculation is enabled
+        # If enable_similarity is None and we're in server mode, default to True
+        enable_sim = getattr(comp, 'enable_similarity', None)
+        if enable_sim is None:
+            enable_sim = True  # Default for server mode
+        
+        if enable_sim:
+            try:
+                # Compare last two revisions for convergence
+                prev_revision = revisions_after[-2]
+                curr_revision = revisions_after[-1]
+                
+                # Use the companion's calculate_similarity method
+                # This requires chain_V2.py with the public method
+                if hasattr(comp, 'calculate_similarity'):
+                    similarity_score = comp.calculate_similarity(prev_revision, curr_revision)
+                    
+                    # Store similarity score in the run_log slot
+                    row["similarity_score"] = similarity_score
+                    
+                    # Log for debugging
+                    logger.debug(f"Similarity between revisions: {similarity_score:.4f}")
+                    
+                    # Check if we've reached convergence threshold
+                    if similarity_score >= comp.similarity_threshold:
+                        logger.info(f"Convergence detected: {similarity_score:.4f} >= {comp.similarity_threshold}")
+                else:
+                    logger.warning("Companion doesn't have calculate_similarity method - using chains.py instead of chain_V2.py?")
+            except Exception as e:
+                logger.error(f"Failed to calculate similarity: {e}")
+                # Don't fail the whole revision, just skip similarity
     # -----------------------------------------------------------------
 
     # Progress notification for server-side completion

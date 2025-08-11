@@ -100,6 +100,22 @@ class CompanionSessionManager:
                 # Set streaming on the LLM if supported
                 if hasattr(comp.llm, "streaming"):
                     comp.llm.streaming = True
+                    
+                # Store similarity calculation preference
+                # Default to True for server mode, False for client mode
+                if sampling_config and sampling_config.enable_similarity is not None:
+                    comp.enable_similarity = sampling_config.enable_similarity
+                else:
+                    # Default based on execution mode (if known)
+                    # Server mode: default True (embeddings are cheap compared to LLM)
+                    # Client mode: default False (no server-side API calls)
+                    # If execution_mode not set yet, default to None (will be decided later)
+                    if sampling_config and sampling_config.execution_mode:
+                        from schema.common import ExecutionMode
+                        comp.enable_similarity = (sampling_config.execution_mode == ExecutionMode.SERVER)
+                    else:
+                        comp.enable_similarity = None  # Will be set when execution mode is determined
+                        
                 companions[companion_type] = comp
 
             return companions[companion_type]
