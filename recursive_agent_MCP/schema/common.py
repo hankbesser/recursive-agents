@@ -110,14 +110,6 @@ class SamplingConfig(BaseModel):
         description="Hard limit on iterations. Default: 3"
     )
     
-    enable_similarity: Annotated[
-        Optional[bool],
-        "Enable similarity calculation for convergence detection (server mode only)"
-    ] = Field(
-        default=None,
-        description="Calculate cosine similarity between revisions. Default: True for server mode, False for client mode. Requires API calls for embeddings."
-    )
-    
     # === ADVANCED OPTIONS ===
     stop_sequences: Annotated[
         Optional[List[str]],

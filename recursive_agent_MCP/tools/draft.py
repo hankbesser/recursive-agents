@@ -361,6 +361,9 @@ async def tool_draft(params: GenerateDraftInput, ctx: Context) -> DraftOutput:
         elapsed_ms=elapsed_ms
     )
     
+    # Save the session after modifications
+    session_manager.mark_companion_modified(session_id)
+    
     return DraftServerOutput(
         draft=draft,
         session_id=session_id,

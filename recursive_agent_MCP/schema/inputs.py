@@ -214,6 +214,10 @@ class ReviseInput(BaseToolInput):
         default_factory=SamplingConfig,
         description="LLM sampling configuration"
     )
+    calculate_similarity: Optional[bool] = Field(
+        default=None,
+        description="Whether to calculate similarity score between revisions (server mode only). Default: True for server mode if 2+ revisions exist. Requires embedding API calls."
+    )
     
     @field_validator('query', 'draft', 'critique', mode='before')
     @classmethod

@@ -24,7 +24,7 @@ COMPANION_MAP: Dict[str, type[BaseCompanion]] = {
 # ── Session Support -----------------------------------------------------------------
 class CompanionSessionManager:
     def __init__(self, ttl_minutes: int = 30, cleanup_interval_minutes: int = 10, 
-                 max_sessions_before_cleanup: int = 100):
+                 max_sessions_before_cleanup: int = 100, redis_url: str = None):
         self.sessions: Dict[str, Dict[str, Any]] = {}
         self.ttl = timedelta(minutes=ttl_minutes)
         self.cleanup_interval = timedelta(minutes=cleanup_interval_minutes)
@@ -33,6 +33,15 @@ class CompanionSessionManager:
         self._lock = threading.Lock()  # Protect session operations (thread-safe)
         self._shutdown = False
         self._opportunistic_cleanup_running = False
+        
+        # Optional persistence layer
+        try:
+            from .session_persister import SessionPersister
+            self.persister = SessionPersister(redis_url)
+        except Exception as e:
+            import logging
+            logging.warning(f"Session persistence not available: {e}")
+            self.persister = None
 
     def get_or_create_session(self, session_id: str = None) -> str:
         if not session_id:
@@ -40,11 +49,23 @@ class CompanionSessionManager:
 
         now = datetime.now()
         if session_id not in self.sessions:
-            self.sessions[session_id] = {
-                "companions": {},
-                "created_at": now,
-                "last_accessed": now,
-            }
+            # Try to load from persistence first
+            loaded = False
+            if self.persister:
+                session_data = self.persister.load(session_id)
+                if session_data:
+                    self.sessions[session_id] = session_data
+                    self.sessions[session_id]["last_accessed"] = now
+                    loaded = True
+            
+            # Create new session if not loaded
+            if not loaded:
+                self.sessions[session_id] = {
+                    "companions": {},
+                    "middleware_state": {},  # For middleware to store cross-request data
+                    "created_at": now,
+                    "last_accessed": now,
+                }
         else:
             # Update last accessed time
             self.sessions[session_id]["last_accessed"] = now
@@ -77,48 +98,79 @@ class CompanionSessionManager:
             companions = session["companions"]
 
             if companion_type not in companions:
-                cls = COMPANION_MAP.get(companion_type.lower(), GenericCompanion)
-                
-                # Extract params from sampling_config if provided
-                if sampling_config:
-                    # Build kwargs only for non-None values
-                    kwargs = {"verbose": False}
+                # Check if we have serialized companion data from persistence
+                serialized_companions = session.get("_serialized_companions", {})
+                if companion_type in serialized_companions and self.persister:
+                    # Deserialize the companion from stored data
+                    cls = COMPANION_MAP.get(companion_type.lower(), GenericCompanion)
+                    comp = self.persister.deserialize_companion(
+                        companion_type, 
+                        serialized_companions[companion_type],
+                        cls
+                    )
+                    companions[companion_type] = comp
+                    # Remove from serialized data once deserialized
+                    del serialized_companions[companion_type]
+                else:
+                    # Create new companion
+                    cls = COMPANION_MAP.get(companion_type.lower(), GenericCompanion)
                     
-                    if sampling_config.model is not None:
-                        kwargs["llm"] = sampling_config.model
-                    if sampling_config.temperature is not None:
-                        kwargs["temperature"] = sampling_config.temperature
-                    if sampling_config.similarity_threshold is not None:
-                        kwargs["similarity_threshold"] = sampling_config.similarity_threshold
-                    if sampling_config.max_loops is not None:
-                        kwargs["max_loops"] = sampling_config.max_loops
+                    # Extract params from sampling_config if provided
+                    if sampling_config:
+                        # Build kwargs only for non-None values
+                        kwargs = {"verbose": False}
                         
-                    comp = cls(**kwargs)
-                else:
-                    comp = cls(verbose=False)  # Use defaults
-                    
-                # Set streaming on the LLM if supported
-                if hasattr(comp.llm, "streaming"):
-                    comp.llm.streaming = True
-                    
-                # Store similarity calculation preference
-                # Default to True for server mode, False for client mode
-                if sampling_config and sampling_config.enable_similarity is not None:
-                    comp.enable_similarity = sampling_config.enable_similarity
-                else:
-                    # Default based on execution mode (if known)
-                    # Server mode: default True (embeddings are cheap compared to LLM)
-                    # Client mode: default False (no server-side API calls)
-                    # If execution_mode not set yet, default to None (will be decided later)
-                    if sampling_config and sampling_config.execution_mode:
-                        from schema.common import ExecutionMode
-                        comp.enable_similarity = (sampling_config.execution_mode == ExecutionMode.SERVER)
+                        if sampling_config.model is not None:
+                            kwargs["llm"] = sampling_config.model
+                        if sampling_config.temperature is not None:
+                            kwargs["temperature"] = sampling_config.temperature
+                        if sampling_config.similarity_threshold is not None:
+                            kwargs["similarity_threshold"] = sampling_config.similarity_threshold
+                        if sampling_config.max_loops is not None:
+                            kwargs["max_loops"] = sampling_config.max_loops
+                            
+                        comp = cls(**kwargs)
                     else:
-                        comp.enable_similarity = None  # Will be set when execution mode is determined
+                        comp = cls(verbose=False)  # Use defaults
                         
-                companions[companion_type] = comp
+                    # Set streaming on the LLM if supported
+                    if hasattr(comp.llm, "streaming"):
+                        comp.llm.streaming = True
+                    companions[companion_type] = comp
+                
+                # Persist the session after creating/loading companion
+                self._save_session(session_id)
 
             return companions[companion_type]
+    
+    def get_middleware_state(self, session_id: str) -> Dict[str, Any]:
+        """Get middleware state for a session, creating session if needed."""
+        if session_id not in self.sessions:
+            self.get_or_create_session(session_id)
+        return self.sessions[session_id].get("middleware_state", {})
+    
+    def set_middleware_state(self, session_id: str, key: str, value: Any):
+        """Set a middleware state value for a session."""
+        if session_id not in self.sessions:
+            self.get_or_create_session(session_id)
+        if "middleware_state" not in self.sessions[session_id]:
+            self.sessions[session_id]["middleware_state"] = {}
+        self.sessions[session_id]["middleware_state"][key] = value
+        # Save session after middleware state update
+        self._save_session(session_id)
+    
+    def _save_session(self, session_id: str):
+        """Save session to persistence if available."""
+        if self.persister and session_id in self.sessions:
+            try:
+                self.persister.save(session_id, self.sessions[session_id])
+            except Exception as e:
+                import logging
+                logging.error(f"Failed to persist session {session_id}: {e}")
+    
+    def mark_companion_modified(self, session_id: str):
+        """Mark that a companion was modified and trigger save."""
+        self._save_session(session_id)
     
     def get_session_metadata(self, session_id: str):
         """Get metadata about a session for reporting."""
@@ -226,5 +278,14 @@ class CompanionSessionManager:
             self.sessions.clear()
 
 # Create the singleton instance
-# Instantiate the session manager
-session_manager = CompanionSessionManager(ttl_minutes=30)
+# Instantiate the session manager with optional Redis support
+import os
+redis_url = os.getenv("REDIS_URL")  # e.g., "redis://localhost:6379"
+session_manager = CompanionSessionManager(ttl_minutes=30, redis_url=redis_url)
+
+if redis_url:
+    import logging
+    logging.info(f"Session manager initialized with Redis persistence at {redis_url}")
+else:
+    import logging
+    logging.info("Session manager initialized with memory-only storage (no Redis)")

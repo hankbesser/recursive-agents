@@ -11,7 +11,7 @@ from services.companion_manager import session_manager
 from tools.tools_registry import register_all_tools
 from resources.resources_registry import register_all_resources
 from middleware.phase_validation import PhaseValidationMiddleware
-from middleware.phase_intelligence import PhaseIntelligenceMiddleware
+from middleware.phase_metrics import PhaseMetricsMiddleware
 
 
 @asynccontextmanager
@@ -35,9 +35,8 @@ mcp = FastMCP("RecursiveAgent-MCP-v2", lifespan=companion_lifespan)
 # Middleware executes in the order added: first middleware runs first.
 # 1. Validation runs first to ensure phase rules are followed
 mcp.add_middleware(PhaseValidationMiddleware())
-# 2. Intelligence runs after validation to track and guide
-intelligence_middleware = PhaseIntelligenceMiddleware()
-mcp.add_middleware(intelligence_middleware)
+# 2. Metrics middleware tracks real metrics (replaces PhaseIntelligence)
+mcp.add_middleware(PhaseMetricsMiddleware())
 
 # ── Tool Registration --------------------------------------------------------
 # Register all tools with the MCP server using the registry pattern.
