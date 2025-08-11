@@ -1,7 +1,11 @@
 Original request: "{user_input}"
-Draft response: "{draft}"
+Most Recent Draft Response: "{draft}"
 
-Provide a detailed critique of the draft above. 
+
+{prev_drafts}
+
+
+Provide a detailed critique of the draft(s) above. 
 Identify any issues with clarity, accuracy, completeness, or style. 
 - Provide actionable suggestions clearly aligned to each critique point.
 - Point out factual errors or inconsistencies.

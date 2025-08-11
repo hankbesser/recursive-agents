@@ -153,6 +153,7 @@ class BaseCompanion:
             self.llm = ChatOpenAI(
                 model_name=model_name,
                 temperature=temp,
+                streaming=True,
                 **llm_kwargs          # forwards anything extra
             )
 

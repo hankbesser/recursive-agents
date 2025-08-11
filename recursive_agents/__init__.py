@@ -39,14 +39,8 @@ from .base import (
 )
 
 # ---------------------------------------------------------------------
-# Re-export Streamlit-enabled agents from streamlit.py
+# Streamlit-enabled agents removed (streamlit.py was deleted)
 # ---------------------------------------------------------------------
-from .streamlit import (
-    StreamlitGenericCompanion,
-    StreamlitMarketingCompanion,
-    StreamlitBugTriageCompanion,
-    StreamlitStrategyCompanion,
-)
 
 # ---------------------------------------------------------------------
 # What `from recursive_agents import *` should expose
@@ -59,9 +53,4 @@ __all__ = [
     "MarketingCompanion",
     "BugTriageCompanion",
     "StrategyCompanion",
-    # Streamlit companions
-    "StreamlitGenericCompanion",
-    "StreamlitMarketingCompanion",
-    "StreamlitBugTriageCompanion",
-    "StreamlitStrategyCompanion",
 ]

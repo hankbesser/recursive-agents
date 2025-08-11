@@ -33,29 +33,26 @@ def _load(name: str) -> str:
     return (TEMPL_DIR / f"{name}.txt").read_text()
 
 
-def build_templates(**overrides):
+def build_templates(*, inject_context: bool = True, **overrides):
     """
-    Build a companion template set with optional overrides.
-    
-    By default, uses generic templates for all 5 keys. Pass keyword
-    arguments to override specific templates.
-    
-    Examples:
-        # Just override initial_sys (most common pattern)
-        build_templates(initial_sys="marketing_initial_sys")
-        
-        # Override multiple templates
-        build_templates(
-            initial_sys="custom_initial_sys",
-            critique_sys="custom_critique_sys"
-        )
-    
-    Returns:
-        Dict with all 5 required template keys, with protocol_context
-        injected into system prompts.
+    Build a complete 5-template dict, optionally overriding any key
+    and deciding whether to inject the Protocol.
+
+    Parameters
+    ----------
+    inject_context : bool, default True
+        If False, the `{context}` placeholder is left empty.
+    overrides : keyword args
+        Pass template-name strings keyed by the 5 canonical keys
+        (initial_sys, critique_sys, revision_sys, critique_user, revision_user).
+
+    Returns
+    -------
+    dict[str,str]
+        Fully rendered template set ready for build_chains().
     """
-    # Load protocol context once
-    protocol_context = _load("protocol_context")
+    # one‑time load of protocol text (or blank if suppressed)
+    protocol_context = _load("protocol_context") if inject_context else ""
     
     # Define defaults
     defaults = {
@@ -73,11 +70,11 @@ def build_templates(**overrides):
     # but you change to what ever you feel suited to how the protocol should
     # be progrigated thoughout the multiphase system
     templates = {}
-    for key, template_name in template_names.items():
-        content = _load(template_name)
-        # Only system prompts get protocol context
-        if key.endswith("_sys"):
+    for key, tpl_name in template_names.items():
+        content = _load(tpl_name)
+        # only system prompts need the context injection
+        if key.endswith("_sys") and inject_context:
             content = content.format(context=protocol_context)
         templates[key] = content
-    
+
     return templates
