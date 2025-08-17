@@ -1,3 +1,4 @@
+import os
 import asyncio
 import threading
 from datetime import datetime, timedelta
@@ -279,7 +280,6 @@ class CompanionSessionManager:
 
 # Create the singleton instance
 # Instantiate the session manager with optional Redis support
-import os
 redis_url = os.getenv("REDIS_URL")  # e.g., "redis://localhost:6379"
 session_manager = CompanionSessionManager(ttl_minutes=30, redis_url=redis_url)
 

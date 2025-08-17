@@ -34,16 +34,17 @@ from .memory_resources import (
     resource_run_log,
     resource_full_prompt
 )
-from .metrics_resources import (
-    resource_global_metrics,
-    resource_companion_metrics,
-    resource_learning_suggestions,
-    set_intelligence_middleware
-)
+# Removed metrics_resources - it depends on unused PhaseIntelligenceMiddleware
+# Using session_metrics_resources instead which works with PhaseMetricsMiddleware
 from .session_resources import (
     resource_session_run_log,
-    resource_session_current_phase,
-    resource_session_suggestions
+    resource_session_current_phase
+)
+from .session_metrics_resources import (
+    resource_session_phase_metrics,
+    resource_session_timing_metrics,
+    resource_all_sessions_timing_aggregate,
+    resource_companion_type_timing
 )
 
 
@@ -131,39 +132,42 @@ SESSION_RESOURCES: List[Tuple[str, str, Callable, str]] = [
         "session_current_phase",
         resource_session_current_phase,
         "Current phase position and available actions"
+    )
+]
+
+# Old METRICS_RESOURCES removed - depended on unused PhaseIntelligenceMiddleware
+# See SESSION_METRICS_RESOURCES below for working metrics from PhaseMetricsMiddleware
+
+# Session Metrics resources (from PhaseMetricsMiddleware): (uri_pattern, name, function, description)
+SESSION_METRICS_RESOURCES: List[Tuple[str, str, Callable, str]] = [
+    (
+        "resource://sessions/{session_id}/phase_metrics",
+        "session_phase_metrics",
+        resource_session_phase_metrics,
+        "Raw phase execution metrics from PhaseMetricsMiddleware for this session"
     ),
     (
-        "resource://sessions/{session_id}/{companion_type}/suggestions",
-        "session_suggestions",
-        resource_session_suggestions,
-        "AI-generated suggestions for next actions"
+        "resource://sessions/{session_id}/timing_metrics",
+        "session_timing_metrics",
+        resource_session_timing_metrics,
+        "Timing and performance metrics for a session (middleware data only)"
+    ),
+    (
+        "resource://metrics/all_sessions_timing",
+        "all_sessions_timing_aggregate",
+        resource_all_sessions_timing_aggregate,
+        "System-wide timing metrics aggregated across all sessions"
+    ),
+    (
+        "resource://metrics/companion_type/{companion_type}/timing",
+        "companion_type_timing",
+        resource_companion_type_timing,
+        "Timing performance analysis for a specific companion type"
     ),
 ]
 
-# Metrics resources: (uri, name, function, description)
-METRICS_RESOURCES: List[Tuple[str, str, Callable, str]] = [
-    (
-        "resource://metrics/global",
-        "global_metrics",
-        resource_global_metrics,
-        "Aggregated learning metrics across all sessions"
-    ),
-    (
-        "resource://metrics/companion/{companion_type}",
-        "companion_metrics",
-        resource_companion_metrics,
-        "Metrics for a specific companion type"
-    ),
-    (
-        "resource://metrics/suggestions",
-        "learning_suggestions",
-        resource_learning_suggestions,
-        "AI-powered suggestions based on learned patterns"
-    ),
-]
-
-# Combine for backward compatibility
-RESOURCE_REGISTRY = RESOURCES + TEMPLATE_RESOURCES + DYNAMIC_RESOURCES + SESSION_RESOURCES + METRICS_RESOURCES 
+# Combine all resource categories
+RESOURCE_REGISTRY = RESOURCES + TEMPLATE_RESOURCES + DYNAMIC_RESOURCES + SESSION_RESOURCES + SESSION_METRICS_RESOURCES 
 
 
 def register_all_resources(mcp: FastMCP) -> int:

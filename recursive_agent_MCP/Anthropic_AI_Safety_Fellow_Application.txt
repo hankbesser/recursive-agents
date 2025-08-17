@@ -1,0 +1,209 @@
+Anthropic Logo
+Back to jobs
+Anthropic AI Safety Fellow, US
+Remote-Friendly (Travel Required) | San Francisco, CA
+About Anthropic
+
+Anthropic’s mission is to create reliable, interpretable, and steerable AI systems. We want AI to be safe and beneficial for our users and for society as a whole. Our team is a quickly growing group of committed researchers, engineers, policy experts, and business leaders working together to build beneficial AI systems.
+
+Note: this is our US job posting. You can find our UK and Canada job postings on our careers page.
+
+Please apply by August 17!
+Responsibilities:
+
+The Anthropic Fellows Program is an external collaboration program focused on accelerating progress in AI safety research by providing promising talent with an opportunity to gain research experience. The program will run for about 2 months, with the possibility of extension for another 4 months, based on how well the collaboration is going. Our goal is to bridge the gap between industry engineering expertise and the research skills needed for impactful work in AI safety.
+
+    Fellows will use external infrastructure (e.g. open-source models, public APIs) to work on an empirical project aligned with our research priorities, with the goal of producing a public output (e.g. a paper submission). Fellows will receive substantial support - including mentorship from Anthropic researchers, funding, compute resources, and access to a shared workspace - enabling them to develop the skills to contribute meaningfully to critical AI safety research.
+    We aim to onboard our next cohort of Fellows in October 2025, with later start dates being possible as well.
+
+What To Expect
+
+    Direct mentorship from Anthropic researchers
+    Connection to the broader AI safety research community
+    Weekly stipend of $2,100 USD & access to benefits (including access to medical, dental, and vision insurance, a Health Savings Account, an Employee Assistance Program, and a 401(k) retirement plan)
+    Funding for compute and other research expenses
+    Shared workspaces in Berkeley, California and London, UK
+    This role will be employed by our third-party talent partner, and may be eligible for benefits through the employer of record.
+
+Mentors & Research Areas
+
+Fellows will undergo a project selection & mentor matching process. Potential mentors include
+
+    Ethan Perez
+    Jan Leike
+    Emmanuel Ameisen
+    Jascha Sohl-Dickstein
+    Sara Price
+    Samuel Marks
+    Joe Benton
+    Akbir Khan
+    Fabien Roger
+    Alex Tamkin
+    Nina Panickssery
+    Collin Burns
+    Jack Lindsey
+    Trenton Bricken
+    Evan Hubinger
+
+Our mentors will lead projects in select AI safety research areas, such as:
+
+    Scalable Oversight: Developing techniques to keep highly capable models helpful and honest, even as they surpass human-level intelligence in various domains. 
+    Adversarial Robustness and AI Control: Creating methods to ensure advanced AI systems remain safe and harmless in unfamiliar or adversarial scenarios.
+    Model Organisms: Creating model organisms of misalignment to improve our empirical understanding of how alignment failures might arise.
+    Model Internals / Mechanistic Interpretability: Advancing our understanding of the internal workings of large language models to enable more targeted interventions and safety measures.
+    AI Welfare: Improving our understanding of potential AI welfare and developing related evaluations and mitigations.
+
+For a full list of representative projects for each area, please see these blog posts: Introducing the Anthropic Fellows Program for AI Safety Research, Recommendations for Technical AI Safety Research Directions.
+You may be a good fit if you:
+
+    Are motivated by reducing catastrophic risks from advanced AI systems
+    Are excited to transition into full-time empirical AI safety research and would be interested in a full-time role at Anthropic
+        Please note: We do not guarantee that we will make any full-time offers to Fellows. However, strong performance during the program may indicate that a Fellow would be a good fit here at Anthropic, and external collaborations have historically provided our teams with substantial evidence that someone might be a good hire.
+    Have a strong technical background in computer science, mathematics, physics, or related fields
+    Have strong programming skills, particularly in Python and machine learning frameworks
+    Can work full-time on the fellowship for at least 2 months, and ideally 6 months
+    Have or can obtain US, UK, or Canadian work authorisation, and are able to work full-time out of Berkeley or London (or remotely if in Canada).
+        While we are not able to sponsor visas, we are able to support Fellows on F-1 visas who are eligible for full-time OPT/CPT.
+    Are comfortable programming in Python
+    Thrive in fast-paced, collaborative environments
+    Can execute projects independently while incorporating feedback on research direction
+
+We’re open to all experience levels and backgrounds that meet the above criteria – you do not, for example, need prior experience with AI safety or ML. We particularly encourage applications from underrepresented groups in tech.
+Strong candidates may also have:
+
+    Experience with empirical ML research projects
+    Experience working with Large Language Models
+    Experience in one of the research areas (e.g. Interpretability)
+    Experience with deep learning frameworks and experiment management
+    Track record of open-source contributions
+
+Candidates need not have:
+
+    100% of the skills needed to perform the job
+    Formal certifications or education credentials
+
+Interview process:
+
+We aim to onboard our next cohort of Fellows in October 2025, with the possibility of later start dates for some fellows. Please note that if you are accepted into the October cohort, we expect that you will be available for several hours of mentor matching in October, although you may start the full-time program later.
+
+To ensure we can start onboarding Fellows in October 2025, we will complete interviews on a rolling basis until August 17, after which we will conduct interviews at specific timeslots on pre-specified days. We will also set hard cut-off dates for each stage - if you are not able to make that stage’s deadline, we unfortunately will not be able to proceed with your candidacy. 
+
+We've outlined the interviewing process below, but this may be subject to change.
+
+    Initial Application and References 
+        Submit your application below by August 17!
+        In the application, we’ll also ask you to provide references who can speak to what it’s like to work with you.
+    Technical Assessment
+        You will complete a 90-minute coding screen in Python
+            As a quick note - we know most auto-screens are pretty bad. We think this one is unusually good and for some teams, give as much signal as an interview. It’s a bunch of reasonably straightforward coding that involves refactoring and adapting to new requirements, without any highly artificial scenarios or cliched algorithms you’d gain an advantage by having memorized.
+        We'll simultaneously collect written feedback from your references during this stage.
+    Technical Interview
+        You'll schedule time to do a coding-based technical interview that does not involve any machine learning (55 minutes)
+    Final interviews  
+        The final interviews consist of two interviews:
+            Research Discussion (15 minutes) – Brainstorming session with an Alignment Science team lead to explore research ideas and approaches
+            Take-Home Project (5 hours work period + 30 minute review) – Research-focused project that demonstrates your technical and analytical abilities
+        In parallel, we will conduct reference calls.
+    Offer decisions
+        We aim to extend all offers by early October, and finalize our cohort shortly after.
+        We will extend offers on a rolling basis and set an offer deadline of 1 week. However, if you need more time for the offer decision, please feel free to ask for it!
+        After we select our initial cohort, we will kick off mentor matching and project selection in mid/late-October (the first week of the program). This will involve several project discussion sessions and follow-up discussions.
+        We'll extend decisions about extensions in mid-December. Extended fellowships will end in mid/late-April.
+
+At each stage, you'll receive more detailed instructions via email. While we have hard deadlines for each stage, we will be assessing candidates and making offer decisions on a rolling basis, so we encourage you to complete each stage as soon as possible. 
+Compensation (USD):
+
+    This role is not a full-time role with Anthropic, and will be hired via our third-party talent partner.
+    The expected base pay for this role is $2,100/week, with an expectation of 40 hours per week. 
+
+Role-Specific Location Policy:
+
+    While we currently expect all staff to be in one of our offices at least 25% of the time, this role is exempt from that policy and can be done remotely from anywhere in the US.
+    However, we strongly prefer candidates who can be based in the Bay Area and make use of the shared workspace we've secured for our Fellows.
+
+Please note: The logistics below this section does not apply to this job posting (for example, we are not able to sponsor visas for Fellows).
+
+The expected salary range for this position is:
+
+Annual Salary:
+
+$109,200 - $109,200 USD
+Logistics
+
+Education requirements: We require at least a Bachelor's degree in a related field or equivalent experience.
+
+Location-based hybrid policy: Currently, we expect all staff to be in one of our offices at least 25% of the time. However, some roles may require more time in our offices.
+
+Visa sponsorship: We do sponsor visas! However, we aren't able to successfully sponsor visas for every role and every candidate. But if we make you an offer, we will make every reasonable effort to get you a visa, and we retain an immigration lawyer to help with this.
+
+We encourage you to apply even if you do not believe you meet every single qualification. Not all strong candidates will meet every single qualification as listed.  Research shows that people who identify as being from underrepresented groups are more prone to experiencing imposter syndrome and doubting the strength of their candidacy, so we urge you not to exclude yourself prematurely and to submit an application if you're interested in this work. We think AI systems like the ones we're building have enormous social and ethical implications. We think this makes representation even more important, and we strive to include a range of diverse perspectives on our team.
+How we're different
+
+We believe that the highest-impact AI research will be big science. At Anthropic we work as a single cohesive team on just a few large-scale research efforts. And we value impact — advancing our long-term goals of steerable, trustworthy AI — rather than work on smaller and more specific puzzles. We view AI research as an empirical science, which has as much in common with physics and biology as with traditional efforts in computer science. We're an extremely collaborative group, and we host frequent research discussions to ensure that we are pursuing the highest-impact work at any given time. As such, we greatly value communication skills.
+
+The easiest way to understand our research directions is to read our recent research. This research continues many of the directions our team worked on prior to Anthropic, including: GPT-3, Circuit-Based Interpretability, Multimodal Neurons, Scaling Laws, AI & Compute, Concrete Problems in AI Safety, and Learning from Human Preferences.
+Come work with us!
+
+Anthropic is a public benefit corporation headquartered in San Francisco. We offer competitive compensation and benefits, optional equity donation matching, generous vacation and parental leave, flexible working hours, and a lovely office space in which to collaborate with colleagues. Guidance on Candidates' AI Usage: Learn about our policy for using AI in our application process
+
+Create a Job Alert
+
+Interested in building your career at Anthropic? Get future opportunities sent straight to your email.
+Create alert
+Apply for this job
+
+*
+
+indicates a required field
+First Name*
+Last Name*
+Email*
+Phone*
+Resume/CV*
+Attach
+Enter manually
+
+Accepted file types: pdf, doc, docx, txt, rtf
+(Optional) Personal Preferences
+
+How do you pronounce your name?
+AI Policy for Application*
+Select...
+
+We believe that AI will have a transformative impact on the world, and we’re seeking exceptional candidates who collaborate thoughtfully with Claude to realize this vision. At the same time, we want to understand your unique skills, expertise, and perspective through our hiring process. We invite you to review our AI partnership guidelines for candidates and confirm your understanding by selecting “Yes.”
+Did you apply to Anthropic, or to work with one of our researchers via programs like MATS, Astra, or the Anthropic Fellows Program within the past year?*
+
+If so, feel free to elaborate on any changes/additions/improvements to your application and experience since you last applied.
+
+Please note: If your application was rejected in or after April 2025, we think it's unlikely that this program would be a good fit at this time.
+In a paragraph or two, why are you interested in participating in this program?*
+
+Why are you interested in participating in this program?
+How likely are you to accept a four-month extension of your fellowship if offered? We expect the vast majority of fellows to continue in the program beyond the two month initial phase in order to complete their projects, assuming the project is progressing well.*
+
+(Please include a brief explanation and, if possible, a % estimate. The estimate doesn’t have to be confident!)
+How likely are you to accept a full-time offer at Anthropic if you receive an offer after the program?*
+
+ (Please include a brief explanation and, if possible, a % estimate. The estimate doesn’t have to be confident!)
+If you were to start at Anthropic full-time after this program, when is the earliest you could start? (E.g., immediately after the program ends, or some other date) *
+
+The program will end September 2025.
+How likely are you to continue being interested in working on AI safety after the program? *
+
+(Please include a % and a brief explanation)
+Optionally, please share code samples from past projects (e.g. GitHub links or uploaded zip files), ideally a substantial project and (if possible) a machine learning project (these could be the same or different projects).
+Other links to information about you and your technical contributions (e.g., personal website, LinkedIn, GitHub, Google Scholar, and/or blog posts).
+Please share at least two references that you would be alright with us reaching out to – ideally people who have worked with you in the past and would have context on your technical ability, strengths, and accomplishment). Make sure to include their name, email, context on your relationship to them, and a link to any information about them (e.g. website or Google Scholar). References from the ML research community are preferred if available.*
+
+By default, we will be contacting references in the next stage without giving you a heads up. Optionally, if you have a reason for wanting us to give you notice before reaching out to your references, please specify your reason and we're happy to respect that. After we give you notice about contacting your references, if we don't hear back from you within a week, we will email your references.
+We have a designated shared workspace in Berkeley, California where other fellows will work from and mentors will visit. To provide the best experience for our Fellows, we will prioritise candidates who can work from these spaces. Will you be able to work out of the Berkeley workspace? If not, please elaborate on why and share where you would like to work from instead.*
+Would you be able to start full-time in the program in mid/late-October? If not, please share the earliest date you’d be able to start.*
+Do you have any timelines or deadlines we should be aware of?
+Other Notes
+
+Is there anything else you would like to share (e.g. significant time commitments in the March-September time period)?
+Have you ever interviewed at Anthropic before?*
+Select...
+Will you require sponsorship to work in the US? (We are unable to sponsor visas for fellows at this time; please apply to the Canada or UK job postings if you are unable to get U.S. work authorization but have or are able to get Canadian or UK authorization.)*
+Select...
+If offered a full-time role following your fellowship, would you be willing to relocate to the San Francisco Bay Area (if not already based here)?*

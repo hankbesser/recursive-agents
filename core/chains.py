@@ -80,7 +80,13 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings # ChatOpenAI can stay 
 from langchain_core.messages import HumanMessage, AIMessage
 
 # ---------------------------------------------------------------------
-# ❶ Cosine similarity from embeddings helper
+# ❶ Global embeddings for MCP compatibility
+# ---------------------------------------------------------------------
+# Make embeddings global so MCP tools can access them directly
+GLOBAL_EMBEDDINGS = OpenAIEmbeddings()
+
+# ---------------------------------------------------------------------
+# ❷ Cosine similarity from embeddings helper
 # ---------------------------------------------------------------------
 
 def cosine_from_embeddings(va: List[float], vb: List[float]) -> float:
@@ -88,7 +94,7 @@ def cosine_from_embeddings(va: List[float], vb: List[float]) -> float:
     return dot(va, vb) / (norm(va) * norm(vb))
 
 # ---------------------------------------------------------------------
-# ❷ Build three chains from template dict + LLM
+# ❸ Build three chains from template dict + LLM
 # ---------------------------------------------------------------------
 def build_chains(t: Dict[str, str], llm: ChatOpenAI):
     init_prompt = ChatPromptTemplate.from_messages([
@@ -176,7 +182,9 @@ class BaseCompanion:
         self.history: List[Any] = []     # list[HumanMessage | AIMessage]
         self.run_log: list[dict[str, str]] = []   # stores per-iteration details
 
-        self._emb = embedding_model or OpenAIEmbeddings()
+        # Use global embeddings by default for MCP compatibility
+        # Can still override with custom embedding_model if needed
+        self._emb = embedding_model or GLOBAL_EMBEDDINGS
         self.return_transcript = return_transcript
         self.verbose = verbose
         if self.verbose:                          # minimal logger setup
@@ -291,6 +299,24 @@ class BaseCompanion:
         """Alias so a Companion instance is itself a callable."""
         return self.loop(user_input)
     
+    def calculate_similarity(self, text1: str, text2: str) -> float:
+        """
+        Calculate cosine similarity between two texts using embeddings.
+        
+        Public method for MCP tools to calculate similarity between revisions.
+        This enables convergence detection in the MCP architecture where tools
+        don't use the loop() method.
+        
+        Args:
+            text1: First text to compare (e.g., revision 1)
+            text2: Second text to compare (e.g., revision 2)
+            
+        Returns:
+            float: Cosine similarity score between 0 and 1
+        """
+        emb1 = self._emb.embed_query(text1)
+        emb2 = self._emb.embed_query(text2)
+        return cosine_from_embeddings(emb1, emb2)
 
     def transcript_as_markdown(self) -> str:
         """Pretty-print the last run for logs or UI."""

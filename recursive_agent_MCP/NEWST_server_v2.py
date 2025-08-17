@@ -75,15 +75,14 @@ register_all_tools(mcp)
 # 3. That decorator is applied to the resource function
 # 4. FastMCP internally stores the resource for resources/list discovery
 #
-# Currently we have one resource:
-#   - resource://protocol_context: The strategic decomposition protocol
+# Currently we have multiple resource categories:
+#   - Protocol & Templates
+#   - Memory resources (history, run_log)
+#   - Session resources (phase, suggestions)
+#   - Session Metrics resources (from PhaseMetricsMiddleware)
 #
 # This must happen after MCP instance creation but before server starts.
 register_all_resources(mcp)
-
-# Initialize metrics resources with the intelligence middleware
-from resources.metrics_resources import set_intelligence_middleware
-set_intelligence_middleware(intelligence_middleware)
 
 # ── run ----------------------------------------------------------------------
 if __name__ == "__main__":

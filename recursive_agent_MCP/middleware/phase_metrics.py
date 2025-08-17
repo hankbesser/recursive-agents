@@ -7,13 +7,11 @@ honest metrics tracking that actually works.
 
 import time
 import logging
-from typing import Dict, Any, Optional
 from datetime import datetime
 
-from mcp import McpError
-from mcp.types import ErrorData
+
 from services.companion_manager import session_manager
-from .middleware import Middleware, MiddlewareContext
+from fastmcp.server.middleware import Middleware, MiddlewareContext
 
 
 logger = logging.getLogger(__name__)
