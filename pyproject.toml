@@ -19,10 +19,12 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
     "langchain>=0.3.20",
+    "langgraph==0.5.4",
     "langchain-openai>=0.3.20",
     "langchain-core>=0.3.60",
     "openai>=1.92.0",
@@ -34,12 +36,9 @@ dependencies = [
 streamlit = [
     "streamlit>=1.46.0",
 ]
-demos = [
-    "langgraph>=0.5.0",
-]
 
 all = [
-    "recursive-agents[streamlit,demos]",
+    "recursive-agents[streamlit]",
 ]
 
 [project.urls]
@@ -53,4 +52,4 @@ packages = ["recursive_agents", "core"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-"" = ["templates/*.txt"]  # Root package
+"*" = ["templates/*.txt"]  # Root package

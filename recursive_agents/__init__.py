@@ -39,18 +39,38 @@ from .base import (
 )
 
 # ---------------------------------------------------------------------
-# Re-export Streamlit-enabled agents from streamlit.py
+# Re-export Streamlit-enabled agents from streamlit.py if streamlit is available
 # ---------------------------------------------------------------------
-from .streamlit import (
-    StreamlitGenericCompanion,
-    StreamlitMarketingCompanion,
-    StreamlitBugTriageCompanion,
-    StreamlitStrategyCompanion,
-)
 
+try:
+    # Attempt to import Streamlit-related modules
+    from .streamlit import (
+        StreamlitGenericCompanion,  # noqa: F401
+        StreamlitMarketingCompanion,  # noqa: F401
+        StreamlitBugTriageCompanion,  # noqa: F401
+        StreamlitStrategyCompanion,  # noqa: F401
+    )
+    # You might want to define a flag indicating availability of Streamlit companions,
+    # so that other parts of your code can check this flag to conditionally use them. 
+    # This is especially useful in larger applications where you want to know
+    # which optional modules are available, if needed elsewhere.
+    STREAMLIT_AVAILABLE = True
+
+except ImportError:
+    # Handle the case where the 'streamlit' package is not installed.
+    # The classes won't be available, but the program won't crash.
+    # You can optionally log a message or define placeholder variables.
+    print("Warning: Streamlit companions are unavailable. Install 'streamlit' to use them.")
+
+    # Define dummy/placeholder variables for the classes if they need to exist
+    # (e.g., if code later checks for their existence), though often not needed.
+    # Example:
+    # StreamlitGenericCompanion = None
+    STREAMLIT_AVAILABLE = False
 # ---------------------------------------------------------------------
 # What `from recursive_agents import *` should expose
 # ---------------------------------------------------------------------
+# Core and standard companions are always available
 __all__ = [
     # Core
     "BaseCompanion",
@@ -59,9 +79,16 @@ __all__ = [
     "MarketingCompanion",
     "BugTriageCompanion",
     "StrategyCompanion",
-    # Streamlit companions
-    "StreamlitGenericCompanion",
-    "StreamlitMarketingCompanion",
-    "StreamlitBugTriageCompanion",
-    "StreamlitStrategyCompanion",
 ]
+
+# Conditionally extend __all__ ONLY if the imports succeeded
+if STREAMLIT_AVAILABLE:  # Assuming you defined this flag in the try block
+    __all__.extend(
+        [
+            # Streamlit companions
+            "StreamlitGenericCompanion",
+            "StreamlitMarketingCompanion",
+            "StreamlitBugTriageCompanion",
+            "StreamlitStrategyCompanion",
+        ]
+    )

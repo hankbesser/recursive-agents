@@ -39,3 +39,6 @@ dist/
 build/
 prop_templates/
 hn.txt
+
+# Claude
+.claude/
