@@ -23,8 +23,8 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-    "langchain>=0.3.20",
-    "langgraph>=0.6.0",
+    "langchain>=0.3.20, <0.4.0",
+    "langgraph>=0.6.0, <0.7.0",
     "langchain-openai >=0.3.35, <0.4.0",
     "langchain-anthropic >=0.3.22, <0.4.0",
     "langchain-core>=0.3.60",
