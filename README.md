@@ -116,15 +116,15 @@ print(agent.transcript_as_markdown())
 ```python
 # 1. Configure companions for different use cases
 fast_draft = MarketingCompanion(
-    temperature=0.9,          # More creative
+    temperature=0.9,         
     max_loops=1,             # Single pass for speed
     clear_history=True       # Don't retain context
 )
 
 thoughtful = MarketingCompanion(
     llm="gpt-4.1-mini"
-    temperature=0.3,          # More focused
-    max_loops=5,             # Deep refinement
+    temperature=0.3,         
+    max_loops=3,            
     similarity_threshold=0.99 # Only stop on near-identical
 )
 
@@ -164,8 +164,8 @@ from recursive_agents.template_load_utils import build_templates
 LEGAL_TEMPLATES = build_templates(initial_sys="legal_initial_sys")
 class LegalCompanion(BaseCompanion):
     TEMPLATES = LEGAL_TEMPLATES
-    SIM_THRESHOLD = 0.99  # Legal requires higher precision
-    MAX_LOOPS = 4         # Thorough analysis for legal matters
+    SIM_THRESHOLD = 0.99 
+    MAX_LOOPS = 4        
 
 # Step 3: Use it immediately
 legal = LegalCompanion()
@@ -173,7 +173,7 @@ analysis = legal("Review this SaaS agreement for potential risks...")
 
 # Access everything just like built-in companions
 print(f"Iterations until convergence: {len(legal.run_log)}")
-print(legal.transcript_as_markdown())  # Full audit trail for compliance!
+print(legal.transcript_as_markdown()) 
 ```
 ## Quick Start - Full Streamlit App
 
@@ -317,8 +317,8 @@ FINANCE_TEMPLATES = build_templates(initial_sys="financial_initial_sys")
 class FinancialCompanion(BaseCompanion):
     TEMPLATES = FINANCE_TEMPLATES
     MODEL_NAME = "gpt-4.1-mini"
-    MAX_LOOPS = 4  # Financial analysis needs thoroughness
-    TEMPERATURE = 0.3  # Lower temperature for numerical precision
+    MAX_LOOPS = 3
+    TEMPERATURE = 0.3 
 ```
 
 #### 3. Use it anywhere
