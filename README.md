@@ -5,7 +5,7 @@
 
 ## A Meta-Framework for Self-Improving Agents
 
-Recursive Agents implements a **three-phase iterative refinement architecture** where LLM agents (instances of Classes) critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision inspectable and debuggable.
+Recursive Agents implements a **three-phase iterative refinement architecture** where LLM agents (instances of Classes) critique and improve their own outputs. Unlike single-pass systems, each agent automatically tracks its full revision history, making every decision and debuggable.
 
 ![Sequence Flow](images/Sequence_Summary.svg)
 
