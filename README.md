@@ -1,4 +1,4 @@
-# Recursive Agents 🔄
+# Recursive Agents
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Contributing](https://img.shields.io/badge/Contributing-Guidelines-blue.svg)](CONTRIBUTING.md)
@@ -13,43 +13,33 @@ Recursive Agents implements a **three-phase iterative refinement architecture** 
 
 ### Why Recursive Agents?
 
-**See inside the thinking.*** While other frameworks show you what happened, RA shows you why. Every instance maintains a complete audit trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
+**See inside the thinking.*** Every instance maintains a complete trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
 
 *Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
 
 **Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial system template per domain), apply overarching protocols to specific phases (usually throughout system templates in all realted domains for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
 
-### Why "Companions"?
-
-In the Recursive Agents framework, we call our agent implementations
-"Companions" rather than "Agents" for clarity:
-
-- **Framework**: Recursive Agents (what the system does)
-- ***C***lasses: ***C***ompanions (what you work with)
-
 ---
 
-## What Makes RA Unique
+## Summary of RA Patterns
 
-| Code Pattern | Why It Matters | Rare in OSS? |
-|--------------|----------------|--------------|
-| **`Draft\|LLM → Critique\|LLM → Revision\|LLM` chains built once** | Three-phase self-improvement is automatic - no manual wiring | ✓✓ |
-| **One `protocol_context.txt` feeds all system prompts** | Change reasoning style everywhere with one edit | ✓ |
-| **Templates live as `.txt` files on disk** | Git tracks prompt changes; hot-reload without restarting | ✓ |
-| **New expert domain = inherit BaseCompanion + point to template** | Three lines of code gets you a complete agent | ✓✓ |
-| **Every Companion instance  is itself an `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | ✓ |
-| **Built-in `run_log` tracks all iterations** | See why decisions were made without adding instrumentation | ✓✓ |
-
-✓ = Uncommon in open source projects | ✓✓ = Very rare in open source projects
+| Code Pattern | Why It Matters |
+|--------------|----------------|
+| **`Draft\|LLM → Critique\|LLM → Revision\|LLM` chains built once** | Three-phase self-improvement is automatic - no manual wiring |
+| **One `protocol_context.txt` feeds all system prompts** | Change reasoning style everywhere with one edit | 
+| **Templates live as `.txt` files on disk** | Git tracks prompt changes; hot-reload without restarting |
+| **New expert domain = inherit BaseCompanion + point to template** | Three lines of code gets you a complete agent | 
+| **Every Companion instance  is itself an `agent()` or `RunnableLambda(agent)`** | Same object works standalone or in any framework | 
+| **Built-in `run_log` tracks all iterations** | See why decisions were made without adding instrumentation |
 
 ---
-### Quick Clone
+### Download
 
 ```bash
-# Create conda environment
-conda create -n recursive-agents python=3.12 -y # (or python=3.13 -y)
+# conda
+conda create -n recursive-agents python=3.13 -y # (or python=3.14 -y)
 conda activate recursive-agents
-# Or using venv
+# venv
 # python -m venv venv
 # source venv/bin/activate  
 
@@ -57,17 +47,12 @@ conda activate recursive-agents
 git clone https://github.com/hankbesser/recursive-agents.git
 cd recursive-agents
 pip install -e .  # or pip install . for non-editable
-# pip install -e .[all] for running the streamlit app and working with LangGraph in demo
-# pip install .[all] for non edittable version as above   
+# pip install -e .[all] for running the streamlit app
 ```  
 ---
-### Challenge: Ask Your Agentic Coding tool to Think Deeply about this Project
+### Ask Your Agentic Coding tool to Think Deeply about this Project
 
-Here's something fun - ask your favorite coding tool ( i.e. Claude Code in a terminal) the following input prompt in a new conversation.. It is very informal and you can tailor the structure (possibly more formal language if you are into that) but the TODO is pretty solid with this particular order:
-
-**"Ok please think as deeply as possible about this project. Start with thinking as deeply as you possibly can about the main core engine is in core/chains.py - think deeply about this, giving every detail you can see from it and what it does. Then go to the package level in recursive_agents including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts (noting that protocol language won't leak as an aside), then the user prompts. Lastly, hit all files in the the demos folder- again, as deep of analysis as you can go. It's good to get a deep grasp of this project."**
-
-*The responses will not dissapoint.*
+**"Ok please think as deeply as possible about this project. Start with the main core engine is in core/chains.py - giving every detail you can see from it and what it does. Then go to the package level in recursive_agents including template_load_utils.py and base.py and do the same deep thinking process. Then read the templates folder starting with the protocol, then system prompts, then the user prompts. Lastly, go to all files in the the demos folder- again, as deep of analysis as you can go. It's good to get a deep grasp of this project."**
 
 ---
 
@@ -88,13 +73,13 @@ templates/*.txt             # Hot-swappable prompts + protocol injection
 ```
 **Where to Look (Separation of Concerns):**
 
-- **Engineers** → ```core/chains.py``` (how to build the chains, storage/caching/memory management, observability, iteration process, etc.)
-- **Users** → ```recursive_agents/base.py``` (picking companions)
-- **Context Engineers** → ```templates/``` folder + ```template_load_utils.py```
-- **UI Developers** → ```streamlit_app.py``` (progress containers)
-- *or any combination of these*
+- ```core/chains.py``` (how to build the chains, storage/caching/memory management, observability, iteration process, etc.)
+- ```recursive_agents/base.py``` (picking companions)
+- ```templates/``` folder + ```template_load_utils.py```
+- ```streamlit_app.py``` (progress containers)
 
-**Tip:** Each module includes extensive docstrings and comments explaining design decisions, usage patterns, and implementation details. Start with the docstrings for a comprehensive understanding. 
+
+**Tip:** Each module includes extensive docstrings and comments explaining design decisions, usage patterns, and implementation details. Start with the docstrings for understanding. 
 
 
 ---
@@ -326,7 +311,6 @@ print(mkt.transcript_as_markdown())     # Full marketing analysis
 print(bug.transcript_as_markdown())     # Full engineering analysis
 print(strategy.transcript_as_markdown()) # How strategy synthesized both
 ```
-For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_compliment](docs/LangGraph_RA_comp.md).
 
 ---
 ## Production Features
@@ -336,13 +320,13 @@ For detailed comparison with LangGraph capabilities, see [LangGraph_comparison_c
 - **Verbose mode**: prints every phase of thinking live
 - **Transcript capture**: return full run_log for debugging along with the final analysis (the instatiated object will have have it own run_log though)
 - **Standard logging**: Integration-ready
-- **Streamlit App**: visualze all live previews, testing 
+- **Streamlit App**: visualze live previews, testing 
 
 - **Smart caching**: Single embeddings client
 - **Early exit**: Stop when converged, not exhausted
 
 - **Any OpenAI model**: "gpt-4o-mini", "gpt-4.1", custom endpoints
-- **Configurable everything**: Per-instance overrides
+- **Configurable**: Per-instance overrides
 - **Template hot-reload:** Change prompts without code
 
 ---
@@ -391,57 +375,10 @@ class FinancialCompanion(BaseCompanion):
 ```python
 fin = FinancialCompanion()
 
-# note: callable - __call__ is an alias for loop()
 analysis = fin("Q3 revenue variance exceeds 2 standard deviations") 
 ```
----
-
-
-*Agents that refine their responses through iteration, integrated seamlessly into your existing code.*
-
 ---
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to get started.
-
-## Future Explorations
-
-The Recursive Agents framework opens fascinating research directions:
-
-- Advanced convergence analysis beyond embeddings / cosine similarity
-- Richer integration patterns with agentic frameworks
-- Extended observability for multi-loop systems
-
-We're particularly interested in collaborations exploring how recursive
-patterns emerge across different domains and scales.
-
-
-
-## Bonus Section: This README's design philosophy
-
-1. **Three-level structure** mirrors the codebase organization
-2. **Technical depth** with actual code snippets and architecture diagrams
-3. **Clear separation** of who should look where (users → base.py, engineers → chains.py)
-4. **Focus on observability** with real implementation details for testing and visualzing in the prvoided full scale Streamlit app
-5. **Protocol + Templates** flexible composition for different applications
-6. **Clean examples** demonstrating the "companions as callables" pattern
-7. **Practical guidance** for extending the framework
-8. **Visual learning** - Sequence diagram up front, architecture docs linked
-
-#### The goal: Show what makes Recursive Agents different and how to use it effectively.
-
----
-
-## Built Through Collaboration
-
-This framework emerged from intensive human-AI collaboration over 3 weeks:
-- Solo developer working with multiple LLMs
-- Built using the very patterns it now enables  
-- The architecture mirrors the discovery process itself
-
-The rapid development was possible because the framework design emerged naturally from the recursive dialogue process—we were building what we were already doing. 
