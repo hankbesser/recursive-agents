@@ -13,9 +13,7 @@ Recursive Agents implements a **three-phase iterative refinement architecture** 
 
 ### Why Recursive Agents?
 
-**See inside the thinking.*** Every instance maintains a complete trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in, not bolted on.
-
-*Unlike single-shot responses, agents systematically refine their outputs by critiquing and improving their own work—thinking about their thinking.
+**See inside the thinking.*** Every instance maintains a complete trail of its critique-revision cycles, stopping conditions, and decision rationale. This transparency is built-in.
 
 **Flexible template loading.** The `build_templates()` utility lets you compose analytical patterns: override just what changes (usually only initial system template per domain), apply overarching protocols to specific phases (usually throughout system templates in all realted domains for consistent behavior), or skip protocols entirely. System templates define WHO the agent is, user templates define WHAT task to perform, and protocols shape HOW to analyze—each layer independently configurable.
 
@@ -206,25 +204,7 @@ streamlit run streamlit_app.py
 - See critique-revision cycles happen in real-time
 - View cosine similarity scores update live
 
-
-
-This is a full testing and observability app included with the framework.
-
 ---
-
-## Why This Architecture Matters
-
-1. **Mathematical Convergence > Arbitrary Limits**
-    - Not "stop after 3 tries"
-    - Stop when `cosine_from_embeddings(revision[n-1], revision[n]) > 0.98`
-2. **Companions as Callables = Composability**
-- Works in Jupyter: `agent("question")`
-- Works with LangGraph: `RunnableLambda(agent)`
-- Works in Streamlit: Live visualization of critique-revision cycles!
-3. **Templates as Data = Evolution Without Refactoring**
-- Change prompts in production
-- A/B test different protocols
-- Domain experts can contribute without coding
 
 ---
 ## Multi-Agent Orchestration
@@ -313,40 +293,10 @@ print(strategy.transcript_as_markdown()) # How strategy synthesized both
 ```
 
 ---
-## Production Features
-
-#### Observability and Flexibility
-
-- **Verbose mode**: prints every phase of thinking live
-- **Transcript capture**: return full run_log for debugging along with the final analysis (the instatiated object will have have it own run_log though)
-- **Standard logging**: Integration-ready
-- **Streamlit App**: visualze live previews, testing 
-
-- **Smart caching**: Single embeddings client
-- **Early exit**: Stop when converged, not exhausted
-
-- **Any OpenAI model**: "gpt-4o-mini", "gpt-4.1", custom endpoints
-- **Configurable**: Per-instance overrides
-- **Template hot-reload:** Change prompts without code
-
----
-
-## The Strategic Decomposition Protocol
-
-Read ```templates/protocol_context.txt``` to see the structured reasoning framework that guides agents through:
-
-- Multi-layered problem analysis
-- Iterative pattern recognition
-- Systematic refinement cycles
-
-This structured approach to recursive problem decomposition consistently outperforms single-pass analysis.
-
----
-
 
 ### Creating Your Own Companion
 
-### 1. Write your
+#### 1. Write your
 ```text
 # templates/financial_initial_sys.txt
 {context}  # Protocol automatically injected
@@ -357,7 +307,7 @@ You are a Financial Analysis Companion. Focus on:
 - Regulatory compliance implications
 ```
 
-### 2. Create the companion class
+#### 2. Create the companion class
 ```python
 your_app/base.py
 from recursive_agents.core.chains import BaseCompanion
@@ -371,7 +321,7 @@ class FinancialCompanion(BaseCompanion):
     TEMPERATURE = 0.3  # Lower temperature for numerical precision
 ```
 
-### 3. Use it anywhere
+#### 3. Use it anywhere
 ```python
 fin = FinancialCompanion()
 
