@@ -177,18 +177,6 @@ print(legal.transcript_as_markdown())
 ```
 ## Quick Start - Full Streamlit App
 
-
-```bash
-export OPENAI_API_KEY="sk-..." # in terminal
-# For Jupyter/Python (more secure):
-# Create .env file with:
-# OPENAI_API_KEY="sk-..."
-# Then in your code:
-# from dotenv import load_dotenv
-# load_dotenv()
-```
-
-### Run the Complete Streamlit Application
 ```bash
 streamlit run streamlit_app.py
 ```
